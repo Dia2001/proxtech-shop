@@ -1,7 +1,5 @@
 package com.proxtechshop.config;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.proxtechshop.common.Constants;
 
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -43,7 +42,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+        	.csrf().disable()
             .authorizeRequests()
+            .antMatchers("/**").permitAll()
+            .antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
+            .antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
             .antMatchers(Constants.HOME_PATH).permitAll()
             .anyRequest().authenticated()
             .and()
