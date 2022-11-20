@@ -1,6 +1,5 @@
-<div sec:authorize="isAuthenticated()">
-    <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
-    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-        <input hidden type="submit" value="Sign Out" />
-    </form>
-</div>
+<th:block sec:authorize="isAuthenticated()">
+  <form name="logoutForm" th:action="@{/logout}" method="post">
+    <button type="submit">Sign Out</button>
+  </form>
+</th:block>

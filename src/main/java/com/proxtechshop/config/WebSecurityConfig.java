@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +39,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		authProvider.setPasswordEncoder(passwordEncoderBean());
 		return authProvider;
 	}
+	
+	public void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws Exception {
+		// do something when after logout success
+		response.sendRedirect(Constants.HOME_PATH);
+	}
 
 	public void logoutSuccessHandler(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws Exception {
@@ -50,13 +57,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.authorizeRequests()
 				.antMatchers(Constants.HOME_PATH).permitAll()
+				.antMatchers(HttpMethod.GET, Constants.PRODUCT_PATH).permitAll()
+				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
 				
 		http.authorizeRequests()
-				.anyRequest().authenticated()
-				.and().formLogin().loginPage(Constants.LOGIN_PATH).permitAll()
-				.and().logout().permitAll();
+				.anyRequest().authenticated();
+		
+		http.formLogin().loginPage(Constants.LOGIN_PATH).permitAll()
+				.successHandler((request, response, authentication) -> {
+					try {
+						loginSuccessHandler(request, response, authentication);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				});
+				
 
 		http.logout(logout -> logout
 				.logoutUrl(Constants.LOGOUT_PATH)
@@ -68,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					}
 				})
 				.deleteCookies()
-		);
+		).logout().permitAll();
 	}
 
 	@Override

@@ -26,4 +26,10 @@ public class Constants {
 	
 	public static final String PRODUCT_PATH = "/san-pham";
 
+	public static final String PRODUCT_DETAIL_VIEW = "product/detail";
+
+	public static final String PRODUCT_DETAIL_PATH = "/san-pham/**";
+	
+	public static final String PRODUCT_DETAIL_URL_PATH = "/san-pham/{productId}";
+
 }
