@@ -1,0 +1,5 @@
+<th:block sec:authorize="isAuthenticated()">
+  <form name="logoutForm" th:action="@{/logout}" method="post">
+    <button type="submit">Sign Out</button>
+  </form>
+</th:block>
