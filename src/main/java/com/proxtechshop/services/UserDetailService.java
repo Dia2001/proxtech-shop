@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.proxtechshop.entities.Role;
 import com.proxtechshop.repositories.UserRepository;
 
 @Service
@@ -28,10 +29,10 @@ public class UserDetailService implements UserDetailsService {
 		final com.proxtechshop.entities.User user = ur.getByUsername(username);
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-//		Set<Role> roles = user.getRoles();
-//		for (Role role : roles) {
-//			authorities.add(new SimpleGrantedAuthority(role.getRoleName().trim()));
-//		}
+		Set<Role> roles = user.getRoles();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getRoleKey()));
+		}
 		
 		return new User(username, user.getPassword(), authorities);
 	}

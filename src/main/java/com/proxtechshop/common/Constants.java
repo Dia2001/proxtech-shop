@@ -4,7 +4,7 @@ public class Constants {
 	
 	public static final String STATIC_RESOURCE_PATH_CONFIG = "/assets/**";
 	
-	public static final String UPLOAD_PATH_CONFIG = "uploads";
+	public static final String UPLOAD_PATH_CONFIG = "src/main/resources/public/uploads";
 	
 	public static final String UPLOAD_RESOURCE_PATH_CONFIG = "/uploads/**";
 	

@@ -1,5 +1,8 @@
 package com.proxtechshop.config;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,55 +22,57 @@ import com.proxtechshop.common.Constants;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
-    private UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 
-    @Bean
-    public PasswordEncoder passwordEncoderBean() {
-    	return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoderBean() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoderBean());
-        return authProvider;
-    }
-    
-    public void logoutSuccessHandler() {
-    	// do something when after logout success
-    }
-	
+	@Bean
+	public DaoAuthenticationProvider authProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoderBean());
+		return authProvider;
+	}
+
+	public void logoutSuccessHandler(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws Exception {
+		// do something when after logout success
+		response.sendRedirect(Constants.HOME_PATH);
+	}
+
 	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-        	.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/**").permitAll()
-            .antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
-            .antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
-            .antMatchers(Constants.HOME_PATH).permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage(Constants.LOGIN_PATH)
-            .permitAll()
-            .and()
-            .logout()
-            .permitAll();
-        
-        http
-        	.logout(logout -> logout
-        			.logoutUrl(Constants.LOGOUT_PATH)
-        			.logoutSuccessUrl(Constants.LOGOUT_PATH_SUCCESS)
-        			.deleteCookies()
-        	);
-    }
+	protected void configure(HttpSecurity http) throws Exception {
+		http.csrf().disable();
+		http.authorizeRequests()
+				.antMatchers(Constants.HOME_PATH).permitAll()
+				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
+				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
+				
+		http.authorizeRequests()
+				.anyRequest().authenticated()
+				.and().formLogin().loginPage(Constants.LOGIN_PATH).permitAll()
+				.and().logout().permitAll();
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider());
-    }
+		http.logout(logout -> logout
+				.logoutUrl(Constants.LOGOUT_PATH)
+				.logoutSuccessHandler((request, response, authentication) -> {
+					try {
+						logoutSuccessHandler(request, response, authentication);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				})
+				.deleteCookies()
+		);
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authProvider());
+	}
 }

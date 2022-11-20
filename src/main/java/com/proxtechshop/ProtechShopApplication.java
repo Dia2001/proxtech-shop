@@ -9,5 +9,5 @@ public class ProtechShopApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProtechShopApplication.class, args);
 	}
-
+	
 }

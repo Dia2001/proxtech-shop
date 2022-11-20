@@ -2,22 +2,26 @@ package com.proxtechshop.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "users")
-@Data
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +44,17 @@ public class User implements Serializable {
 
 	@Column(name = "active", nullable = false, columnDefinition = "bit default 1")
 	private boolean active;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "user_roles",
+			joinColumns = {
+					@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, updatable = false)
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name = "role_key", referencedColumnName = "role_key", nullable = false, updatable = false)
+			}
+	)
+	private Set<Role> roles = new HashSet<>();
 
 	public String getId() {
 		return id;
@@ -79,5 +94,13 @@ public class User implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 }
