@@ -14,14 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "users")
+@Data
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +42,7 @@ public class User implements Serializable {
 	@Column(name = "password", length = 100, nullable = false)
 	private String password;
 
-	@Column(name = "create_date", nullable = false)
+	@Column(name = "created_date", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
@@ -55,6 +59,9 @@ public class User implements Serializable {
 			}
 	)
 	private Set<Role> roles = new HashSet<>();
+	
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
+	private Customer customer;
 
 	public String getId() {
 		return id;
@@ -102,5 +109,13 @@ public class User implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 }
