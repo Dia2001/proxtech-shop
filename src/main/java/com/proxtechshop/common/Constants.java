@@ -14,9 +14,13 @@ public class Constants {
 
 	public static final String HOME_PATH_2 = "/home";
 	
-	public static final String LOGIN_VIEW = "login";
+	public static final String LOGIN_VIEW = "formlogin/login";
 	
 	public static final String LOGIN_PATH = "/login";
+	
+	public static final String SIGNUP_VIEW = "formsignup/signup";
+	
+	public static final String SIGNUP_PATH = "/signup";
 	
 	public static final String LOGOUT_PATH = "/logout";
 	
@@ -31,5 +35,7 @@ public class Constants {
 	public static final String PRODUCT_DETAIL_PATH = "/san-pham/**";
 	
 	public static final String PRODUCT_DETAIL_URL_PATH = "/san-pham/{productId}";
+	
+	public static final String ICON_PATH="/static/**";
 
 }

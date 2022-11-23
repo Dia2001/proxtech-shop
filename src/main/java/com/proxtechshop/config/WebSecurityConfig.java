@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.AntPathMatcher;
 
 import com.proxtechshop.common.Constants;
 
@@ -60,7 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
-				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
+				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
+				.antMatchers(Constants.SIGNUP_PATH).permitAll()
+				.antMatchers(Constants.ICON_PATH).permitAll();
+				
 				
 		http.authorizeRequests()
 				.anyRequest().authenticated();
