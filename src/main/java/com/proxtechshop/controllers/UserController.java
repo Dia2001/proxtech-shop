@@ -41,7 +41,6 @@ public class UserController {
 	@RequestMapping(value=Constants.POST_REGISTER,method=RequestMethod.POST)
 	public RedirectView processRegister(UserView userv, Model model) {
 		User user=userRepo.getByUsername(userv.getUsername());
-		String msg="";
 		if(user==null) {
 			user=new User();
 			user.setUsername(userv.getUsername());
@@ -61,9 +60,7 @@ public class UserController {
 		    model.addAttribute("user",user);
 		}
 		else {
-			msg="Tài khoản đã được tạo";
 			 model.addAttribute("user",userv);
-			 model.addAttribute("message",msg);
 			 return new RedirectView(Constants.SIGNUP_PATH);
 		}
 	    return new RedirectView(Constants.LOGIN_PATH);
