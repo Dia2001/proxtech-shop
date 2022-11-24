@@ -41,7 +41,7 @@ public class Customer implements Serializable {
 	private String fullName;
 	
 	@Column(name = "email", length = 50, nullable = false)
-	private String emali;
+	private String email;
 	
 	@Column(name = "phone", length = 11, nullable = true)
 	private String phone;
@@ -62,14 +62,16 @@ public class Customer implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
 	private Set<Cart> carts = new HashSet<>();
-
-	public Customer(String id, String userId, String fullName, String emali, String phone, String address,
+	public Customer() {
+		
+	}
+	public Customer(String id, String userId, String fullName, String email, String phone, String address,
 			Date createdDate) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.fullName = fullName;
-		this.emali = emali;
+		this.email = email;
 		this.phone = phone;
 		this.address = address;
 		this.createdDate = createdDate;
@@ -99,12 +101,12 @@ public class Customer implements Serializable {
 		this.fullName = fullName;
 	}
 
-	public String getEmali() {
-		return emali;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmali(String emali) {
-		this.emali = emali;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPhone() {

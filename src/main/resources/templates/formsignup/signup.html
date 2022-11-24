@@ -35,14 +35,14 @@
                     <div class="flex-title">
                         <img src="/assets/icons/ProxTech.svg" class="img-title" />
                         <h2 class="title">Đăng ký</h2>
-
+                        <p th:text="${message}" style="color:red;"></p>
                     </div>
                     <form th:action="@{/register}" th:object="${user}" method="POST">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Tên đầy đủ</label>
-                                    <input class="input--style-4" type="text" name="first_name">
+                                    <input th:field="*{fullname}" class="input--style-4" type="text">
                                 </div>
                             </div>
                             

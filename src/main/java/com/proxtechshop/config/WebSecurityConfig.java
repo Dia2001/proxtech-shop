@@ -67,6 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.SIGNUP_PATH).permitAll()
+				.antMatchers(Constants.LOGIN_PATH).permitAll()
 				.antMatchers(HttpMethod.POST,Constants.POST_REGISTER).permitAll()
 				.antMatchers(Constants.ICON_PATH).permitAll();
 				
