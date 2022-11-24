@@ -37,22 +37,17 @@
                         <h2 class="title">Đăng ký</h2>
 
                     </div>
-                    <form method="POST">
+                    <form th:action="@{/register}" th:object="${user}" method="POST">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Tên</label>
+                                    <label class="label">Tên đầy đủ</label>
                                     <input class="input--style-4" type="text" name="first_name">
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Họ và tên đệm</label>
-                                    <input class="input--style-4" type="text" name="last_name">
-                                </div>
-                            </div>
+                            
                         </div>
-                        <div class="row row-space">
+                        <!-- <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Ngày sinh</label>
@@ -82,12 +77,12 @@
                                 </div>
                             </div>
                            
-                        </div>
-                        <div class="row row-space">
+                        </div> -->
+                        <!-- <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email</label>
-                                    <input class="input--style-4" type="email" name="email">
+                                    <input class="input--style-4" type="email" th:field="*{email}">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -96,21 +91,20 @@
                                     <input class="input--style-4" type="text" name="phone">
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="input-group">
+                        </div>     -->
+                        <!-- <div class="input-group">
                             <label class="label">Địa chỉ</label>
                             <textarea class="input--style-4" style="width: 90%; min-height: 120px;resize:none;border: none;overflow: auto;outline: none;" name="address"></textarea>
-                        </div>
+                        </div> -->
                         <hr class="hr-text" data-content="*" />
                         <div style="width: 80%;">
                             <div class="input-group">
-                                <label class="label">Tài khoản</label>
-                                <input class="input--style-4" type="text" name="user_name">
+                                <label class="label">Tài khoản email</label>
+                                <input class="input--style-4" type="text" th:field="*{username}" name="user_name">
                             </div>
                             <div class="input-group">
                                 <label class="label">Mật khẩu</label>
-                                <input class="input--style-4" type="password" name="user_name">
+                                <input class="input--style-4" type="password" th:field="*{password}">
                             </div>
                             <div class="input-group">
                                 <label class="label">Nhập lại mật khẩu</label>

@@ -37,5 +37,6 @@ public class Constants {
 	public static final String PRODUCT_DETAIL_URL_PATH = "/san-pham/{productId}";
 	
 	public static final String ICON_PATH="/static/**";
-
+	
+	public static final String POST_REGISTER="/register";
 }
