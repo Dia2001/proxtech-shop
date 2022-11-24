@@ -20,6 +20,7 @@ public class UserView {
 	private String password;
 	private Date createdDate;
 	private boolean active;
+	private String msg;
 	
 	public UserView(String username, String fullname, String password, Date createdDate, boolean active) {
 		super();
@@ -28,11 +29,18 @@ public class UserView {
 		this.password = password;
 		this.createdDate = createdDate;
 		this.active = active;
+		msg="";
 	}
 	public UserView() {
-		
+		msg="";
 	}
-//	public String getId() {
+public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	//	public String getId() {
 //		return id;
 //	}
 //	public void setId(String id) {
