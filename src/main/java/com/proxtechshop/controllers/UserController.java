@@ -1,13 +1,14 @@
 package com.proxtechshop.controllers;
-
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proxtechshop.common.Constants;
@@ -22,6 +23,7 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepo;
+
 	@Autowired
 	private CustomerRepository customerRepo;
 
@@ -31,9 +33,11 @@ public class UserController {
 		return Constants.SIGNUP_VIEW;
 	}
 
-	@RequestMapping(Constants.LOGIN_PATH)
-	public String Signin(Model model) {
-		model.addAttribute("user", new User());
+	@GetMapping(Constants.LOGIN_PATH)
+	public String Signin(@RequestParam(required = false) String username, Model model) {
+		UserView user = new UserView();
+		user.setUsername(username);
+		model.addAttribute("user", user);
 		return Constants.LOGIN_VIEW;
 	}
 

@@ -72,4 +72,10 @@ public class UserView {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	@Override
+	public String toString() {
+		return "UserView [username=" + username + ", fullname=" + fullname + ", password=" + password + ", createdDate="
+				+ createdDate + ", active=" + active + ", msg=" + msg + "]";
+	}
 }

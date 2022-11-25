@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import com.proxtechshop.common.Constants;
 
@@ -30,6 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoderBean() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public SimpleUrlAuthenticationFailureHandler authFailureHandler() {
+		return new AuthFailureHandlerConfig();
 	}
 
 	@Bean
@@ -73,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				});
+				}).failureHandler(authFailureHandler());
 
 		http.logout(logout -> logout
 				.logoutUrl(Constants.LOGOUT_PATH)
