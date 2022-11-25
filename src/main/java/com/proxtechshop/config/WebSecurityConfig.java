@@ -2,7 +2,6 @@ package com.proxtechshop.config;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.AntPathMatcher;
 
 import com.proxtechshop.common.Constants;
 
@@ -25,9 +23,6 @@ import com.proxtechshop.common.Constants;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	@Autowired
-    private DataSource dataSource;
      
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -66,10 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.SIGNUP_PATH).permitAll()
-				.antMatchers(Constants.LOGIN_PATH).permitAll()
-				.antMatchers(HttpMethod.POST,Constants.POST_REGISTER).permitAll()
-				.antMatchers(Constants.ICON_PATH).permitAll();
-				
+				.antMatchers(HttpMethod.POST,Constants.REGISTER_URL_PATH).permitAll();
 				
 		http.authorizeRequests()
 				.anyRequest().permitAll();
@@ -82,7 +74,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						e.printStackTrace();
 					}
 				});
-				
 
 		http.logout(logout -> logout
 				.logoutUrl(Constants.LOGOUT_PATH)
