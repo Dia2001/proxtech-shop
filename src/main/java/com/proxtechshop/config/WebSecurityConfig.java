@@ -59,7 +59,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(Constants.HOME_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
-				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
+				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
+				.antMatchers(Constants.PROFILE_PATH).permitAll();
 				
 		http.authorizeRequests()
 				.anyRequest().permitAll();
