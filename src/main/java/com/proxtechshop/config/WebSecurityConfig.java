@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	public void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws Exception {
-		// do something when after logout success
+		// do something when after login success
 		response.sendRedirect(Constants.HOME_PATH);
 	}
 
@@ -57,13 +57,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		http.authorizeRequests()
 				.antMatchers(Constants.HOME_PATH).permitAll()
-				.antMatchers(HttpMethod.GET, Constants.PRODUCT_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
 				
 		http.authorizeRequests()
-				.anyRequest().authenticated();
+				.anyRequest().permitAll();
 		
 		http.formLogin().loginPage(Constants.LOGIN_PATH).permitAll()
 				.successHandler((request, response, authentication) -> {
