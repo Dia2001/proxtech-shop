@@ -29,6 +29,8 @@ public class Constants {
 	public static final String PRODUCT_VIEW = "product/index";
 	
 	public static final String PRODUCT_PATH = "/san-pham";
+	
+	public static final String ERROR_404_VIEW = "error/404";
 
 	public static final String PRODUCT_DETAIL_VIEW = "product/detail";
 
