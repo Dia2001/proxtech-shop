@@ -25,13 +25,17 @@ public class Image implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", length = 11)
 	private int id;
-	
+
 	@Column(name = "thumbnail", length = 500, nullable = false)
 	private String thumbnail;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
+
+	public Image() {
+		super();
+	}
 
 	public Image(int id, String thumbnail) {
 		super();

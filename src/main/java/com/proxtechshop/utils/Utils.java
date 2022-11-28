@@ -22,11 +22,9 @@ public class Utils {
 		for (int i = 0; i < targetStringLength; i++) {
 			if (i == 0) {
 				int randomNo = randomNumber.nextInt(myString.length());
-				// 5
 				Character character = myString.charAt(randomNo);
 				buffer.append(Character.toUpperCase(character));
 			} else {
-				StringBuilder sb = new StringBuilder(10);
 				int index = (int) (AlphaNumericString.length() * Math.random());
 				buffer.append(AlphaNumericString.charAt(index));
 			}
