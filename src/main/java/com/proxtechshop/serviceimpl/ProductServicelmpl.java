@@ -14,7 +14,7 @@ import com.proxtechshop.services.ProductService;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 
 @Service
-public class ProductrServicelmpl implements ProductService {
+public class ProductServicelmpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
