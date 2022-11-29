@@ -58,4 +58,9 @@ public class UserController {
 		}
 		return page;
 	}
+	
+	@RequestMapping(Constants.PROFILE_PATH)
+	public String Profile(Model model) {
+		return Constants.PROFILE_VIEW;
+	}
 }
