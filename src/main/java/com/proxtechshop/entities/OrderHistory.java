@@ -14,11 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "order_histories")
-@Data
 public class OrderHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +28,7 @@ public class OrderHistory implements Serializable {
 	@Column(name = "order_id", insertable = false, updatable = false, length = 36, nullable = false)
 	private String orderId;
 
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	
@@ -42,6 +39,8 @@ public class OrderHistory implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "order_status_key", nullable = false)
 	private OrderStatus orderStatus;
+	
+	public OrderHistory() {}
 
 	public int getId() {
 		return id;

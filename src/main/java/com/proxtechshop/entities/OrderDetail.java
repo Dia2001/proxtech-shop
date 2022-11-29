@@ -14,12 +14,9 @@ import javax.persistence.Table;
 
 import com.proxtechshop.utils.OrderDetailId;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "order_details")
 @IdClass(OrderDetailId.class)
-@Data
 public class OrderDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;

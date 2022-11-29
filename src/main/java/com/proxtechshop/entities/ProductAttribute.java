@@ -12,11 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "product_attributes")
-@Data
 public class ProductAttribute implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -35,13 +32,15 @@ public class ProductAttribute implements Serializable {
 	@Column(name = "status", nullable = false, columnDefinition = "bit default 1")
 	private boolean status;
 	
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
-	@Column(name = "updated_date", nullable = false)
+	@Column(name = "updated_date", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
+	
+	public ProductAttribute() {}
 
 	public int getId() {
 		return id;

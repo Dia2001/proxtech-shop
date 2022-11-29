@@ -11,11 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "order_status")
-@Data
 public class OrderStatus implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -32,6 +29,8 @@ public class OrderStatus implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderStatus")
 	private Set<Order> orders = new HashSet<>();
+	
+	public OrderStatus() {}
 
 	public OrderStatus(String key, String name, String description) {
 		super();

@@ -12,11 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "images")
-@Data
 public class Image implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,9 +30,7 @@ public class Image implements Serializable {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 
-	public Image() {
-		super();
-	}
+	public Image() {}
 
 	public Image(int id, String thumbnail) {
 		super();

@@ -77,6 +77,10 @@
 							</span>
 						</div>
 						<p class="product-info-detail-title">Thông tin sản phẩm:</p>
+						<div th:each="attribute_value : ${productDetail.productAttributeValues}">
+							<p th:text="${attribute_value.productAttribute.name} + ': '" />
+							<p th:text="${attribute_value.value}" />
+						</div>
 						<p th:utext="${productDetail.description}"
 							class="product-description" />
 						<div th:text="'$ '+${productDetail.price}"

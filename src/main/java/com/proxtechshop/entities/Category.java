@@ -38,6 +38,8 @@ public class Category implements Serializable {
 
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
 	public Set<Product> products = new HashSet<>();
+	
+	public Category() {}
 
 	public Category(int id, String name, String description, String thumbnail) {
 		super();

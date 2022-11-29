@@ -5,24 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import com.proxtechshop.entities.Brand;
 import com.proxtechshop.entities.Category;
 import com.proxtechshop.entities.Image;
+import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.entities.ProductAttributeValue;
 
 public class ProductDetailViewModel {
@@ -41,7 +27,7 @@ public class ProductDetailViewModel {
 	private Set<Category> categories = new HashSet<>();
 	private Set<Image> images = new HashSet<>();
 	private Brand brand;
-	private Set<Category> productAttributes = new HashSet<>();
+	private Set<ProductAttribute> productAttributes = new HashSet<>();
 	
 	private Set<ProductAttributeValue> productAttributeValues = new HashSet<>();
 	
@@ -129,10 +115,10 @@ public class ProductDetailViewModel {
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	}
-	public Set<Category> getProductAttributes() {
+	public Set<ProductAttribute> getProductAttributes() {
 		return productAttributes;
 	}
-	public void setProductAttributes(Set<Category> productAttributes) {
+	public void setProductAttributes(Set<ProductAttribute> productAttributes) {
 		this.productAttributes = productAttributes;
 	}
 	public Set<ProductAttributeValue> getProductAttributeValues() {

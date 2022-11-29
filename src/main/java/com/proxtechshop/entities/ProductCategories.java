@@ -27,6 +27,8 @@ public class ProductCategories implements Serializable {
 	@Id
 	@Column(name = "category_id", length = 11, nullable = false)
 	private int categoryid;
+	
+	public ProductCategories() {}
 
 	public ProductCategories(String productId, int categoryid) {
 		super();

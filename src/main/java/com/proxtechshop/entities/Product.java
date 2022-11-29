@@ -23,11 +23,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "products")
-@Data
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -71,11 +68,11 @@ public class Product implements Serializable {
 	@Column(name = "rate", precision = 2, scale = 1, nullable = true)
 	private BigDecimal rate;
 	
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
-	@Column(name = "updated_date", nullable = false)
+	@Column(name = "updated_date", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
@@ -106,7 +103,7 @@ public class Product implements Serializable {
 					@JoinColumn(name = "attribute_id", referencedColumnName = "id", nullable = false, updatable = false)
 			}
 	)
-	private Set<Category> productAttributes = new HashSet<>();
+	private Set<ProductAttribute> productAttributes = new HashSet<>();
 	
 	@OneToMany(mappedBy = "product")
 	private Set<ProductAttributeValue> productAttributeValues = new HashSet<>();
@@ -247,11 +244,11 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
-	public Set<Category> getProductAttributes() {
+	public Set<ProductAttribute> getProductAttributes() {
 		return productAttributes;
 	}
 
-	public void setProductAttributes(Set<Category> productAttributes) {
+	public void setProductAttributes(Set<ProductAttribute> productAttributes) {
 		this.productAttributes = productAttributes;
 	}
 
