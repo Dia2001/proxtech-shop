@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Account Settings UI Design</title>
+<title>Thông tin cá nhân</title>
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
@@ -11,7 +11,12 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="/assets/css/profile.css">
+
 <th:block th:include="includes/resource-global" />
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 </head>
 <body>
 	<th:block th:include="includes/header">
@@ -26,10 +31,11 @@
 							<img th:src="@{/assets/images/tuat.jpg}" alt="Image"
 								class="shadow">
 						</div>
-						<h4 class="text-center">Nhân</h4>
+						<h4 th:text="${user.fullName}" class="text-center"></h4>
 					</div>
 					<div class="nav flex-column nav-pills" id="v-pills-tab"
 						role="tablist" aria-orientation="vertical">
+
 						<a class="nav-link active" id="account-tab" data-toggle="pill"
 							href="#account" role="tab" aria-controls="account"
 							aria-selected="true"> <i class="fa fa-home text-center mr-1"></i>
@@ -42,72 +48,83 @@
 					</div>
 				</div>
 				<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+
 					<div class="tab-pane fade show active" id="account" role="tabpanel"
 						aria-labelledby="account-tab">
-						<h3 class="mb-4">Thông tin</h3>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Tên đầy đủ</label> <input type="text"
-										class="form-control" value="Kiran">
+						<p th:if="${flag}" th:text="${message}" style="color: green;"></p>
+						<p th:unless="${flag}" th:text="${message}" style="color: red;"></p>
+						<form th:action="@{/profile}" id="profile" th:object="${user}"
+							method="POST">
+							<h3 class="mb-4">Thông tin</h3>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Tên đầy đủ</label> <input type="text"
+											class="form-control" th:field="*{fullName}">
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Tài khoản</label> <input type="text"
-										class="form-control" value="kiranacharya287@gmail.com"
-										disabled>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Tài khoản</label> <input type="text"
+											class="form-control" th:field="*{username}" readonly>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Số điện thoại</label> <input type="text"
-										class="form-control" value="+91 9876543215">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Số điện thoại</label> <input type="text"
+											class="form-control" th:field="*{phone}">
+									</div>
 								</div>
-							</div>
 
-							<div class="col-md-12">
-								<div class="form-group">
-									<label>Địa chỉ</label>
-									<textarea style="resize: none;" class="form-control" rows="4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Địa chỉ</label>
+										<textarea style="resize: none;" th:field="*{address}"
+											class="form-control" rows="4"></textarea>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div>
-							<button class="btn btn-primary">Cập nhật</button>
-							<button class="btn btn-light">Trở về trang chủ</button>
-						</div>
+							<div>
+								<button class="btn btn-primary" type="submit">Cập nhật</button>
+								<a href="/" class="btn btn-light">Trở về trang chủ</a>
+							</div>
+						</form>
 					</div>
+
 					<div class="tab-pane fade" id="password" role="tabpanel"
 						aria-labelledby="password-tab">
-						<h3 class="mb-4">Thiết lập mật khẩu</h3>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Mật khẩu cũ</label> <input type="password"
-										class="form-control">
+						<form th:action="@{/change-password}" name="changePassword"
+							method="POST">
+							<h3 class="mb-4">Thiết lập mật khẩu</h3>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Mật khẩu cũ</label> <input type="password" id="oldpass"
+											name="oldpass" class="form-control">
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Mật khẩu mới</label> <input type="password"
-										class="form-control">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Mật khẩu mới</label> <input name="newpass"
+											id="newpass" type="password" class="form-control">
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Nhập lại mật khẩu</label> <input id="confirmpassword"
+											name="confirmpassword" type="password" class="form-control">
+									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Nhập lại mật khẩu</label> <input type="password"
-										class="form-control">
-								</div>
+							<div>
+								<button class="btn btn-danger" type="submit">Thay dổi</button>
+								<button class="btn btn-light" type="reset">hủy thay đổi</button>
 							</div>
-						</div>
-						<div>
-							<button class="btn btn-danger">Thay dổi</button>
-							<button class="btn btn-light">hủy thay đổi</button>
-						</div>
+						</form>
 					</div>
+
 				</div>
 			</div>
 		</div>
@@ -115,7 +132,7 @@
 	<th:block th:include="includes/footer">
 	</th:block>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="/assets/js/profile-validation.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script

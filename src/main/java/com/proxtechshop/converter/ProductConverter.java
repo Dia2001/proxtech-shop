@@ -4,8 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.proxtechshop.entities.Customer;
 import com.proxtechshop.entities.Product;
+import com.proxtechshop.entities.User;
+import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
+import com.proxtechshop.viewmodels.UserView;
 
 @Component
 public class ProductConverter {
@@ -23,9 +27,11 @@ public class ProductConverter {
 	 */
 
 	public ProductDetailViewModel converToModel(Product productEntity) {
-		// Can customize everything inside
+		
 		ProductDetailViewModel productDetailViewModel = modelMapper.map(productEntity, ProductDetailViewModel.class);
 		return productDetailViewModel;
 	}
+
+	
 
 }

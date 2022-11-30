@@ -1,5 +1,7 @@
 package com.proxtechshop.controllers;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,22 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proxtechshop.common.Constants;
-import com.proxtechshop.repositories.CustomerRepository;
-import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.UserService;
+import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.UserView;
 
 @Controller
 public class UserController {
-
-	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
-	private CustomerRepository customerRepo;
 	
 	@Autowired
 	private UserService userService;
@@ -61,6 +57,54 @@ public class UserController {
 	
 	@RequestMapping(Constants.PROFILE_PATH)
 	public String Profile(Model model) {
+		CustomUserModelView mv=userService.loadProfile();
+		System.out.println(mv);
+		model.addAttribute("user",mv);
 		return Constants.PROFILE_VIEW;
+	}
+	
+	@RequestMapping(value=Constants.PROFILE_PATH,method=RequestMethod.POST)
+	public ModelAndView UpdateProfile(CustomUserModelView userv,Model model) {
+		ModelAndView page=new ModelAndView();
+		boolean flag=userService.UpdateProfile(userv);
+		
+		if(flag) {
+			page.addObject("user", userv);
+			page.addObject("message","Đã thay đổi thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		else
+		{
+			page.addObject("user", userv);
+			page.addObject("message","Thay đổi không thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		return page;
+	}
+	
+	@RequestMapping(value=Constants.CHANGEPASS_URL_PATH,method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView changePassWord(@RequestParam(name = "oldpass") String oldPass, @RequestParam(name = "newpass") String newPass) {
+		ModelAndView page=new ModelAndView();
+		CustomUserModelView userv=userService.loadProfile();
+		page.addObject("user", userv);
+		boolean flag=userService.changePassword(oldPass, newPass);
+		
+		if(flag)
+		{
+			page.addObject("message","Thay đổi mật khẩu thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		else
+		{
+			page.addObject("message","Lỗi khi thay đổi mật khẩu!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		
+		return page;
 	}
 }

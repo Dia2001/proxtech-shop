@@ -28,7 +28,7 @@ public class Constants {
 
 	public static final String PRODUCT_VIEW = "product/index";
 
-	public static final String PROFILE_PATH = "/thong-tin-ca-nhan";
+	public static final String PROFILE_PATH = "/profile";
 
 	public static final String PROFILE_VIEW = "profile/index";
 
@@ -43,6 +43,8 @@ public class Constants {
 	public static final String PRODUCT_DETAIL_URL_PATH = "/san-pham/{id}";
 
 	public static final String REGISTER_URL_PATH = "/register";
+	
+	public static final String CHANGEPASS_URL_PATH = "/change-password";
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";
