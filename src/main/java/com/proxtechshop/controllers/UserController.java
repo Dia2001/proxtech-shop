@@ -1,33 +1,29 @@
 package com.proxtechshop.controllers;
-import java.util.Date;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proxtechshop.common.Constants;
-import com.proxtechshop.entities.Customer;
-import com.proxtechshop.entities.User;
-import com.proxtechshop.repositories.CustomerRepository;
-import com.proxtechshop.repositories.UserRepository;
+import com.proxtechshop.services.UserService;
+import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.UserView;
 
 @Controller
 public class UserController {
-
+	
 	@Autowired
-	private UserRepository userRepo;
+	private UserService userService;
 
-	@Autowired
-	private CustomerRepository customerRepo;
-
-	@RequestMapping(Constants.SIGNUP_PATH)
+	@GetMapping(Constants.SIGNUP_PATH)
 	public String SignUp(Model model) {
 		model.addAttribute("user", new UserView());
 		return Constants.SIGNUP_VIEW;
@@ -43,38 +39,72 @@ public class UserController {
 
 	@RequestMapping(value = Constants.REGISTER_URL_PATH, method = RequestMethod.POST)
 	public ModelAndView processRegister(UserView userv, Model model) {
-		ModelAndView page = new ModelAndView();
-		User user = userRepo.getByUsername(userv.getUsername());
-		if (user == null) {
-			user = new User();
-			user.setUsername(userv.getUsername());
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			String encodedPassword = passwordEncoder.encode(userv.getPassword());
-			user.setCreatedDate(new Date());
-			user.setPassword(encodedPassword);
-			userRepo.save(user);
-			Customer customer = new Customer();
-			customer.setFullName(userv.getFullname());
-			customer.setEmail(userv.getUsername());
-			customer.setCreatedDate(new Date());
-			User FKUser = userRepo.getByUsername(user.getUsername());
-			customer.setUserId(FKUser.getId());
-			customer.setUser(FKUser);
-			customerRepo.save(customer);
-			page.addObject("user", user);
-			page.setViewName(Constants.LOGIN_VIEW);
-
-		} else {
+		ModelAndView page=new ModelAndView();
+		
+		boolean register=userService.Register(userv);
+		if(register)
+		{
 			page.addObject("user", userv);
+			page.setViewName(Constants.LOGIN_VIEW);
+		}
+		else {
+			page.addObject("user", userv);
+			page.addObject("message","Tài khoản đã dược tạo!");
 			page.setViewName(Constants.SIGNUP_VIEW);
-
 		}
 		return page;
-
 	}
 	
 	@RequestMapping(Constants.PROFILE_PATH)
 	public String Profile(Model model) {
+		CustomUserModelView mv=userService.loadProfile();
+		System.out.println(mv);
+		model.addAttribute("user",mv);
 		return Constants.PROFILE_VIEW;
+	}
+	
+	@RequestMapping(value=Constants.PROFILE_PATH,method=RequestMethod.POST)
+	public ModelAndView UpdateProfile(CustomUserModelView userv,Model model) {
+		ModelAndView page=new ModelAndView();
+		boolean flag=userService.UpdateProfile(userv);
+		
+		if(flag) {
+			page.addObject("user", userv);
+			page.addObject("message","Đã thay đổi thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		else
+		{
+			page.addObject("user", userv);
+			page.addObject("message","Thay đổi không thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		return page;
+	}
+	
+	@RequestMapping(value=Constants.CHANGEPASS_URL_PATH,method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView changePassWord(@RequestParam(name = "oldpass") String oldPass, @RequestParam(name = "newpass") String newPass) {
+		ModelAndView page=new ModelAndView();
+		CustomUserModelView userv=userService.loadProfile();
+		page.addObject("user", userv);
+		boolean flag=userService.changePassword(oldPass, newPass);
+		
+		if(flag)
+		{
+			page.addObject("message","Thay đổi mật khẩu thành công!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		else
+		{
+			page.addObject("message","Lỗi khi thay đổi mật khẩu!");
+			page.addObject("flag",flag);
+			page.setViewName(Constants.PROFILE_VIEW);
+		}
+		
+		return page;
 	}
 }

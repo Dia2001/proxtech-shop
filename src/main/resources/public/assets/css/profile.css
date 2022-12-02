@@ -16,7 +16,9 @@ a {
 	text-decoration: none;
 	color: unset;
 }
-
+.error{
+	color:#ff0000;
+}
 .container-profile {
 	max-width: 1140px;
 	margin: auto;
