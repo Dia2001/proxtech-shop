@@ -12,11 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "brands")
-@Data
 public class Brand implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,6 +34,8 @@ public class Brand implements Serializable {
 	
 	@OneToMany(mappedBy = "brand")
 	private Set<Product> products = new HashSet<>();
+	
+	public Brand() {}
 
 	public int getId() {
 		return id;

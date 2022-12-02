@@ -23,11 +23,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "products")
-@Data
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +37,18 @@ public class Product implements Serializable {
 	
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
+	
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", thumbnail=" + thumbnail
+				+ ", slug=" + slug + ", price=" + price + ", quantity=" + quantity + ", rate=" + rate + ", createdDate="
+				+ createdDate + ", updatedDate=" + updatedDate + ", categories=" + categories + ", images=" + images
+				+ ", brand=" + brand + ", productAttributes=" + productAttributes + ", productAttributeValues="
+				+ productAttributeValues + "]";
+	}
+
+	@Column(name = "descriptioned", length = 500, nullable = true)
+	private String descriptioned;
 	
 	@Column(name = "description", length = 500, nullable = false)
 	private String description;
@@ -56,14 +65,14 @@ public class Product implements Serializable {
 	@Column(name = "quantity", length = 11, nullable = false)
 	private int quantity;
 	
-	@Column(name = "rate", precision = 1, scale = 1, nullable = true)
+	@Column(name = "rate", precision = 2, scale = 1, nullable = true)
 	private BigDecimal rate;
 	
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
-	@Column(name = "updated_date", nullable = false)
+	@Column(name = "updated_date", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
@@ -94,16 +103,21 @@ public class Product implements Serializable {
 					@JoinColumn(name = "attribute_id", referencedColumnName = "id", nullable = false, updatable = false)
 			}
 	)
-	private Set<Category> productAttributes = new HashSet<>();
+	private Set<ProductAttribute> productAttributes = new HashSet<>();
 	
 	@OneToMany(mappedBy = "product")
 	private Set<ProductAttributeValue> productAttributeValues = new HashSet<>();
 
-	public Product(String id, String name, String description, String thumbnail, String slug,
+	public Product() {
+		super();
+	}
+
+	public Product(String id, String name,String descriptioned, String description, String thumbnail, String slug,
 			BigDecimal price, int quantity, BigDecimal rate, Date createdDate, Date updatedDate) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.descriptioned=descriptioned;
 		this.description = description;
 		this.thumbnail = thumbnail;
 		this.slug = slug;
@@ -129,6 +143,18 @@ public class Product implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDescriptioned() {
+		return descriptioned;
+	}
+
+
+
+	public void setDescriptioned(String descriptioned) {
+		this.descriptioned = descriptioned;
+	}
+
+
 
 	public String getDescription() {
 		return description;
@@ -218,11 +244,11 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
-	public Set<Category> getProductAttributes() {
+	public Set<ProductAttribute> getProductAttributes() {
 		return productAttributes;
 	}
 
-	public void setProductAttributes(Set<Category> productAttributes) {
+	public void setProductAttributes(Set<ProductAttribute> productAttributes) {
 		this.productAttributes = productAttributes;
 	}
 

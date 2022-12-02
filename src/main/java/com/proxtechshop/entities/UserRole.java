@@ -24,6 +24,8 @@ public class UserRole implements Serializable {
 	@Id
 	@Column(name = "role_key", length = 20, nullable = false)
 	public String roleKey;
+	
+	public UserRole() {}
 
 	public String getUserId() {
 		return userId;

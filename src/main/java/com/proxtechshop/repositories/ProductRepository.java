@@ -7,5 +7,5 @@ import com.proxtechshop.entities.Product;
 
 @Component
 public interface ProductRepository extends JpaRepository<Product, String> {
-
+	/* Optional<Product> findById(String id); */
 }

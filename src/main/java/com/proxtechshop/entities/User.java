@@ -21,11 +21,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "users")
-@Data
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +39,7 @@ public class User implements Serializable {
 	@Column(name = "password", length = 100, nullable = false)
 	private String password;
 
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
@@ -62,6 +59,8 @@ public class User implements Serializable {
 	
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
 	private Customer customer;
+	
+	public User() {}
 
 	public String getId() {
 		return id;

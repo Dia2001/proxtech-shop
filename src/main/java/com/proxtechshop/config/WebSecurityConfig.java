@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import com.proxtechshop.common.Constants;
 
@@ -23,13 +24,18 @@ import com.proxtechshop.common.Constants;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+     
 	@Autowired
 	private UserDetailsService userDetailsService;
 
 	@Bean
 	public PasswordEncoder passwordEncoderBean() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public SimpleUrlAuthenticationFailureHandler authFailureHandler() {
+		return new AuthFailureHandlerConfig();
 	}
 
 	@Bean
@@ -58,8 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers(Constants.HOME_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
+				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_URL_PATH).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
-				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll();
+				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
+				.antMatchers(Constants.SIGNUP_PATH).permitAll()
+				.antMatchers(HttpMethod.POST,Constants.REGISTER_URL_PATH).permitAll()
+				.antMatchers(Constants.PROFILE_PATH).authenticated();
 				
 		http.authorizeRequests()
 				.anyRequest().permitAll();
@@ -71,8 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				});
-				
+				}).failureHandler(authFailureHandler());
 
 		http.logout(logout -> logout
 				.logoutUrl(Constants.LOGOUT_PATH)

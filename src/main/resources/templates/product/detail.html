@@ -1,278 +1,258 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ProxTech - Shop</title>
+<title>ProxTech - Shop</title>
 
-  <!-- Include css, lib global -->
-  <th:block th:include="includes/resource-global" />
+<!-- Include css, lib global -->
+<th:block th:include="includes/resource-global" />
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-  <!-- Include header -->
-  <th:block th:include="includes/header"> </th:block>
+	<!-- Include header -->
+	<th:block th:include="includes/header">
+	</th:block>
 
-  <!-- Content here-->
+	<!-- Content here-->
 
 
-  <!-- product-detail content -->
-  <div class="bg-main">
-    <div class="container">
-      <div class="box">
-        <div class="breadcumb">
-          <a href="./index.html">home</a>
-          <span><i class='bx bxs-chevrons-right'></i></span>
-          <a href="./products.html">all products</a>
-          <span><i class='bx bxs-chevrons-right'></i></span>
-          <a href="./product-detail.html">JBL Tune 750TNC</a>
-        </div>
-      </div>
-      <div class="row product-row">
-        <div class="col-5 col-md-12">
-          <div class="product-img" id="product-img">
-            <img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png" alt="">
-          </div>
-          <div class="box">
-            <div class="product-img-list">
-              <div class="product-img-item">
-                <img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png"
-                  alt="">
-              </div>
-              <div class="product-img-item">
-                <img src="/assets/images/JBL-Endurance-Sprint_Alt_Red-1605x1605px.webp" alt="">
-              </div>
-              <div class="product-img-item">
-                <img src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-7 col-md-12">
-          <div class="product-info">
-            <h1>
+	<!-- product-detail content -->
+	<div class="bg-main">
+		<div class="container">
+			<div class="box">
+				<div class="breadcumb">
+					<a href="./index.html">Trang chủ</a> <span><i
+						class='bx bxs-chevrons-right'></i></span> <a href="./products.html">Tất
+						cả sản phẩm</a> <span><i class='bx bxs-chevrons-right'></i></span> <a
+						th:text="${productDetail.name}"
+						th:href="@{'/san-pham/'+${productDetail.id}}" />
+				</div>
+			</div>
+			<div class="row product-row">
+				<div class="col-5 col-md-12">
+					<div class="product-img" id="product-img">
+						<img th:src="@{'/assets/images/'+${productDetail.thumbnail}}"
+							alt="">
+					</div>
+					<div class="box">
+						<div class="product-img-list">
+							<div th:each="images : ${productDetail.images}"
+								class="product-img-item">
+								<img th:src="@{'/assets/images/'+${images.thumbnail}}" alt="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-7 col-md-12">
+					<div class="product-info">
+						<!-- <h1>
               JBL TUNE 750TNC
-            </h1>
-            <div class="product-info-detail">
-              <span class="product-info-detail-title">Brand:</span>
-              <a href="#">JBL</a>
-            </div>
-            <div class="product-info-detail">
-              <span class="product-info-detail-title">Rated:</span>
-              <span class="rating">
-                <i class='bx bxs-star'></i>
-                <i class='bx bxs-star'></i>
-                <i class='bx bxs-star'></i>
-                <i class='bx bxs-star'></i>
-                <i class='bx bxs-star'></i>
-              </span>
-            </div>
-            <p class="product-description">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo libero alias officiis dolore doloremque
-              eveniet culpa dignissimos, itaque, cum animi excepturi sed veritatis asperiores soluta, nisi atque quae
-              illum. Ipsum.
-            </p>
-            <div class="product-info-price">$2345</div>
-            <div class="product-quantity-wrapper">
-              <span class="product-quantity-btn">
-                <i class='bx bx-minus'></i>
-              </span>
-              <span class="product-quantity">1</span>
-              <span class="product-quantity-btn">
-                <i class='bx bx-plus'></i>
-              </span>
-            </div>
-            <div>
-              <button class="btn-flat btn-hover">add to cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-header">
-          description
-        </div>
-        <div class="product-detail-description">
-          <button class="btn-flat btn-hover btn-view-description" id="view-all-description">
-            view all
-          </button>
-          <div class="product-detail-description-content">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit laudantium obcaecati odit dolorem,
-              doloremque accusamus esse neque ipsa dignissimos saepe quisquam tempore perferendis deserunt sapiente!
-              Recusandae illum totam earum ratione.
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam incidunt maxime rerum reprehenderit
-              voluptas asperiores ipsam quas consequuntur maiores, at odit obcaecati vero sunt! Reiciendis aperiam
-              perferendis consequuntur odio quas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut quaerat
-              eum veniam doloremque nihil repudiandae odio ratione culpa libero tempora. Expedita, quo molestias. Minus
-              illo quis dignissimos aliquid sapiente error!
-            </p>
-            <img src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png" alt="">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis accusantium officia, quae fuga in
-              exercitationem aliquam labore ex doloribus repellendus beatae facilis ipsam. Veritatis vero obcaecati iste
-              atque aspernatur ducimus.
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat quam praesentium id sit amet magnam ad,
-              dolorum, cumque iste optio itaque expedita eius similique, ab adipisci dicta. Quod, quibusdam quas. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Odit, in corrupti ipsam sint error possimus commodi
-              incidunt suscipit sit voluptatum quibusdam enim eligendi animi deserunt recusandae earum natus voluptas
-              blanditiis?
-            </p>
-            <img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png" alt="">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi ullam quam fugit veniam ipsum recusandae
-              incidunt, ex ratione, magnam labore ad tenetur officia! In, totam. Molestias sapiente deserunt animi
-              porro?
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-header">
-          review
-        </div>
-        <div>
-          <div class="user-rate">
-            <div class="user-info">
-              <div class="user-avt">
-                <img src="/assets/images/tuat.jpg" alt="">
-              </div>
-              <div class="user-name">
-                <span class="name">tuat tran anh</span>
-                <span class="rating">
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-            </div>
-            <div class="user-rate-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis amet illum,
-              cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus voluptas vero? Aspernatur!
-            </div>
-          </div>
-          <div class="user-rate">
-            <div class="user-info">
-              <div class="user-avt">
-                <img src="/assets/images/tuat.jpg" alt="">
-              </div>
-              <div class="user-name">
-                <span class="name">tuat tran anh</span>
-                <span class="rating">
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-            </div>
-            <div class="user-rate-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis amet illum,
-              cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus voluptas vero? Aspernatur!
-            </div>
-          </div>
-          <div class="user-rate">
-            <div class="user-info">
-              <div class="user-avt">
-                <img src="/assets/images/tuat.jpg" alt="">
-              </div>
-              <div class="user-name">
-                <span class="name">tuat tran anh</span>
-                <span class="rating">
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-            </div>
-            <div class="user-rate-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis amet illum,
-              cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus voluptas vero? Aspernatur!
-            </div>
-          </div>
-          <div class="user-rate">
-            <div class="user-info">
-              <div class="user-avt">
-                <img src="/assets/images/tuat.jpg" alt="">
-              </div>
-              <div class="user-name">
-                <span class="name">tuat tran anh</span>
-                <span class="rating">
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-            </div>
-            <div class="user-rate-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis amet illum,
-              cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus voluptas vero? Aspernatur!
-            </div>
-          </div>
-          <div class="user-rate">
-            <div class="user-info">
-              <div class="user-avt">
-                <img src="/assets/images/tuat.jpg" alt="">
-              </div>
-              <div class="user-name">
-                <span class="name">tuat tran anh</span>
-                <span class="rating">
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                  <i class='bx bxs-star'></i>
-                </span>
-              </div>
-            </div>
-            <div class="user-rate-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio ea iste, veritatis nobis amet illum,
-              cum alias magni dolores odio, eius quo excepturi veniam ipsa voluptatibus natus voluptas vero? Aspernatur!
-            </div>
-          </div>
-          <div class="box">
-            <ul class="pagination">
-              <li><a href="#"><i class='bx bxs-chevron-left'></i></a></li>
-              <li><a href="#" class="active">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="box">
-        <div class="box-header">
-          related products
-        </div>
-        <div class="row" id="related-products"></div>
-      </div>
-    </div>
-  </div>
-  <!-- end product-detail content -->
+            </h1> -->
+						<h1 th:text="${productDetail.name}" />
+						<div class="product-info-detail">
+							<span class="product-info-detail-title">Nhãn hiệu:</span> <a
+								th:text="${productDetail.brand.name}" href="#">JBL</a>
+						</div>
+						<div class="product-info-detail">
+							<span class="product-info-detail-title">Đánh giá:</span> <span
+								class="rating"> <th:block
+									th:if="${productDetail.rate== 4.5}">
+									<i class='fa-solid fa-star'></i>
+									<i class='fa-solid fa-star'></i>
+									<i class='fa-solid fa-star'></i>
+									<i class='fa-solid fa-star'></i>
+									<i class="fa-solid fa-star-half"></i>
+								</th:block>
+							</span>
+						</div>
+						<p class="product-info-detail-title">Thông tin sản phẩm:</p>
+						<div th:each="attribute_value : ${productDetail.productAttributeValues}">
+							<p th:text="${attribute_value.productAttribute.name} + ': '" />
+							<p th:text="${attribute_value.value}" />
+						</div>
+						<p th:utext="${productDetail.description}"
+							class="product-description" />
+						<div th:text="'$ '+${productDetail.price}"
+							class="product-info-price" />
+						<div class="product-quantity-wrapper">
+							<span class="product-quantity-btn"> <i
+								id='btnReduceNumber' class='bx bx-minus'></i>
+							</span> <span class="product-quantity">1</span> <span
+								class="product-quantity-btn"> <i id='btnIncNumber'
+								class='bx bx-plus'></i>
+							</span>
+						</div>
+						<div>
+							<button class="btn-flat btn-hover">Thêm vào giỏ hàng</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="box-header">Mô tả chi tiết</div>
+				<div class="product-detail-description">
+					<button class="btn-flat btn-hover btn-view-description"
+						id="view-all-description">view all</button>
+					<div class="product-detail-description-content">
+						<p th:utext="${productDetail.descriptioned}" />
+						<img
+							src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png"
+							alt="">
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Nobis accusantium officia, quae fuga in exercitationem aliquam
+							labore ex doloribus repellendus beatae facilis ipsam. Veritatis
+							vero obcaecati iste atque aspernatur ducimus. Lorem ipsum dolor
+							sit, amet consectetur adipisicing elit. Repellat quam praesentium
+							id sit amet magnam ad, dolorum, cumque iste optio itaque expedita
+							eius similique, ab adipisci dicta. Quod, quibusdam quas. Lorem
+							ipsum dolor sit amet consectetur adipisicing elit. Odit, in
+							corrupti ipsam sint error possimus commodi incidunt suscipit sit
+							voluptatum quibusdam enim eligendi animi deserunt recusandae
+							earum natus voluptas blanditiis?</p>
+						<img
+							src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png"
+							alt="">
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+							Modi ullam quam fugit veniam ipsum recusandae incidunt, ex
+							ratione, magnam labore ad tenetur officia! In, totam. Molestias
+							sapiente deserunt animi porro?</p>
+					</div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="box-header">review</div>
+				<div>
+					<div class="user-rate">
+						<div class="user-info">
+							<div class="user-avt">
+								<img src="/assets/images/tuat.jpg" alt="">
+							</div>
+							<div class="user-name">
+								<span class="name">tuat tran anh</span> <span class="rating">
+									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i>
+								</span>
+							</div>
+						</div>
+						<div class="user-rate-content">Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
+							amet illum, cum alias magni dolores odio, eius quo excepturi
+							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
+					</div>
+					<div class="user-rate">
+						<div class="user-info">
+							<div class="user-avt">
+								<img src="/assets/images/tuat.jpg" alt="">
+							</div>
+							<div class="user-name">
+								<span class="name">tuat tran anh</span> <span class="rating">
+									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i>
+								</span>
+							</div>
+						</div>
+						<div class="user-rate-content">Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
+							amet illum, cum alias magni dolores odio, eius quo excepturi
+							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
+					</div>
+					<div class="user-rate">
+						<div class="user-info">
+							<div class="user-avt">
+								<img src="/assets/images/tuat.jpg" alt="">
+							</div>
+							<div class="user-name">
+								<span class="name">tuat tran anh</span> <span class="rating">
+									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i>
+								</span>
+							</div>
+						</div>
+						<div class="user-rate-content">Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
+							amet illum, cum alias magni dolores odio, eius quo excepturi
+							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
+					</div>
+					<div class="user-rate">
+						<div class="user-info">
+							<div class="user-avt">
+								<img src="/assets/images/tuat.jpg" alt="">
+							</div>
+							<div class="user-name">
+								<span class="name">tuat tran anh</span> <span class="rating">
+									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i>
+								</span>
+							</div>
+						</div>
+						<div class="user-rate-content">Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
+							amet illum, cum alias magni dolores odio, eius quo excepturi
+							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
+					</div>
+					<div class="user-rate">
+						<div class="user-info">
+							<div class="user-avt">
+								<img src="/assets/images/tuat.jpg" alt="">
+							</div>
+							<div class="user-name">
+								<span class="name">tuat tran anh</span> <span class="rating">
+									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+									class='bx bxs-star'></i>
+								</span>
+							</div>
+						</div>
+						<div class="user-rate-content">Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
+							amet illum, cum alias magni dolores odio, eius quo excepturi
+							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
+					</div>
+					<div class="box">
+						<ul class="pagination">
+							<li><a href="#"><i class='bx bxs-chevron-left'></i></a></li>
+							<li><a href="#" class="active">1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="box">
+				<div class="box-header">related products</div>
+				<div class="row" id="related-products"></div>
+			</div>
+		</div>
+	</div>
+	<!-- end product-detail content -->
 
 
-  <!-- Content end -->
+	<!-- Content end -->
 
-  <!-- Include footer-->
-  <th:block th:include="includes/footer" />
+	<!-- Include footer-->
+	<th:block th:include="includes/footer" />
 
-  <!-- Include script global-->
-  <th:block th:include="includes/js-global" />
-  <script src="/assets/js/product-detail.js"></script>
+	<!-- Include script global-->
+	<th:block th:include="includes/js-global" />
+	<script src="/assets/js/product-detail.js"></script>
 </body>
 
 </html>

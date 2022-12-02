@@ -13,11 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "carts")
-@Data
 public class Cart implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -42,6 +39,8 @@ public class Cart implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
+	
+	public Cart() {}
 
 	public int getId() {
 		return id;

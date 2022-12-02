@@ -15,11 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "product_attribute_values")
-@Data
 public class ProductAttributeValue implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -28,15 +25,21 @@ public class ProductAttributeValue implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", length = 11)
 	private int id;
-
+	
+	@Column(name = "product_id", length = 36, nullable = false, insertable = false, updatable = false)
+	private String productId;
+	
+	@Column(name = "attribute_id", length = 11, nullable = false, insertable = false, updatable = false)
+	private int attributeId;
+	
 	@Column(name = "value", length = 100, nullable = false)
 	private String value;
 
-	@Column(name = "created_date", nullable = false)
+	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
-	@Column(name = "updated_date", nullable = false)
+	@Column(name = "updated_date", nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
@@ -47,6 +50,8 @@ public class ProductAttributeValue implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+	
+	public ProductAttributeValue() {}
 	
 	public String getName() {
 		return productAttribute.getName();
@@ -90,5 +95,29 @@ public class ProductAttributeValue implements Serializable {
 
 	public void setProductAttribute(ProductAttribute productAttribute) {
 		this.productAttribute = productAttribute;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public int getAttributeId() {
+		return attributeId;
+	}
+
+	public void setAttributeId(int attributeId) {
+		this.attributeId = attributeId;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 }

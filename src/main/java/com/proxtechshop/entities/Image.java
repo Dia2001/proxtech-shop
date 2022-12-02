@@ -12,11 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
-
 @Entity
 @Table(name = "images")
-@Data
 public class Image implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,13 +22,15 @@ public class Image implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", length = 11)
 	private int id;
-	
+
 	@Column(name = "thumbnail", length = 500, nullable = false)
 	private String thumbnail;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "product_id", nullable = false)
+	private Product product;
+
+	public Image() {}
 
 	public Image(int id, String thumbnail) {
 		super();
