@@ -24,83 +24,22 @@
     <div class="slider">
       <div class="container">
         <!-- slide item -->
-        <div class="slide active">
+        <div th:each="product : ${@top6Product.get()}" class="slide">
           <div class="info">
             <div class="info-content">
-              <h3 class="top-down">
-                JBL TUNE 750TNC
-              </h3>
-              <h2 class="top-down trans-delay-0-2">
-                Next-gen design
-              </h2>
-              <p class="top-down trans-delay-0-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati dolor commodi dignissimos culpa,
-                eaque eos necessitatibus possimus veniam, cupiditate rerum deleniti? Libero, ducimus error? Beatae velit
-                dolore sint explicabo! Fugit.
-              </p>
-              <div class="top-down trans-delay-0-6">
+              <h3 th:text="${product.brand?.name}" class="top-down"></h3>
+              <h2 th:text="${product.name}" class="top-down trans-delay-0-2"></h2>
+              <p th:text=${product.description} class="top-down trans-delay-0-4"></p>
+              <a th:href="${@productPath} + '/' + ${product.slug}" class="top-down trans-delay-0-6">
                 <button class="btn-flat btn-hover">
-                  <span>shop now</span>
+                  <span>Xem ngay</span>
                 </button>
-              </div>
-            </div>
-          </div>
-          <div class="img top-down">
-            <img src="/assets/images/JBL_E55BT_KEY_RED_6063_FS_x1-1605x1605px.webp" alt="">
-          </div>
-        </div>
-        <!-- end slide item -->
-        <!-- slide item -->
-        <div class="slide">
-          <div class="info">
-            <div class="info-content">
-              <h3 class="top-down">
-                JBL Quantum ONE
-              </h3>
-              <h2 class="top-down trans-delay-0-2">
-                Ipsum dolor
-              </h2>
-              <p class="top-down trans-delay-0-4">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. A optio, voluptatum aperiam nobis quis maxime
-                corporis porro alias soluta sunt quae consectetur aliquid blanditiis perspiciatis labore cumque, ullam,
-                quam eligendi!
-              </p>
-              <div class="top-down trans-delay-0-6">
-                <button class="btn-flat btn-hover">
-                  <span>shop now</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="img right-left">
-            <img src="/assets/images/JBL_E55BT_KEY_BLACK_6175_FS_x1-1605x1605px.png" alt="">
-          </div>
-        </div>
-        <!-- end slide item -->
-        <!-- slide item -->
-        <div class="slide">
-          <div class="info">
-            <div class="info-content">
-              <h3 class="top-down">
-                JBL JR 310BT
-              </h3>
-              <h2 class="top-down trans-delay-0-2">
-                Consectetur Elit
-              </h2>
-              <p class="top-down trans-delay-0-4">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo aut fugiat, libero magnam nemo
-                inventore in tempora beatae officiis temporibus odit deserunt molestiae amet quam, asperiores, iure
-                recusandae nulla labore!
-              </p>
-              <div class="top-down trans-delay-0-6">
-                <button class="btn-flat btn-hover">
-                  <span>shop now</span>
-                </button>
-              </div>
+              </a>
             </div>
           </div>
           <div class="img left-right">
-            <img src="/assets/images/JBL_JR 310BT_Product Image_Hero_Skyblue.png" alt="">
+            <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+            	th:alt="'Hình ảnh ' + ${product.thumbnail}">
           </div>
         </div>
         <!-- end slide item -->
@@ -120,118 +59,42 @@
   <!-- promotion section -->
   <div class="promotion">
     <div class="row">
-      <div class="col-4 col-md-12 col-sm-12">
+      <div th:each="brand : ${@top3Brand.get()}" class="col-4 col-md-12 col-sm-12">
         <div class="promotion-box">
           <div class="text">
-            <h3>Headphone & Earbuds</h3>
-            <button class="btn-flat btn-hover"><span>shop collection</span></button>
+            <h3 th:text="${brand.name}"></h3>
+            <a th:href="${@productPath} + '?b=' + ${brand.id}" class="btn-flat btn-hover">
+              <span>Xem chi tiết</span>
+            </a>
           </div>
-          <img src="/assets/images/JBLHorizon_001_dvHAMaster.png" alt="">
-        </div>
-      </div>
-      <div class="col-4 col-md-12 col-sm-12">
-        <div class="promotion-box">
-          <div class="text">
-            <h3>JBL Quantum Series</h3>
-            <button class="btn-flat btn-hover"><span>shop collection</span></button>
-          </div>
-          <img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png" alt="">
-        </div>
-      </div>
-      <div class="col-4 col-md-12 col-sm-12">
-        <div class="promotion-box">
-          <div class="text">
-            <h3>True Wireless Earbuds</h3>
-            <button class="btn-flat btn-hover"><span>shop collection</span></button>
-          </div>
-          <img src="/assets/images/JBL_TUNE220TWS_ProductImage_Pink_ChargingCaseOpen.png" alt="">
+          <img th:src="${@uploadImageURL} + ${brand.thumbnail}"
+          	th:alt="'Hình ảnh thương hiệu ' + ${brand.name}">
         </div>
       </div>
     </div>
   </div>
   <!-- end promotion section -->
+  
 
-  <!-- product list -->
+  <!-- top selling product list -->
   <div class="section">
     <div class="container">
       <div class="section-header">
-        <h2>Latest product</h2>
-      </div>
-      <div class="row" id="latest-products">
-        <div class="col-3 col-md-6 col-sm-12">
-          <div class="product-card">
-            <div class="product-card-img">
-              <img src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png" alt="">
-              <img src="/assets/images/JBL_Quantum_400_Product Image_Hero Mic Up.webp" alt="">
-            </div>
-            <div class="product-card-info">
-              <div class="product-btn">
-                <button class="btn-flat btn-hover btn-shop-now">shop now</button>
-                <button class="btn-flat btn-hover btn-cart-add">
-                  <i class='bx bxs-cart-add'></i>
-                </button>
-                <button class="btn-flat btn-hover btn-cart-add">
-                  <i class='bx bxs-heart'></i>
-                </button>
-              </div>
-              <div class="product-card-name">
-                JBL Quantum 400
-              </div>
-              <div class="product-card-price">
-                <span><del>$300</del></span>
-                <span class="curr-price">$200</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section-footer">
-        <a href="./products.html" class="btn-flat btn-hover">view all</a>
-      </div>
-    </div>
-  </div>
-  <!-- end product list -->
-
-  <!-- special product -->
-  <div class="bg-second">
-    <div class="section container">
-      <div class="row">
-        <div class="col-4 col-md-4">
-          <div class="sp-item-img">
-            <img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png" alt="">
-          </div>
-        </div>
-        <div class="col-7 col-md-8">
-          <div class="sp-item-info">
-            <div class="sp-item-name">JBL TUNE 750TNC</div>
-            <p class="sp-item-description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore dignissimos itaque et eaque quod harum
-              vero autem? Reprehenderit enim non voluptate! Qui provident modi est non eius ratione, debitis iure.
-            </p>
-            <button class="btn-flat btn-hover">shop now</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end special product -->
-
-  <!-- product list -->
-  <div class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>best selling</h2>
+        <h2>Top bán chạy</h2>
       </div>
       <div class="row" id="best-products">
-        <div class="col-3 col-md-6 col-sm-12">
+        <div th:each="product: ${@top8SellingProduct.get()}" 
+      	 class="col-3 col-md-6 col-sm-12">
           <div class="product-card">
             <div class="product-card-img">
-              <img src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png" alt="">
-              <img src="/assets/images/JBL_Quantum_400_Product Image_Hero Mic Up.webp" alt="">
+              <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+              	th:alt="'Hình ảnh ' + ${product.name}">
+              <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+              	th:alt="'Hình ảnh ' + ${product.name}">
             </div>
             <div class="product-card-info">
               <div class="product-btn">
-                <button class="btn-flat btn-hover btn-shop-now">shop now</button>
+                <a th:href="${@productPath} + '/' + ${product.slug}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
                 <button class="btn-flat btn-hover btn-cart-add">
                   <i class='bx bxs-cart-add'></i>
                 </button>
@@ -239,19 +102,82 @@
                   <i class='bx bxs-heart'></i>
                 </button>
               </div>
-              <div class="product-card-name">
-                JBL Quantum 400
-              </div>
+              <div th:text="${product.name}" class="product-card-name"></div>
               <div class="product-card-price">
-                <span><del>$300</del></span>
-                <span class="curr-price">$200</span>
+                <span><del th:text="'$' + ${product.price}"></del></span>
+                <span th:text="'$' + ${product.price}" class="curr-price"></span>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="section-footer">
-        <a href="./products.html" class="btn-flat btn-hover">view all</a>
+        <a th:href="'/san-pham?s=topSelling'" class="btn-flat btn-hover">Xem tất cả</a>
+      </div>
+    </div>
+  </div>
+  <!-- end top selling product list -->
+
+  <!-- random product -->
+  <div class="bg-second">
+    <div class="section container">
+      <div th:with="product = ${@randomProduct.get()}" class="row">
+        <div class="col-4 col-md-4">
+          <div class="sp-item-img">
+            <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+              th:alt="'Hình ảnh ' + ${product.name}">
+            </div>
+        </div>
+        <div class="col-7 col-md-8">
+          <p>Đề xuất ngẫu nhiên</p>
+          <div class="sp-item-info">
+            <div th:text="${product.name}" class="sp-item-name"></div>
+            <p th:text="${product.description}" class="sp-item-description"></p>
+            <a th:href="${@productPath} + '/' + ${product.slug}" class="btn-flat btn-hover">Xem ngay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end random product -->
+  
+  <!-- product list -->
+  <div class="section">
+    <div th:each="category : ${@top3Category.get()}" class="container">
+      <div class="section-header">
+        <h2 th:text="${category.name}"></h2>
+      </div>
+      <div class="row" id="latest-products">
+        <div th:each="product, pStart : ${category.getProducts()}" th:unless="${pStart.index > 7}" 
+      	 class="col-3 col-md-6 col-sm-12">
+          <div class="product-card">
+            <div class="product-card-img">
+              <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+              	th:alt="'Hình ảnh ' + ${product.name}">
+              <img th:src="${@uploadImageURL} + ${product.thumbnail}"
+              	th:alt="'Hình ảnh ' + ${product.name}">
+            </div>
+            <div class="product-card-info">
+              <div class="product-btn">
+                <a th:href="${@productPath} + '/' + ${product.slug}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
+                <button class="btn-flat btn-hover btn-cart-add">
+                  <i class='bx bxs-cart-add'></i>
+                </button>
+                <button class="btn-flat btn-hover btn-cart-add">
+                  <i class='bx bxs-heart'></i>
+                </button>
+              </div>
+              <div th:text="${product.name}" class="product-card-name"></div>
+              <div class="product-card-price">
+                <span><del th:text="'$' + ${product.price}"></del></span>
+                <span th:text="'$' + ${product.price}" class="curr-price"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-footer">
+        <a th:href="${@productPath} + '?c=' + ${category.id}" class="btn-flat btn-hover">Xem tất cả</a>
       </div>
     </div>
   </div>

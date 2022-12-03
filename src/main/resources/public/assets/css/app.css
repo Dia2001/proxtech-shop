@@ -183,11 +183,80 @@ ul.devided > li:last-child {
 
 .user-menu {
     display: flex;
+    line-height: 30px;
+    box-align: center;
 }
 
 .user-menu > li > a {
     font-size: 30px;
     margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid transparent;
+}
+
+.user-menu > li > a:hover {	
+    border-bottom: 2px solid var(--red);
+}
+
+.user-menu-second p {
+	display: none;
+}
+
+.user-menu > li > a > p{
+    font-size: 16px;
+}
+
+.user-menu > li:first-child {
+	position: relative;
+	display: flex;
+}
+
+.user-menu > li:first-child > a {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.user-menu .box-user {
+	opacity: 0;
+	visibility: hidden;
+	top: calc(100% + 100px);
+	position: absolute;
+	display: flex;
+	box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0;
+	flex-direction: column;
+	right: 0;
+	min-width: 200px;
+	gap: 8px;
+	z-index: 5;
+	transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+	padding: 15px;
+	background-color: var(--main-bg-color);
+}
+
+.user-menu > li:first-child:hover .box-user {
+	opacity: 1;
+	visibility: visible;
+	top: 120%;
+}
+
+.box-user .box-user-item {
+	display: flex;
+    justify-content: space-between;
+    border: none;
+    font-size: 16px;
+    width: 100%;
+    height: 30px;
+    font-family: "Poppins", sans-serif;
+    background: none;
+    padding: 10px 0;
+    align-items: center;
+	border-bottom: 2px solid transparent;
+}
+
+.box-user .box-user-item:hover {
+	border-bottom: 2px solid var(--red);
 }
 
 .bottom-header {
@@ -965,7 +1034,7 @@ footer ul li {
 
 /* responsive */
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: 1080px) {
     .mobile-menu {
         display: flex;
     }
@@ -1153,6 +1222,48 @@ footer ul li {
     .pagination {
         justify-content: center;
     }
+    
+    .user-menu {
+		width: 100%!important;
+		display: block;
+		margin-bottom: 10px;
+	}
+	
+	.user-menu-second p {
+		display: block;
+	}
+    
+    .user-menu > li {
+		width: 100%!important;
+	}
+	
+	.user-menu > li:first-child {
+		display: block;
+	}
+	
+	.user-menu a {
+		margin: 10px!important;
+	}
+	
+	.user-menu .box-user {
+		position: relative!important;
+		top: 0!important;
+		opacity: 1!important;
+		visibility: visible!important;
+		box-shadow: none!important;
+		padding: 0;
+		width: calc(100% - 20px);
+		gap: 0;
+	}
+	
+	.box-user button {
+		margin: 10px;
+		padding-right: 3px!important;
+	}
+	
+	.box-user-item > i {
+		font-size: 30px;
+	}
 }
 
 @media only screen and (max-width: 750px) {

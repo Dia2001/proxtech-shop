@@ -47,7 +47,7 @@
   // }, 3000);
 
   // render products
-
+/*
   let products = [
     {
       name: 'JBL E55BT KEY BLACK',
@@ -135,7 +135,7 @@
 
     product_list.insertAdjacentHTML("beforeend", prod)
     best_product_list.insertAdjacentHTML("afterbegin", prod)
-  })
+  }) */
 
 
 })()

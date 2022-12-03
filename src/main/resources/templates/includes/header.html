@@ -21,33 +21,32 @@
 			<div class="top-header container">
 				<ul class="devided">
 					<li>
-						<a href="#">+840123456789</a>
+						<a th:href="'tel:'+${@phoneShop}" th:text="${@phoneShop}"></a>
 					</li>
 					<li>
-						<a href="#">proxtech@mail.com</a>
+						<a th:href="'tel:'+${@emailShop}" th:text="${@emailShop}"></a>
 					</li>
 				</ul>
 				<ul class="devided">
 					<li class="dropdown">
-						<a href="">USD</a>
+						<a href="#">VND</a>
 						<i class='bx bxs-chevron-down'></i>
 						<ul class="dropdown-content">
 							<li><a href="#">VND</a></li>
-							<li><a href="#">JPY</a></li>
-							<li><a href="#">EUR</a></li>
+							<li><a href="#">USD</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
-						<a href="">ENGLISH</a>
+						<a href="#">VIETNAMESE</a>
 						<i class='bx bxs-chevron-down'></i>
 						<ul class="dropdown-content">
 							<li><a href="#">VIETNAMESE</a></li>
-							<li><a href="#">JAPANESE</a></li>
-							<li><a href="#">FRENCH</a></li>
-							<li><a href="#">SPANISH</a></li>
+							<li><a href="#">ENGLISH</a></li>
 						</ul>
 					</li>
-					<li><a href="#">ORDER TRACKING</a></li>
+					<th:block sec:authorize="isAuthenticated()">
+						<li><a href="#">THEO DÕI ĐƠN HÀNG</a></li>
+					</th:block>
 				</ul>
 			</div>
 		</div>
@@ -55,20 +54,27 @@
 		<!-- mid header -->
 		<div class="bg-main">
 			<div class="mid-header container">
-				<a href="#" class="logo">
+				<a th:href="${@homePath}" class="logo">
 					<img src="/assets/icons/ProxTech.svg" alt="Logo shop">
 				</a>
 				<div class="search">
-					<input type="text" placeholder="Search">
+					<input type="text" placeholder="Tìm kiếm">
 					<i class='bx bx-search-alt'></i>
 				</div>
 				<ul class="user-menu">
 					<li>
-						<th:block th:include="includes/logout" />
+						<th:block th:include="includes/box-user" />
 					</li>
-					<li><a href="#"><i class='bx bx-bell'></i></a></li>
-					<li><a href="#"><i class='bx bx-user-circle'></i></a></li>
-					<li><a href="#"><i class='bx bx-cart'></i></a></li>
+					<li class="user-menu-second">
+						<a href="#">
+							<p>Thông báo</p><i class='bx bx-bell'></i>
+						</a>
+					</li>
+					<li class="user-menu-second">
+						<a th:href="'/gio-hang'">
+							<p>Giỏ hàng</p><i class='bx bx-cart'></i>
+						</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -77,86 +83,31 @@
 		<div class="bg-second">
 			<div class="bottom-header container">
 				<ul class="main-menu">
-					<li><a href="#">home</a></li>
+					<li><a th:href="${@homePath}">Trang chủ</a></li>
 					<!-- mega menu -->
 					<li class="mega-dropdown">
-						<a href="./products.html">Shop<i class='bx bxs-chevron-down'></i></a>
+						<a th:href="${@productPath}">Sản phẩm<i class='bx bxs-chevron-down'></i></a>
 						<div class="mega-content">
 							<div class="row">
-								<div class="col-3 col-md-12">
+								<div th:each="brand : ${@brands.get()}" class="col-3 col-md-12">
 									<div class="box">
-										<h3>Categories</h3>
+										<h3 th:text="${brand.name}"></h3>
 										<ul>
-											<li><a href="#">Wireless</a></li>
-											<li><a href="#">Inear headphone</a></li>
-											<li><a href="#">Overear headphone</a></li>
-											<li><a href="#">sport headphone</a></li>
+											<li th:each="category : ${@categories.get()}">
+												<a th:href="${@productPath} + '?c=' + ${category.id} + '&b=' + ${brand.id}"
+													th:text="${category.name}"></a>
+											</li>
 										</ul>
-									</div>
-								</div>
-								<div class="col-3 col-md-12">
-									<div class="box">
-										<h3>Categories</h3>
-										<ul>
-											<li><a href="#">Wireless</a></li>
-											<li><a href="#">Inear headphone</a></li>
-											<li><a href="#">Overear headphone</a></li>
-											<li><a href="#">sport headphone</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-3 col-md-12">
-									<div class="box">
-										<h3>Categories</h3>
-										<ul>
-											<li><a href="#">Wireless</a></li>
-											<li><a href="#">Inear headphone</a></li>
-											<li><a href="#">Overear headphone</a></li>
-											<li><a href="#">sport headphone</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-3 col-md-12">
-									<div class="box">
-										<h3>Categories</h3>
-										<ul>
-											<li><a href="#">Wireless</a></li>
-											<li><a href="#">Inear headphone</a></li>
-											<li><a href="#">Overear headphone</a></li>
-											<li><a href="#">sport headphone</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="row img-row">
-								<div class="col-3">
-									<div class="box">
-										<img src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png"
-											alt="">
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="box">
-										<img src="/assets/images/JBL_TUNE220TWS_ProductImage_Pink_ChargingCaseOpen.png"
-											alt="">
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="box">
-										<img src="/assets/images/JBL_JR 310BT_Product Image_Hero_Skyblue.png" alt="">
-									</div>
-								</div>
-								<div class="col-3">
-									<div class="box">
-										<img src="/assets/images/JBLHorizon_001_dvHAMaster.png" alt="">
+										<img th:src="${@uploadImageURL} + ${brand.thumbnail}"
+											th:alt="'Hình ảnh thương hiệu ' + ${brand.name}">
 									</div>
 								</div>
 							</div>
 						</div>
 					</li>
 					<!-- end mega menu -->
-					<li><a href="#">blog</a></li>
-					<li><a href="#">contact</a></li>
+					<li><a href="#">Bài viết</a></li>
+					<li><a href="#">Liên hệ</a></li>
 				</ul>
 			</div>
 		</div>

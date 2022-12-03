@@ -1,14 +1,21 @@
 package com.proxtechshop.viewmodels;
 
+import java.util.Date;
+
+import com.proxtechshop.entities.User;
+import com.proxtechshop.entities.Customer;
+
 public class CustomUserModelView {
 	private String fullName;
 	private String username;
 	private String phone;
 	private String address;
-	private String createdDate;
+	private Date createdDate;
 	private String newPassword;
 	private String password;
-	public CustomUserModelView(String fullName, String username, String phone, String address, String createdDate,
+	private boolean isCustomer = false;
+	
+	public CustomUserModelView(String fullName, String username, String phone, String address, Date createdDate,
 			String newPassword, String password) {
 		super();
 		this.fullName = fullName;
@@ -19,55 +26,89 @@ public class CustomUserModelView {
 		this.newPassword = newPassword;
 		this.password = password;
 	}
-	public String getPassword() {
-		return password;
+	
+	public CustomUserModelView(User user, Customer customer, boolean isCustomer) {
+		this.fullName = customer.getFullName();
+		this.username = user.getUsername();
+		this.phone = customer.getPhone();
+		this.address = customer.getAddress();
+		this.createdDate = customer.getCreatedDate();
+		this.newPassword = "";
+		this.password = user.getPassword();
+		this.isCustomer = isCustomer;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 	public CustomUserModelView() {
 		this.fullName = "";
 		this.username = "";
 		this.phone = "";
 		this.address = "";
-		this.createdDate = "";
-		this.newPassword="";
-		this.password="";
+		this.createdDate = null;
+		this.newPassword = "";
+		this.password = "";
 	}
-	public String getNewPassword() {
-		return newPassword;
-	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
 	public String getAddress() {
 		return address;
 	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getCreatedDate() {
+
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(String createdDate) {
+
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isCustomer() {
+		return isCustomer;
+	}
+
+	public void setCustomer(boolean isCustomer) {
+		this.isCustomer = isCustomer;
 	}
 }

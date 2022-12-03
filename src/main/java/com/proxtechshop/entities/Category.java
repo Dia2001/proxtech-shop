@@ -36,7 +36,7 @@ public class Category implements Serializable {
 	@Column(name = "thumbnail", length = 500, nullable = false)
 	private String thumbnail;
 
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
 	public Set<Product> products = new HashSet<>();
 	
 	public Category() {}

@@ -145,4 +145,12 @@ public class Customer implements Serializable {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
+
+	public Set<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(Set<Cart> carts) {
+		this.carts = carts;
+	}
 }

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,9 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import com.proxtechshop.common.Constants;
@@ -24,35 +20,20 @@ import com.proxtechshop.common.Constants;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-     
+	
 	@Autowired
-	private UserDetailsService userDetailsService;
-
-	@Bean
-	public PasswordEncoder passwordEncoderBean() {
-		return new BCryptPasswordEncoder();
-	}
+	private SimpleUrlAuthenticationFailureHandler authFailureHandler;
 	
-	@Bean
-	public SimpleUrlAuthenticationFailureHandler authFailureHandler() {
-		return new AuthFailureHandlerConfig();
-	}
-
-	@Bean
-	public DaoAuthenticationProvider authProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService);
-		authProvider.setPasswordEncoder(passwordEncoderBean());
-		return authProvider;
-	}
+	@Autowired
+	public DaoAuthenticationProvider authProvider;
 	
-	public void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
+	private void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws Exception {
 		// do something when after login success
 		response.sendRedirect(Constants.HOME_PATH);
 	}
 
-	public void logoutSuccessHandler(HttpServletRequest request, HttpServletResponse response,
+	private void logoutSuccessHandler(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws Exception {
 		// do something when after logout success
 		response.sendRedirect(Constants.HOME_PATH);
@@ -81,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}).failureHandler(authFailureHandler());
+				}).failureHandler(authFailureHandler);
 
 		http.logout(logout -> logout
 				.logoutUrl(Constants.LOGOUT_PATH)
@@ -98,6 +79,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authProvider());
+		auth.authenticationProvider(authProvider);
 	}
 }
