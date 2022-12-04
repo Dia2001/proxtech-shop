@@ -42,9 +42,22 @@ public class Constants {
 
 	public static final String PRODUCT_DETAIL_URL_PATH = "/san-pham/{id}";
 
-	public static final String REGISTER_URL_PATH = "/register";
+	public static final String REGISTER_URL_PATH = "/signup";
 	
 	public static final String CHANGEPASS_URL_PATH = "/change-password";
+	
+	public static final String ORDERDETAIL_PATH="/orderdetail";
+	public static final String ORDERDETAIL_VIEW="orderdetail/orderdetail";
+	
+	public static final String PAYMENT_PATH="/payment";
+	public static final String PAYMENT_VIEW="payment/payment";
+	
+	public static final String ORDERS_PATH="/orders";
+	public static final String ORDERS_VIEW="orders/orders";
+	
+	
+	public static final String ADMIN_PATH="admin/products";
+	public static final String ADMIN_VIEW="admin/products/products";
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

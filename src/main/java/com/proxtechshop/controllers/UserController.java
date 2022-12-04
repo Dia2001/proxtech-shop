@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.services.UserService;
@@ -65,21 +66,21 @@ public class UserController {
 	
 	@RequestMapping(value=Constants.PROFILE_PATH,method=RequestMethod.POST)
 	public ModelAndView UpdateProfile(CustomUserModelView userv,Model model) {
-		ModelAndView page=new ModelAndView();
+		ModelAndView page=new ModelAndView(Constants.PROFILE_VIEW);
 		boolean flag=userService.UpdateProfile(userv);
 		
 		if(flag) {
 			page.addObject("user", userv);
 			page.addObject("message","Đã thay đổi thành công!");
 			page.addObject("flag",flag);
-			page.setViewName(Constants.PROFILE_VIEW);
+			
 		}
 		else
 		{
 			page.addObject("user", userv);
 			page.addObject("message","Thay đổi không thành công!");
 			page.addObject("flag",flag);
-			page.setViewName(Constants.PROFILE_VIEW);
+			
 		}
 		return page;
 	}
