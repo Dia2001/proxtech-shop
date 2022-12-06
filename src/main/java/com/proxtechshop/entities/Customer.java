@@ -145,4 +145,19 @@ public class Customer implements Serializable {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
+
+	public Set<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(Set<Cart> carts) {
+		this.carts = carts;
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", phone="
+				+ phone + ", address=" + address + ", createdDate=" + createdDate +  ", orders="
+				+ orders + "]";
+	}
 }

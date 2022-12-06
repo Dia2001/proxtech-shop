@@ -9,15 +9,20 @@ import org.springframework.stereotype.Service;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.converter.ProductConverter;
+import com.proxtechshop.entities.Cart;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.entities.ProductAttributeValue;
+import com.proxtechshop.entities.User;
 import com.proxtechshop.exception.DataNotFoundException;
 import com.proxtechshop.repositories.BrandRepository;
+import com.proxtechshop.repositories.CartRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
 import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.repositories.ProductRepository;
+import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.ProductService;
+import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 
 @Service
@@ -36,6 +41,12 @@ public class ProductServicelmpl implements ProductService {
 	private BrandRepository br;
 	
 	@Autowired
+	private CartRepository cartRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private ProductConverter productConverter;
 
 	@Override
@@ -46,6 +57,8 @@ public class ProductServicelmpl implements ProductService {
 		if (Objects.isNull(product)) {
 			throw new DataNotFoundException(Constants.messageNotFound(productId));
 		}
+		//getCartByCustomerId();
+		//createCart();
 		
 //		createProduct();
 		
@@ -55,7 +68,6 @@ public class ProductServicelmpl implements ProductService {
 		 * productDetailVM=(ProductDetailViewModel)productConverter.converTo();
 		 */
 		ProductDetailViewModel productDetailVM = productConverter.converToModel(product);
-		System.out.println(productDetailVM.toString());
 		return productDetailVM;
 
 	}
@@ -82,6 +94,22 @@ public class ProductServicelmpl implements ProductService {
 		attributeValue.setProductAttribute(attribute);
 		attributeValue.setValue("16 GB");
 		pavr.save(attributeValue);
+	}
+	
+	public void getCartByCustomerId(){
+		System.out.println("Data cart by one customer");
+		System.out.println(cartRepository.findByCustomer_id("bb606eb2-a00c-4550-9632-d7d4cd5faa33"));
+	}
+	
+	public void createCart() {
+		User user = userRepository.getByUsername(GetUserUtil.GetUserName());
+	    Cart cart=new Cart(); 
+	    cart.setPrice(new BigDecimal(218000));
+		cart.setQuantity(3);
+		cart.setProduct(productRepository.findById("600c2ebc-648f-4404-bb81-41ee39acc3d8").get());
+		cart.setCustomer(user.getCustomer());
+		cartRepository.save(cart);
+		 
 	}
 
 }

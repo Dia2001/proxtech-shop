@@ -38,15 +38,6 @@ public class Product implements Serializable {
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
 	
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", thumbnail=" + thumbnail
-				+ ", slug=" + slug + ", price=" + price + ", quantity=" + quantity + ", rate=" + rate + ", createdDate="
-				+ createdDate + ", updatedDate=" + updatedDate + ", categories=" + categories + ", images=" + images
-				+ ", brand=" + brand + ", productAttributes=" + productAttributes + ", productAttributeValues="
-				+ productAttributeValues + "]";
-	}
-
 	@Column(name = "descriptioned", length = 500, nullable = true)
 	private String descriptioned;
 	
@@ -259,4 +250,14 @@ public class Product implements Serializable {
 	public void setProductAttributeValues(Set<ProductAttributeValue> productAttributeValues) {
 		this.productAttributeValues = productAttributeValues;
 	}
+	
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", thumbnail=" + thumbnail
+				+ ", slug=" + slug + ", price=" + price + ", quantity=" + quantity + ", rate=" + rate + ", createdDate="
+				+ createdDate + ", updatedDate=" + updatedDate + ", categories=" + categories + ", images=" + images
+				+ ", brand=" + brand + ", productAttributes=" + productAttributes + ", productAttributeValues="
+				+ productAttributeValues + "]";
+	}
+
 }

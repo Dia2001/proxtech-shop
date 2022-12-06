@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<th:block th:include="includes/resource-global" />
+<link rel="stylesheet" type="text/css" href="/assets/css/payment.css">
+<title>Thanh toán giỏ hàng</title>
+
+</head>
+<body>
+	<th:block th:include="includes/header">
+	</th:block>
+	<div class="container payment-form">
+		<div class="payment_details">
+			<h1>Payment Information</h1>
+			<div class="details_card">
+				<div class="name_address">
+					<div class="first_lastName">
+						<input type="text" placeholder="First Name" /> <input type="text"
+							placeholder="Last Name" />
+					</div>
+					<div class="address">
+						<input type="text" onkeyup="change()" id="put"
+							placeholder="Address" /> <input type="number"
+							placeholder="Pincode" /> <input type="text"
+							placeholder="Country" />
+					</div>
+				</div>
+				<h1>Shipping Details</h1>
+				<div class="shipping_card">
+					<div class="new_card">
+						<h4>Same as personal</h4>
+						<p id="output">Bharat House Bombay Samachar Road</p>
+						<p>400001</p>
+					</div>
+					<div class="add_savedcard">
+						<h4>Saved Address</h4>
+						<p>Lokhandwala Complex, Andheri (west)</p>
+						<p>400053</p>
+					</div>
+				</div>
+				<div class="proced_payment">
+					<a href="">Procced to payment</a>
+				</div>
+			</div>
+		</div>
+		<div class="order_summary">
+			<h1>Order Summary</h1>
+			<div class="summary_card">
+				<div class="card_item">
+					<div class="product_img">
+						<img
+							src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=643&q=80"
+							alt="" />
+					</div>
+					<div class="product_info">
+						<h1>Nike Shoes</h1>
+						<p>Lorem Ipsum is simply dummy text.</p>
+						<div class="close-btn">
+							<i class="fa fa-close"></i>
+						</div>
+						<div class="product_rate_info">
+							<h1>$ 200</h1>
+							<span class="pqt-minus">-</span> <span class="pqt">1</span> <span
+								class="pqt-plus">+</span>
+						</div>
+					</div>
+				</div>
+				<div class="card_item">
+					<div class="product_img">
+						<img
+							src="https://images.unsplash.com/photo-1543512214-318c7553f230?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+							alt="" />
+					</div>
+					<div class="product_info">
+						<h1>Amazon Prime</h1>
+						<p>Lorem Ipsum is simply dummy text.</p>
+						<div class="close-btn">
+							<i class="fa fa-close"></i>
+						</div>
+						<div class="product_rate_info">
+							<h1>$ 160</h1>
+							<span class="pqt-minus">-</span> <span class="pqt">1</span> <span
+								class="pqt-plus">+</span>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="order_price">
+					<p>Order summary</p>
+					<h4>$400</h4>
+				</div>
+				<div class="order_service">
+					<p>Additional Service</p>
+					<h4>$10</h4>
+				</div>
+				<div class="order_total">
+					<p>Total Amount</p>
+					<h4>$370</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="includes/footer">
+	</th:block>
+</body>
+</html>
