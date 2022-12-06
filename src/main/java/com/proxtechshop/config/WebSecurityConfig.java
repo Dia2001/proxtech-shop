@@ -46,10 +46,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(Constants.HOME_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_URL_PATH).permitAll()
+				.antMatchers(HttpMethod.POST, Constants.CART_PATH).permitAll()
+				.antMatchers(HttpMethod.POST, Constants.CART_URL_ACTION).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.SIGNUP_PATH).permitAll()
 				.antMatchers(HttpMethod.POST,Constants.REGISTER_URL_PATH).permitAll()
+				.antMatchers(Constants.ADMIN_PATH).permitAll()
+				.antMatchers(Constants.ORDERDETAIL_PATH).permitAll()
+				.antMatchers(Constants.PAYMENT_PATH).permitAll()
+				.antMatchers(Constants.ORDERS_PATH).permitAll()
 				.antMatchers(Constants.PROFILE_PATH).authenticated();
 				
 		http.authorizeRequests()

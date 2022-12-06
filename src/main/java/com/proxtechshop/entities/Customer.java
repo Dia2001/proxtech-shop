@@ -153,4 +153,11 @@ public class Customer implements Serializable {
 	public void setCarts(Set<Cart> carts) {
 		this.carts = carts;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", phone="
+				+ phone + ", address=" + address + ", createdDate=" + createdDate +  ", orders="
+				+ orders + "]";
+	}
 }

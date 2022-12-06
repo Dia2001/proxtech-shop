@@ -117,4 +117,11 @@ public class User implements Serializable {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdDate=" + createdDate
+				+ ", active=" + active + ", roles=" + roles + ", customer=" + customer + "]";
+	}
+	
 }
