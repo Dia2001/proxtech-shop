@@ -145,4 +145,12 @@ public class Customer implements Serializable {
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", userId=" + userId + ", fullName=" + fullName + ", email=" + email + ", phone="
+				+ phone + ", address=" + address + ", createdDate=" + createdDate +  ", orders="
+				+ orders + "]";
+	}
+	
 }

@@ -46,6 +46,12 @@ public class Constants {
 	
 	public static final String CHANGEPASS_URL_PATH = "/change-password";
 
+	public static final String CART_VIEW="cart/index" ;
+	
+	public static final String CART_PATH = "/cart";
+	
+	public static final String CART_URL_PATH = "/addProductToCart";
+
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";
 	}

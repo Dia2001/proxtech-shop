@@ -130,4 +130,33 @@ function handleAmount(quantity, number) {
 		$quantity.text(quantity + number);
 	}
 }
+$(document).on('click', '#btnAddCart', function() {
+	addProuctToCart();
+	console.log("aaaaaaaa");
+});
+function addProuctToCart() {
 
+	var infoDataCart = {
+		productId: $("#productId").text(),
+		price: $("#price").val(),
+		quantity: $("#quantity").text()
+	}
+
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: "/api/v1/customer/addProductToCart",
+		data: JSON.stringify(infoDataCart),
+		dataType: 'json',
+		timeout: 100000,
+		success: function(data) {
+			alert(data.msg);
+			console.log(data.msg);
+			$quantity.text(1);
+		},
+		error: function(e) {
+			alert("Lỗi không thêm được sản phẩm");
+			console.log("ERROR: ", e);
+		}
+	});
+}

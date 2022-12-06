@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ProxTech - Shop</title>
+
+<!-- Include css, lib global -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+	rel="stylesheet" />
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+	rel="stylesheet" />
+<!-- MDB -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.1/mdb.min.css"
+	rel="stylesheet" />
+<th:block th:include="includes/resource-global" />
+</head>
+
+<body>
+	<!-- Include header -->
+	<th:block th:include="includes/header">
+	</th:block>
+
+	<!-- Content here-->
+
+	<div class="container py-5">
+		<div class="row d-flex justify-content-center my-4">
+			<div class="col-md-8">
+				<div class="card mb-4 shadow-lg">
+					<div class="card-header d-flex justify-content-between py-3">
+						<div>
+							<input class="form-check-input" type="checkbox" id="checkAll"
+								name="option1" value="something" /> <span class=" badge-light">Chọn
+								tất cả</span>
+						</div>
+						<h5 class="mb-0">Giỏ hàng</h5>
+						<div>
+							<span class=" badge-light">Sản phẩm (1)</span>
+						</div>
+					</div>
+					<div class="card-body" th:each="cart : ${carts}">
+						<!-- Single item -->
+						<div class="row">
+							<div class="col-lg-1 col-md-12 mb-1 mb-lg-1">
+								<input class="form-check-input mb-auto cart-check-item" type="checkbox"
+									th:id="'check-' + ${cart.product.id}" name="option1" value="something" />
+							</div>
+							<div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+								<!-- Image -->
+								<div class="bg-image hover-overlay hover-zoom ripple rounded"
+									data-mdb-ripple-color="light">
+									<img
+										th:src="@{'/upload/'+${cart.product.thumbnail}}" 
+										class="w-100" alt="" /> <a href="#!">
+										<div class="mask"
+											style="background-color: rgba(251, 251, 251, 0.2)"></div>
+									</a>
+								</div>
+								<!-- Image -->
+							</div>
+
+							<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+								<!-- Data -->
+								<p>
+									<strong th:text="${cart.product.name}" ></strong>
+								</p>
+								<button type="button" class="btn  btn-danger btn-sm me-1 mb-2"
+									data-mdb-toggle="tooltip" title="Remove item">
+									<i class="fas fa-trash"></i>
+								</button>
+								<!-- Data -->
+							</div>
+
+							<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+								<!-- Quantity -->
+								<div class="d-flex mb-4" style="max-width: 300px">
+									<button class="btn btn-primary px-3 me-2"
+										onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+										<i class="fas fa-minus"></i>
+									</button>
+
+									<div class="form-outline">
+										<input id="form1" min="1" name="quantity" th:value="${cart.quantity}"
+											type="number" class="form-control" />
+
+									</div>
+
+									<button class="btn btn-primary px-3 ms-2"
+										onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+										<i class="fas fa-plus"></i>
+									</button>
+								</div>
+								<!-- Quantity -->
+
+								<!-- Price -->
+								<p class="text-start text-md-center">
+									<strong th:text="${cart.product.price}"></strong>
+								</p>
+								<!-- Price -->
+							</div>
+						</div>
+						<!-- Single item -->
+
+						<hr class="my-4" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card mb-4 shadow-lg">
+					<div class="card-header py-3">
+						<h5 class="mb-0">Tóm tắt</h5>
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+								Tổng thanh toán <span>$53.98</span>
+							</li>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center px-0">
+								Khuyến mãi <span>$0</span>
+							</li>
+						</ul>
+
+						<button type="button" id="btnCheckout" class="btn btn-primary btn-lg btn-block">
+							Mua hàng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Content end -->
+
+	<!-- Include footer-->
+	<th:block th:include="includes/footer" />
+
+	<!-- Include script global-->
+	<th:block th:include="includes/js-global" />
+	
+	<script type="text/javascript" src="/assets/js/cart.js"></script>
+</body>
+
+</html>

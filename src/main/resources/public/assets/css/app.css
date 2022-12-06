@@ -827,6 +827,7 @@ footer ul li {
 
 .product-img > img {
     max-width: 70%;
+    min-width: 70%;
 }
 
 .product-img-list {
