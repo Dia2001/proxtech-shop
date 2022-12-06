@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 		User user = userRepo.getByUsername(userv.getUsername());
 		List<Customer> customers = customerRepo.findByUserId(user.getId());
 		Customer customer = customers.get(0);
-		customer.setFullName(userv.getUsername());
+		customer.setFullName(userv.getFullName());
 		customer.setAddress(userv.getAddress());
 		customer.setPhone(userv.getPhone());
 		Customer checkCustomer = customerRepo.save(customer);
