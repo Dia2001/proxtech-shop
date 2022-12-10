@@ -2,6 +2,8 @@ package com.proxtechshop.controllers;
 
 
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.proxtechshop.common.Constants;
@@ -64,9 +67,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value=Constants.PROFILE_PATH,method=RequestMethod.POST)
-	public ModelAndView UpdateProfile(CustomUserModelView userv,Model model) {
+	public ModelAndView UpdateProfile(CustomUserModelView userv,@RequestParam(name="avatar") MultipartFile file) throws IOException {
 		ModelAndView page=new ModelAndView();
-		boolean flag=userService.UpdateProfile(userv);
+		boolean flag=userService.UpdateProfile(userv,file);
 		
 		if(flag) {
 			page.addObject("user", userv);
@@ -107,4 +110,7 @@ public class UserController {
 		
 		return page;
 	}
+	
+	
+	
 }

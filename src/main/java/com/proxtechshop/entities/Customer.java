@@ -45,6 +45,17 @@ public class Customer implements Serializable {
 	
 	@Column(name = "address", length = 255, nullable = true)
 	private String address;
+	
+	@Column(name = "image", length = 255, nullable = true)
+	private String image;
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
 
 	@Column(name = "created_date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -63,7 +74,7 @@ public class Customer implements Serializable {
 	public Customer() {}
 	
 	public Customer(String id, String userId, String fullName, String email, String phone, String address,
-			Date createdDate) {
+			Date createdDate,String image) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -72,6 +83,7 @@ public class Customer implements Serializable {
 		this.phone = phone;
 		this.address = address;
 		this.createdDate = createdDate;
+		this.image=image;
 	}
 
 	public String getId() {

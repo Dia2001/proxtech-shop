@@ -8,8 +8,10 @@ public class CustomUserModelView {
 	private String createdDate;
 	private String newPassword;
 	private String password;
+	private String image;
+	
 	public CustomUserModelView(String fullName, String username, String phone, String address, String createdDate,
-			String newPassword, String password) {
+			String newPassword, String password,String image) {
 		super();
 		this.fullName = fullName;
 		this.username = username;
@@ -18,6 +20,13 @@ public class CustomUserModelView {
 		this.createdDate = createdDate;
 		this.newPassword = newPassword;
 		this.password = password;
+		this.image=image;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	public String getPassword() {
 		return password;
@@ -33,6 +42,7 @@ public class CustomUserModelView {
 		this.createdDate = "";
 		this.newPassword="";
 		this.password="";
+		this.image="";
 	}
 	public String getNewPassword() {
 		return newPassword;

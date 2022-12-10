@@ -1,11 +1,14 @@
 package com.proxtechshop.serviceimpl;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.converter.UserConverter;
 import com.proxtechshop.entities.Customer;
@@ -13,9 +16,11 @@ import com.proxtechshop.entities.User;
 import com.proxtechshop.repositories.CustomerRepository;
 import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.UserService;
+import com.proxtechshop.utils.FileUploadUtil;
 import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.UserView;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean UpdateProfile(CustomUserModelView userv) {
+	public boolean UpdateProfile(CustomUserModelView userv,MultipartFile file) throws IOException {
 		System.out.println(userv.getUsername());
 		User user = userRepo.getByUsername(userv.getUsername());
 		List<Customer> customers = customerRepo.findByUserId(user.getId());
@@ -68,6 +73,11 @@ public class UserServiceImpl implements UserService {
 		customer.setFullName(userv.getUsername());
 		customer.setAddress(userv.getAddress());
 		customer.setPhone(userv.getPhone());
+		//handle avatar
+		 String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		customer.setImage(fileName);
+		 String uploadDir = "/user";
+		 FileUploadUtil.saveFile(uploadDir, fileName, file);
 		Customer checkCustomer = customerRepo.save(customer);
 		if (checkCustomer!=null)
 			return true;
@@ -102,5 +112,6 @@ public class UserServiceImpl implements UserService {
 		}
 		return false;
 	}
+	
 
 }

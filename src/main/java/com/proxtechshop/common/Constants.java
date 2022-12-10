@@ -45,6 +45,26 @@ public class Constants {
 	public static final String REGISTER_URL_PATH = "/register";
 	
 	public static final String CHANGEPASS_URL_PATH = "/change-password";
+	
+	public static final String ADMIN_PATH="/admin";
+	
+	
+	public static final String ADMIN_PRODUCTMNG_VIEW="admin/productmanagement/index";
+		public static final String ADMIN_FOFMPRODUCT_VIEW="admin/productmanagement/formproduct";
+	public static final String ADMIN_CUSTOMERSMNG_VIEW="admin/customermanagement/index";
+	public static final String ADMIN_MEMBERSMNG_VIEW="admin/membermanagement/index";
+	public static final String ADMIN_CATEGORIESMNG_VIEW="admin/categorymanagement/index";
+	public static final String ADMIN_ORDERMNG_VIEW="admin/ordermanagement/index";
+	public static final String ADMIN_PROFILE_VIEW="admin/adminprofile/index";
+	
+	public static final String ADMIN_PRODUCTMNG_PATH="/admin/productmanagement";
+		public static final String ADMIN_FOFMPRODUCT_PATH="/admin/formproduct";
+	public static final String ADMIN_CUSTOMERSMNG_PATH="/admin/customermanagement";
+	public static final String ADMIN_MEMBERSMNG_PATH="/admin/membermanagement";
+	public static final String ADMIN_CATEGORIESMNG_PATH="/admin/categorymanagement";
+	public static final String ADMIN_ORDERMNG_PATH="/admin/ordermanagement";
+	public static final String ADMIN_PROFILE_PATH="/admin/adminprofile";
+	
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

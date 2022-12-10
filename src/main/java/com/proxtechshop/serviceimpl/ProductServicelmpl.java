@@ -2,9 +2,13 @@ package com.proxtechshop.serviceimpl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.proxtechshop.common.Constants;
@@ -83,5 +87,32 @@ public class ProductServicelmpl implements ProductService {
 		attributeValue.setValue("16 GB");
 		pavr.save(attributeValue);
 	}
+
+	@Override
+	public List<Product> getAllProduct() {
+		
+		return productRepository.findAll();
+	}
+
+	@Override
+	public void DeleteProduct(String id) {
+		productRepository.deleteById(id);
+	}
+
+	@Override
+	public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+			Sort.by(sortField).descending();
+		
+		PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+		return this.productRepository.findAll(pageable);
+	}
+
+	@Override
+	public Product getProductById(String id) {
+		return productRepository.findById(id).get();
+	}
+
+	
 
 }

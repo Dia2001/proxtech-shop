@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/dms/admin-layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <title>Thay đổi sản phẩm</title>
+</head>
+
+<body>
+    <div layout:fragment="content" class="bg-[#f5f5f5] w-full">
+    <div>
+        <style>
+            .error{
+                color: #ff0000;  
+            }
+        </style>
+    <form name='form-product' class="w-[1240px] mx-auto p-4" th:object="${product}" action="@{/admin/formproduct}" method="POST">
+        <h1 class="text-3xl font-semibold pl-8 py-8">Thay đổi sản phẩm</h1>
+        <!-- <h1 class="text-2xl">Tạo sản phẩm</h1> -->
+        <div class="flex">
+            <div class="flex flex-col basis-1/2">
+                <!-- input -->
+                <div th:if="${product.id}" class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right">
+                            ID
+                        </label>
+                    </div>
+                    <div class="md:min-w-2/4">
+                        <input th:field="*{id}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            readonly>
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Tên
+                        </label>
+                    </div>
+                    <div class="md:w-3/4">
+                        <input th:field="*{name}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                    </div>
+                </div>
+                <!-- input -->
+            </div>
+            <div class=" basis-1/2 p-8">
+                <!-- contain choose image -->
+            </div>
+        </div>
+        <!-- input -->
+        <div class="md:flex my-8 mx-12">
+            <div class="md:w-1/12">
+                <label class="block text-gray-500  font-bold mb-1 md:mb-0 pr-4 md:text-right" for="inline-full-name">
+                    Mô tả
+                </label>
+            </div>
+            <div class="md:w-10/12">
+                <textarea th:field="*{description}"
+                    class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full h-[250px] py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 resize-none"></textarea> </textarea>
+            </div>
+        </div>
+        <!-- input -->
+        <div class="flex my-6">
+            <div class="flex flex-col basis-1/2">
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Số lượng
+                        </label>
+                    </div>
+                    <div class="md:w-2/4">
+                        <input th:field="*{quantity}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Nhãn hiệu
+                        </label>
+                    </div>
+                    <div class="md:w-2/4">
+                        <select name="brand" class="block py-2.5 px-4 w-full text-md text-black/90 bg-transparent border-0 border-b-2 border-gray-200  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                            <option value="" selected>--Chọn nhãn hiệu--</option>
+                           <!--  <option value="US">Sony</option>
+                            <option value="CA">ASUS</option>
+                            <option value="FR">HP</option>
+                            <option value="DE">iPhone</option> -->
+                            <option th:each="item:${brand}" th:value="${item.id}" th:text="${item.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Danh mục
+                        </label>
+                    </div>
+                    <div class="md:w-2/4">
+                        <select name="category" class="block py-2.5 px-4 w-full text-md text-black/90 bg-transparent border-0 border-b-2 border-gray-200  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                            <option value="" selected>--Chọn Danh mục--</option>
+                            <!-- <option value="US">Sony</option>
+                            <option value="CA">ASUS</option>
+                            <option value="FR">HP</option>
+                            <option value="DE">iPhone</option> -->
+                            <option th:each="item:${category}" th:value="${item.id}" th:text="${item.name}"></option>
+                        </select>
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            giá (VNĐ)
+                        </label>
+                    </div>
+                    <div class="md:w-2/4 ">
+                        <input th:field="*{price}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Ngày tạo
+                        </label>
+                    </div>
+                    <div class="md:w-1/4">
+                        <input th:field="*{createdDate}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            readonly>
+                    </div>
+                </div>
+                <!-- input -->
+            </div>
+
+            <div class="flex flex-col basis-1/2">
+                <!-- input -->
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/4">
+                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+                            for="inline-full-name">
+                            Slug
+                        </label>
+                    </div>
+                    <div class="md:w-2/4">
+                        <input th:field="*{slug}"
+                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                    </div>
+                </div>
+                <!-- input -->
+                <!-- table -->
+                <table class="table-auto max-w-[80%] border-2 border-black/15 rounded-[12px] !border-separate">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-right">Thông số kỹ thuật</th>
+                            <th class="px-4 py-2">Giá trị</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="px-4 py-2 text-right">Cpu</td>
+                            <th class="px-4 py-2">
+                                <input
+                                    class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                            </th>
+                        </tr>
+                        <td class="px-4 py-2 text-right">Ram</td>
+                        <th class="px-4 py-2">
+                            <input
+                                class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
+                        </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- table -->
+            </div>
+        </div>
+        <!-- buttons area -->
+        <div class="flex justify-between my-6 mx-6">
+            <div class="flex gap-8">
+                <button
+                    class="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                    type="reset">
+                    Hủy bỏ thay đổi
+                </button>
+                <button
+                    class="shadow bg-red-500 hover:bg-red-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                    type="button">
+                    Xóa sản phẩm
+                </button>
+            </div>
+            <div class="flex gap-8">
+                <button
+                    class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                    type="submit">
+                    Xác nhận
+                </button>
+                <button
+                    class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                    type="button">
+                    Trở về
+                </button>
+            </div>
+        </div>
+        <!-- buttons area -->
+        
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Initialize form validation on the registration form.
+            // It has the name attribute "registration"
+            $("form[name='form-product']").validate({
+                rules: {
+                    name:"required",
+                    description:"required",
+                    quantity:{
+                        required:true,
+                        digits:true,
+                        min:0
+                    },
+                    brand:{
+                    	required:true
+                    },
+                    category:{
+                    	required:true
+                    },
+                    price:{
+                        required:true,
+                        digits:true,
+                        min:0
+                    },
+                    slug:"required",
+                },
+                messages: {
+                    name:"Không được bỏ trống tên",
+                    description:"Không được bỏ trống trường mô tả",
+                    quantity:{
+                        required:"Không được bỏ trống số lượng",
+                        digits:"Phải nhập số",
+                        min:"Nhập giá trị lớn hơn hoặc bằng không"
+                    },
+                    brand:{
+                    	required:"Hãy chọn nhãn hiệu"
+                    },
+                    category:{
+                    	required:"Hãy chọn nhãn hiệu"
+                    },
+                    price:{
+                        required:"Không được bỏ trống giá cả",
+                        digits:"Phải nhập số",
+                        min:"Nhập giá trị lớn hơn hoặc bằng 0"
+                    },
+                    slug:"Không bỏ trống trường này",
+                    
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                  }
+            });
+        });
+    </script>
+    </div>
+</div>
+
+</body>
+
+</html>

@@ -1,11 +1,10 @@
 package com.proxtechshop.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Repository;
 import com.proxtechshop.entities.Category;
 
-@Component
+@Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 }
