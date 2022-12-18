@@ -1,5 +1,6 @@
 package com.proxtechshop.controllers;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,15 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.services.ProductService;
 import com.proxtechshop.services.TypesProductService;
-
-import groovy.cli.Option;
 
 
 @Controller
@@ -53,11 +51,15 @@ public class ManagementController {
 		model.addAttribute("products",productService.getAllProduct());
 		return Constants.ADMIN_MEMBERSMNG_VIEW;
 	}
-	@RequestMapping(Constants.ADMIN_CATEGORIESMNG_PATH)
-	public String CategoryMng(Model model)
-	{
-		return Constants.ADMIN_CATEGORIESMNG_VIEW;
-	}
+//	@RequestMapping(Constants.ADMIN_BRAND_PATH)
+//	public String BrandMng(Model model) {
+//		return Constants.ADMIN_BRAND_VIEW;
+//	}
+//	@RequestMapping(Constants.ADMIN_CATEGORIESMNG_PATH)
+//	public String CategoryMng(Model model)
+//	{
+//		return Constants.ADMIN_CATEGORIESMNG_VIEW;
+//	}
 	@RequestMapping(Constants.ADMIN_ORDERMNG_PATH)
 	public String OrderMng(Model model)
 	{
@@ -68,6 +70,7 @@ public class ManagementController {
 	{
 		return Constants.ADMIN_PROFILE_VIEW;
 	}
+	
 	
 	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/delete/{id}")
 	public String DeleteProduct(@PathVariable("id")Optional<String> id,Model model)
@@ -92,6 +95,10 @@ public class ManagementController {
 		//model.addAttribute("products",productService.getAllProduct());
 		return findPaginated(1, "name", "asc", model);
 	}
+	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/search")
+	public RedirectView searchProduct(@RequestParam(value="find",required = false) String search,Model model) {
+		return new RedirectView(findPaginated(1, "name", "asc", model));
+	}
 	
 	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
@@ -106,7 +113,6 @@ public class ManagementController {
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("totalItems", page.getTotalElements());
-		
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
@@ -122,29 +128,40 @@ public class ManagementController {
 		if(id.isPresent()) {
 			try {
 				model.addAttribute("product",productService.getProductById(id.get()));
+				model.addAttribute("specifications",productService.showAtrsAndValues(id.get()));
 			}catch(Exception e){
 				model.addAttribute("flag",false);
 				model.addAttribute("msg","Không tìm thấy sản phẩm chỉnh sửa!");
 				return findPaginated(1, "name", "asc", model);
 			}
 		}else
+		{
+		model.addAttribute("specifications",productService.showAtrsAndValues(null));
 		model.addAttribute("product",new Product());
+		}
 		//add product attribute value , how can i add this effectively?
-		model.addAttribute("brand",typesProductService.getAllBrand());
-		model.addAttribute("category",typesProductService.getAllCategory());
 		return getFormProduct(model);
 	}
 	
 	public String getFormProduct(Model model) {
-		
+		model.addAttribute("brand",typesProductService.getAllBrand());
+		model.addAttribute("category",typesProductService.getAllCategory());
 		return Constants.ADMIN_FOFMPRODUCT_VIEW;
 	}
 	@RequestMapping(value=Constants.ADMIN_FOFMPRODUCT_PATH,method=RequestMethod.POST)
 	public String UpdateProduct(Product product,Model model)
 	{
-		model.addAttribute("flag",true);
-		model.addAttribute("msg","Thay đổi thành công!");
-		return "demo Thêm thành công";
+		boolean flag=productService.updateProduct(product);
+		if(flag) {
+			model.addAttribute("flag",true);
+			model.addAttribute("msg","Thêm hoặc sửa sản phẩm thành công!");
+			return findPaginated(1, "name", "asc", model);
+		}
+		else {
+			model.addAttribute("flag",false);
+			model.addAttribute("msg","Thêm hoặc sửa không thành công!");
+			return getFormProduct(model);
+		}
 	}
 	@RequestMapping(Constants.ADMIN_PATH+"/{page}")
 	public RedirectView testAdmin(@PathVariable(name="page",required = false)Optional<String> id ,Model model) {
@@ -154,12 +171,14 @@ public class ManagementController {
 		case "2":
 			return new RedirectView(Constants.ADMIN_MEMBERSMNG_PATH);
 		case "3":
-			return new RedirectView(Constants.ADMIN_CATEGORIESMNG_PATH);
+			return new RedirectView(Constants.ADMIN_BRAND_PATH);
 		case "4":
-			return new RedirectView(Constants.ADMIN_PRODUCTMNG_PATH);
+			return new RedirectView(Constants.ADMIN_CATEGORIESMNG_PATH);
 		case "5":
-			return new RedirectView(Constants.ADMIN_ORDERMNG_PATH);
+			return new RedirectView(Constants.ADMIN_PRODUCTMNG_PATH);
 		case "6":
+			return new RedirectView(Constants.ADMIN_ORDERMNG_PATH);
+		case "7":
 			return new RedirectView(Constants.ADMIN_PROFILE_PATH);
 		}
 		return new RedirectView(Constants.ERROR_404_VIEW);

@@ -21,8 +21,10 @@
                 color: #ff0000;  
             }
         </style>
-    <form name='form-product' class="w-[1240px] mx-auto p-4" th:object="${product}" action="@{/admin/formproduct}" method="POST">
+    <form name='form-product' class="w-[1240px] mx-auto p-4" th:object="${product}" th:action="@{'/admin/formproduct'}" method="POST">
         <h1 class="text-3xl font-semibold pl-8 py-8">Thay đổi sản phẩm</h1>
+        <h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
+				<h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
         <!-- <h1 class="text-2xl">Tạo sản phẩm</h1> -->
         <div class="flex">
             <div class="flex flex-col basis-1/2">
@@ -141,22 +143,7 @@
                             class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
                     </div>
                 </div>
-                <!-- input -->
-                <!-- input -->
-                <div class="md:flex md:items-center mb-6">
-                    <div class="md:w-1/4">
-                        <label class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
-                            for="inline-full-name">
-                            Ngày tạo
-                        </label>
-                    </div>
-                    <div class="md:w-1/4">
-                        <input th:field="*{createdDate}"
-                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                            readonly>
-                    </div>
-                </div>
-                <!-- input -->
+               
             </div>
 
             <div class="flex flex-col basis-1/2">
@@ -182,20 +169,21 @@
                             <th class="px-4 py-2">Giá trị</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="px-4 py-2 text-right">Cpu</td>
-                            <th class="px-4 py-2">
-                                <input
+                    <tbody >
+                        <tr th:each="element:${specifications}">
+                            <td class="px-4 py-2 text-right" th:text="${element.key}"></td>
+                            <td class="px-4 py-2">
+                                <input th:value="${element.value}" th:name="${element.key}"
                                     class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
-                            </th>
+                            </td>
                         </tr>
-                        <td class="px-4 py-2 text-right">Ram</td>
-                        <th class="px-4 py-2">
+                       <!-- <tr>
+                       <td class="px-4 py-2 text-right">Ram</td>
+                        <td class="px-4 py-2">
                             <input
                                 class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500">
-                        </th>
-                        </tr>
+                        </td>
+                       </tr> -->
                     </tbody>
                 </table>
                 <!-- table -->
@@ -221,7 +209,7 @@
                     type="submit">
                     Xác nhận
                 </button>
-                <button
+                <button onClick="history.back()"
                     class="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                     type="button">
                     Trở về

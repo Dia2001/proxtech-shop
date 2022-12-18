@@ -5,6 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 
 <body class="flex items-center justify-center"
@@ -176,7 +178,7 @@
 			<div class="flex gap-2">
 				<th:block th:include="admin/includes/admin-slidebar">
 				</th:block>
-				<div layout:fragment="content"></div>
+				<div class="grow min-h-[100vh]" layout:fragment="content"></div>
 			</div>
 		</div>
 	</div>

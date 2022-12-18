@@ -56,6 +56,7 @@ public class Constants {
 	public static final String ADMIN_CATEGORIESMNG_VIEW="admin/categorymanagement/index";
 	public static final String ADMIN_ORDERMNG_VIEW="admin/ordermanagement/index";
 	public static final String ADMIN_PROFILE_VIEW="admin/adminprofile/index";
+	public static final String ADMIN_BRAND_VIEW="admin/brandmanagement/index";
 	
 	public static final String ADMIN_PRODUCTMNG_PATH="/admin/productmanagement";
 		public static final String ADMIN_FOFMPRODUCT_PATH="/admin/formproduct";
@@ -64,6 +65,7 @@ public class Constants {
 	public static final String ADMIN_CATEGORIESMNG_PATH="/admin/categorymanagement";
 	public static final String ADMIN_ORDERMNG_PATH="/admin/ordermanagement";
 	public static final String ADMIN_PROFILE_PATH="/admin/adminprofile";
+	public static final String ADMIN_BRAND_PATH="/admin/brandmanagement";
 	
 
 	public static final String messageNotFound(String Id) {
