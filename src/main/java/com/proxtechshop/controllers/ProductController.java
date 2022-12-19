@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.models.ProductFilter;
 import com.proxtechshop.services.ProductService;
+import com.proxtechshop.services.UserService;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 import com.proxtechshop.viewmodels.ProductPagingViewModel;
 

@@ -33,17 +33,17 @@
 					<div class="row d-flex justify-content-between px-3 top">
 						<div class="d-flex">
 							<h5>
-								ORDER <span class="text-primary font-weight-bold">#Y34XDHR</span>
+								Mã đơn hàng <span class="text-primary font-weight-bold">#Y34XDHR</span>
 							</h5>
 						</div>
-						<div class="d-flex flex-column text-sm-right">
+						<!-- div class="d-flex flex-column text-sm-right">
 							<p class="mb-0">
 								Expected Arrival <span>01/12/19</span>
 							</p>
 							<p>
 								USPS <span class="font-weight-bold">234094567242423422898</span>
 							</p>
-						</div>
+						</div> -->
 					</div>
 					<!-- Add class 'active' to progress -->
 					<div class="row d-flex justify-content-center">
@@ -61,7 +61,7 @@
 							<img class="icon" src="https://i.imgur.com/9nnc9Et.png">
 							<div class="d-flex flex-column">
 								<p class="font-weight-bold">
-									Order<br>Processed
+									Chờ<br>xác nhận
 								</p>
 							</div>
 						</div>
@@ -69,7 +69,7 @@
 							<img class="icon" src="https://i.imgur.com/u1AzR7w.png">
 							<div class="d-flex flex-column">
 								<p class="font-weight-bold">
-									Order<br>Shipped
+									Đã<br>xác nhận
 								</p>
 							</div>
 						</div>
@@ -77,7 +77,7 @@
 							<img class="icon" src="https://i.imgur.com/TkPm63y.png">
 							<div class="d-flex flex-column">
 								<p class="font-weight-bold">
-									Order<br>En Route
+									Đang<br>giao
 								</p>
 							</div>
 						</div>
@@ -85,7 +85,7 @@
 							<img class="icon" src="https://i.imgur.com/HdsziHP.png">
 							<div class="d-flex flex-column">
 								<p class="font-weight-bold">
-									Order<br>Arrived
+									Đã<br>giao
 								</p>
 							</div>
 						</div>
@@ -100,14 +100,13 @@
 						<div class="card-body">
 							<div class="mb-3 d-flex justify-content-between">
 								<div>
-									<span class="me-3">22-11-2021</span> <span class="me-3">#16123222</span>
-									<span class="me-3">Visa -1234</span> <span
-										class="badge rounded-pill bg-info">SHIPPING</span>
+									<span class="me-3">22-11-2021</span> 
+									<spanclass="badge rounded-pill bg-info">Trạng thái</span>
 								</div>
 								<div class="d-flex">
 									<button
 										class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text">
-										<i class="bi bi-download"></i> <span class="text">Invoice</span>
+										<i class="bi bi-download"></i> <span class="text">Hóa đơn</span>
 									</button>
 									<div class="dropdown">
 										<button class="btn btn-link p-0 text-muted" type="button"
@@ -168,20 +167,16 @@
 								</tbody>
 								<tfoot>
 									<tr>
-										<td colspan="2">Subtotal</td>
-										<td class="text-end">$159,98</td>
+										<td colspan="2">Tổng tiền hàng</td>
+										<td class="text-end">159 VNĐ</td>
 									</tr>
 									<tr>
-										<td colspan="2">Shipping</td>
-										<td class="text-end">$20.00</td>
-									</tr>
-									<tr>
-										<td colspan="2">Discount (Code: NEWYEAR)</td>
-										<td class="text-danger text-end">-$10.00</td>
+										<td colspan="2">Phí vận chuyển</td>
+										<td class="text-end">20 VNĐ</td>
 									</tr>
 									<tr class="fw-bold">
-										<td colspan="2">TOTAL</td>
-										<td class="text-end">$169,98</td>
+										<td colspan="2">Thành tiền</td>
+										<td class="text-end">169 VNĐ</td>
 									</tr>
 								</tfoot>
 							</table>
@@ -192,17 +187,17 @@
 						<div class="card-body">
 							<div class="row">
 								<div class="col-lg-6">
-									<h3 class="h6">Payment Method</h3>
+									<h3 class="h6">Hình thức thanh toán</h3>
 									<p>
-										Visa -1234 <br> Total: $169,98 <span
+										 Thành tiền: 169,98 VNĐ <span
 											class="badge bg-success rounded-pill">PAID</span>
 									</p>
 								</div>
 								<div class="col-lg-6">
-									<h3 class="h6">Billing address</h3>
+									<h3 class="h6">Địa chỉ thanh toán</h3>
 									<address>
-										<strong>John Doe</strong><br> 1355 Market St, Suite 900<br>
-										San Francisco, CA 94103<br> <abbr title="Phone">P:</abbr>
+									<br>Tổ 8 thôn hội tân, xã nhơn hội,
+										Thành phố quy nhơn Bình định <br><a title="Phone">SDT:</a>
 										(123) 456-7890
 									</address>
 								</div>
@@ -214,7 +209,7 @@
 					<!-- Customer Notes -->
 					<div class="card mb-4">
 						<div class="card-body">
-							<h3 class="h6">Customer Notes</h3>
+							<h3 class="h6">Ghi chú khách hàng</h3>
 							<p>Sed enim, faucibus litora velit vestibulum habitasse. Cras
 								lobortis cum sem aliquet mauris rutrum. Sollicitudin. Morbi, sem
 								tellus vestibulum porttitor.</p>
@@ -223,16 +218,16 @@
 					<div class="card mb-4">
 						<!-- Shipping information -->
 						<div class="card-body">
-							<h3 class="h6">Shipping Information</h3>
-							<strong>FedEx</strong> <span><a href="#"
-								class="text-decoration-underline" target="_blank">FF1234567890</a>
+							<h3 class="h6">Thông đơn đơn vị vận chuyển</h3>
+							<strong>Website:</strong> <span><a href="#"
+								class="text-decoration-underline" target="_blank"> https://www.ninjavan.co/vi-vn</a>
 								<i class="bi bi-box-arrow-up-right"></i> </span>
 							<hr>
-							<h3 class="h6">Address</h3>
+							<h3 class="h6">Địa chỉ</h3>
 							<address>
-								<strong>John Doe</strong><br> 1355 Market St, Suite 900<br>
-								San Francisco, CA 94103<br> <abbr title="Phone">P:</abbr>
-								(123) 456-7890
+								<br>117/2D1 Hồ Văn Long, Phường Tân Tạo, Quận Bình Tân,<br>
+								 Thành phố Hồ Chí Minh, Việt Nam<br> <a title="Phone">SDT:</a>
+								1900 886 877
 							</address>
 						</div>
 					</div>

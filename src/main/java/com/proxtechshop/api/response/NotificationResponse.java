@@ -1,10 +1,10 @@
 package com.proxtechshop.api.response;
 
-public class CartResponse {
+public class NotificationResponse {
 	
 	String msg;
 
-	public CartResponse() {
+	public NotificationResponse() {
 		super();
 	}
 

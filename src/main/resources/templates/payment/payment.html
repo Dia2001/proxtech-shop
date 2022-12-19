@@ -14,50 +14,50 @@
 	</th:block>
 	<div class="container payment-form">
 		<div class="payment_details">
-			<h1>Payment Information</h1>
+			<h1>Thông tin thanh toán</h1>
 			<div class="details_card">
 				<div class="name_address">
 					<div class="first_lastName">
-						<input type="text" placeholder="First Name" /> <input type="text"
-							placeholder="Last Name" />
+						<input id="ipFullname" th:value="${infoCustomer.fullname}" type="text" placeholder="Họ tên" /> <input th:value="${infoCustomer.phone}" type="text"
+							id="ipPhone" placeholder="Số điện thoại" />
 					</div>
 					<div class="address">
-						<input type="text" onkeyup="change()" id="put"
-							placeholder="Address" /> <input type="number"
-							placeholder="Pincode" /> <input type="text"
-							placeholder="Country" />
+						<input  type="text"  id="idAddress"
+							placeholder="Địa chỉ ship" />  
+					</div>
+					<div class="address description">
+						<input id="ipNote" type="text"
+							placeholder="Mô tả" />  
 					</div>
 				</div>
-				<h1>Shipping Details</h1>
+				<h1>Chi tiết vận chuyển</h1>
 				<div class="shipping_card">
 					<div class="new_card">
-						<h4>Same as personal</h4>
-						<p id="output">Bharat House Bombay Samachar Road</p>
-						<p>400001</p>
+						<h4>Địa chỉ khách hàng</h4>
+						<p th:text="${infoCustomer.address}" id="output"/>
 					</div>
 					<div class="add_savedcard">
-						<h4>Saved Address</h4>
-						<p>Lokhandwala Complex, Andheri (west)</p>
-						<p>400053</p>
+						<h4>Địa chỉ ship</h4>
+						<p th:text="${infoCustomer.address}" id="adressShip"/>
 					</div>
 				</div>
-				<div class="proced_payment">
+<!-- 				<div class="proced_payment">
 					<a href="">Procced to payment</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="order_summary">
-			<h1>Order Summary</h1>
-			<div class="summary_card">
-				<div class="card_item">
+			<h1>Mô tả hóa đơn</h1>
+			<div id="listproduct" class="summary_card">
+				<!-- <div class="card_item">
 					<div class="product_img">
 						<img
 							src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=643&q=80"
 							alt="" />
 					</div>
 					<div class="product_info">
-						<h1>Nike Shoes</h1>
-						<p>Lorem Ipsum is simply dummy text.</p>
+						<h1>Sản phẩm a</h1>
+						<p>Sản phẩm a là sản phẩm a</p>
 						<div class="close-btn">
 							<i class="fa fa-close"></i>
 						</div>
@@ -89,21 +89,25 @@
 				</div>
 				<hr />
 				<div class="order_price">
-					<p>Order summary</p>
-					<h4>$400</h4>
+					<p>Tổng thanh toán</p>
+					<h4>100 VNĐ</h4>
 				</div>
 				<div class="order_service">
-					<p>Additional Service</p>
-					<h4>$10</h4>
+					<p>Khuyến mãi</p>
+					<h4>0 VNĐ</h4>
 				</div>
 				<div class="order_total">
-					<p>Total Amount</p>
-					<h4>$370</h4>
-				</div>
+					<p>Tổng tiền</p>
+					<h4>100 VNĐ</h4>
+				</div> -->
 			</div>
 		</div>
 	</div>
 	<th:block th:include="includes/footer">
 	</th:block>
+	<!-- Include script global-->
+	<th:block th:include="includes/js-global" />
+	
+	<script type="text/javascript" src="/assets/js/payment.js"></script>
 </body>
 </html>

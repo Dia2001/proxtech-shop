@@ -115,7 +115,7 @@ $btnReduceNumnber.click(function() {
 });
 
 function handleAmount(quantity, number) {
-	debugger;
+
 	if (number != 1 && number != -1) {
 		return;
 	}
@@ -136,12 +136,13 @@ $(document).on('click', '#btnAddCart', function() {
 });
 function addProuctToCart() {
 
+	debugger;
 	var infoDataCart = {
 		productId: $("#productId").text(),
 		price: $("#price").val(),
 		quantity: $("#quantity").text()
 	}
-
+	console.log(infoDataCart);
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",

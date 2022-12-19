@@ -33,6 +33,8 @@ function cartHandle() {
 	
 	btnCheckout.onclick = function() {
 		let idProducts = getIdProductCartChecked()
+		localStorage.setItem("listIdProduct",idProducts);
+		window.location.href = "/thanh-toan";
 		console.log(idProducts)
 	}
 	
