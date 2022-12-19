@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.proxtechshop.entities.Customer;
 import com.proxtechshop.entities.User;
 import com.proxtechshop.viewmodels.CustomUserModelView;
+import com.proxtechshop.viewmodels.PaymentCustomerDetailViewModel;
 
 @Component
 public class UserConverter {
@@ -22,6 +23,19 @@ public class UserConverter {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		return null;
+	}
+	
+	public PaymentCustomerDetailViewModel covertToCustomerViewModel(Customer customer) {
+		
+		try {
+			PaymentCustomerDetailViewModel infoCustomer =modelMapper.map(customer, PaymentCustomerDetailViewModel.class);
+			System.out.println(infoCustomer.toString());
+			return infoCustomer;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
 		return null;
 	}
 }
