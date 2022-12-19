@@ -35,7 +35,9 @@ public class Brand implements Serializable {
 	@OneToMany(mappedBy = "brand")
 	private Set<Product> products = new HashSet<>();
 	
-	public Brand() {}
+	
+	public Brand() {
+	}
 
 	public int getId() {
 		return id;

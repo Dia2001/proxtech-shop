@@ -35,7 +35,7 @@ public class CustomerRestController {
 	@Autowired
 	private OrderService orderService;
 	
-	@PostMapping(Constants.CART_ADDPRODUCT_URL_ACTION_API)
+	@PostMapping(Constants.CART_URL_ACTION)
 	public ResponseEntity<?> addProductToCart(@RequestBody CartRequest cartRequest) {
 
 		boolean check = cartService.addProductToCart(cartRequest);

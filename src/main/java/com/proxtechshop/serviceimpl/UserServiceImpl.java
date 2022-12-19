@@ -1,12 +1,14 @@
 package com.proxtechshop.serviceimpl;
 
+import java.io.IOException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.proxtechshop.converter.CartConverter;
 import com.proxtechshop.converter.UserConverter;
 import com.proxtechshop.entities.Customer;
 import com.proxtechshop.entities.User;
@@ -14,25 +16,25 @@ import com.proxtechshop.functionalinterface.IUserLogin;
 import com.proxtechshop.repositories.CustomerRepository;
 import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.InforCustomerService;
-import com.proxtechshop.services.PaymentService;
 import com.proxtechshop.services.UserService;
+import com.proxtechshop.utils.FileUploadUtil;
 import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.PaymentCustomerDetailViewModel;
 import com.proxtechshop.viewmodels.UserView;
 
 @Service
-public class UserServiceImpl implements UserService,InforCustomerService{
+public class UserServiceImpl implements UserService, InforCustomerService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private CustomerRepository customerRepo;
-	
+
 	@Autowired
 	private IUserLogin userLogin;
-	
+
 	@Autowired
 	private UserConverter userConverter;
 
@@ -69,14 +71,20 @@ public class UserServiceImpl implements UserService,InforCustomerService{
 	}
 
 	@Override
-	public boolean UpdateProfile(CustomUserModelView userv) {
-		User user = userLogin.get();
+	public boolean UpdateProfile(CustomUserModelView userv, MultipartFile file) throws IOException {
+		System.out.println(userv.getUsername());
+		User user = userRepo.getByUsername(userv.getUsername());
 		Customer customer = customerRepo.findOneByUserId(user.getId());
-		customer.setFullName(userv.getFullName());
+		customer.setFullName(userv.getUsername());
 		customer.setAddress(userv.getAddress());
 		customer.setPhone(userv.getPhone());
+		// handle avatar
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		customer.setImage(fileName);
+		String uploadDir = "/user";
+		FileUploadUtil.saveFile(uploadDir, fileName, file);
 		Customer checkCustomer = customerRepo.save(customer);
-		if (checkCustomer!=null)
+		if (checkCustomer != null)
 			return true;
 		else
 			return false;
@@ -85,7 +93,7 @@ public class UserServiceImpl implements UserService,InforCustomerService{
 	@Override
 	public CustomUserModelView loadProfile() {
 		User user = userLogin.get();
-		if (user != null) {			
+		if (user != null) {
 			CustomUserModelView profile;
 			Customer customer = customerRepo.findOneByUserId(user.getId());
 			if (customer != null) {
@@ -100,15 +108,14 @@ public class UserServiceImpl implements UserService,InforCustomerService{
 	}
 
 	@Override
-	public boolean changePassword(String oldPass,String newPass) {
+	public boolean changePassword(String oldPass, String newPass) {
 		User user = userLogin.get();
 		if (user == null) {
 			return false;
 		}
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String currentPass=user.getPassword();
-		if(passwordEncoder.matches(oldPass, currentPass))
-		{
+		String currentPass = user.getPassword();
+		if (passwordEncoder.matches(oldPass, currentPass)) {
 			String encodedNewPassword = passwordEncoder.encode(newPass);
 			user.setPassword(encodedNewPassword);
 			userRepo.save(user);
@@ -120,7 +127,8 @@ public class UserServiceImpl implements UserService,InforCustomerService{
 	@Override
 	public PaymentCustomerDetailViewModel inforCustomerPayment() {
 		User user = userRepo.getByUsername(GetUserUtil.GetUserName());
-		PaymentCustomerDetailViewModel infoCustomerPayment=userConverter.covertToCustomerViewModel(user.getCustomer());
+		PaymentCustomerDetailViewModel infoCustomerPayment = userConverter
+				.covertToCustomerViewModel(user.getCustomer());
 		return infoCustomerPayment;
 	}
 }

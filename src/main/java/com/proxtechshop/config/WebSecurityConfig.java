@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_URL_PATH).permitAll()
 				.antMatchers(HttpMethod.POST, Constants.CART_PATH).permitAll()
-				.antMatchers(HttpMethod.POST, Constants.CART_ADDPRODUCT_URL_ACTION_API).permitAll()
+				.antMatchers(HttpMethod.POST, Constants.CART_URL_ACTION).permitAll()
 				.antMatchers(HttpMethod.POST, Constants.PAYMENT_PRODUCTDETAIL_URL_API).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()

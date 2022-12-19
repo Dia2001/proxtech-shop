@@ -14,9 +14,10 @@ public class CustomUserModelView {
 	private String newPassword;
 	private String password;
 	private boolean isCustomer = false;
-	
+	private String image;
+
 	public CustomUserModelView(String fullName, String username, String phone, String address, Date createdDate,
-			String newPassword, String password) {
+			String newPassword, String password, String image) {
 		super();
 		this.fullName = fullName;
 		this.username = username;
@@ -25,8 +26,17 @@ public class CustomUserModelView {
 		this.createdDate = createdDate;
 		this.newPassword = newPassword;
 		this.password = password;
+		this.image = image;
 	}
-	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public CustomUserModelView(User user, Customer customer, boolean isCustomer) {
 		this.fullName = customer.getFullName();
 		this.username = user.getUsername();
@@ -37,7 +47,7 @@ public class CustomUserModelView {
 		this.password = user.getPassword();
 		this.isCustomer = isCustomer;
 	}
-	
+
 	public CustomUserModelView() {
 		this.fullName = "";
 		this.username = "";
@@ -46,6 +56,15 @@ public class CustomUserModelView {
 		this.createdDate = null;
 		this.newPassword = "";
 		this.password = "";
+		this.image = "";
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	public String getFullName() {
@@ -86,14 +105,6 @@ public class CustomUserModelView {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-
-	public String getNewPassword() {
-		return newPassword;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
 	}
 
 	public String getPassword() {

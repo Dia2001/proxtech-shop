@@ -1,10 +1,15 @@
 package com.proxtechshop.services;
 
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
-import com.proxtechshop.models.ProductFilter;
+import org.springframework.data.domain.Page;
+
+import com.proxtechshop.entities.Product;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 import com.proxtechshop.viewmodels.ProductPagingViewModel;
+import com.proxtechshop.models.ProductFilter;
 
 public interface ProductService {
 	
@@ -12,4 +17,15 @@ public interface ProductService {
 	
 	ProductPagingViewModel getFilter(ProductFilter filter, Map<Integer, String[]> attribute);
 	
+	List<Product> getAllProduct();
+	
+	void DeleteProduct(String id);
+	
+	Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+	
+	Product getProductById(String id);
+	
+	boolean updateProduct(Product product);
+	
+	HashMap<String, String> showAtrsAndValues(String productId);
 }
