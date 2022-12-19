@@ -1,0 +1,73 @@
+	.box > .box-brands {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding-left: 20px;
+}
+
+.box > h3 {
+	padding-left: 20px;
+}
+
+.box-brands > .box-brand {
+	margin-top: 10px;
+    display: flex;
+    gap: 4px;
+    min-width: 100px;
+    height: 50px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 2px;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.box-brand > img {
+	max-height: 40px;
+}
+
+.brand-link-active {
+	background-color: gray;
+	color: white;
+}
+
+.filter-col > h3 {
+    padding-left: 20px;
+}
+
+.filter-attribute {
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filter-attribute > select {
+    flex: 1;
+    overflow-x: hidden;
+    height: 30px;
+    max-width: 100px;
+}
+.pagination > li > a {
+    cursor: pointer;
+}
+
+#btnView {
+    padding: 15px 35px;
+    margin: 10px 20px;
+    font-size: 20px;
+    background-color: rgb(48, 142, 204);
+    color: white;
+    border: none;
+    border-radius: 2px;
+}
+
+#btnView:hover {
+    opacity: 0.6;
+}
+
+@media only screen and (max-width: 1080px) {
+    .filter-attribute > select {
+        max-width: 400px;
+    }
+}

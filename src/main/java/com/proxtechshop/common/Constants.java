@@ -66,6 +66,8 @@ public class Constants {
 	public static final String CART_PATH = "/gio-hang";
 	
 	public static final String CART_URL_ACTION = "/addProductToCart";
+	
+	public static final int PRODUCT_PAGE_SIZE = 1;
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

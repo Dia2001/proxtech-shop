@@ -1,92 +1,129 @@
 (() => {
+	let filter_col = document.querySelector('#filter-col')
 
-  let products = [
-    {
-      name: 'JBL E55BT KEY BLACK',
-      image1: '/assets/images/JBL_E55BT_KEY_BLACK_6175_FS_x1-1605x1605px.png',
-      image2: '/assets/images/JBL_LIVE650BTNC_Product Image_Folded_Black.webp',
-      old_price: '400',
-      curr_price: '300'
-    },
-    {
-      name: 'JBL JR 310BT',
-      image1: '/assets/images/JBL_JR 310BT_Product Image_Hero_Skyblue.png',
-      image2: '/assets/images/JBL_JR 310BT_Product Image_Detail_Skyblue.png',
-      old_price: '400',
-      curr_price: '300'
-    },
-    {
-      name: 'JBL TUNE 750BTNC',
-      image1: '/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png',
-      image2: '/assets/images/JBL_E55BT_KEY_RED_6063_FS_x1-1605x1605px.webp',
-      old_price: '400',
-      curr_price: '300'
-    },
-    {
-      name: 'JBL Horizon',
-      image1: '/assets/images/JBLHorizon_001_dvHAMaster.png',
-      image2: '/assets/images/JBLHorizon_BLK_002_dvHAMaster.webp',
-      old_price: '400',
-      curr_price: '300'
-    },
-    {
-      name: 'JBL Tune 220TWS',
-      image1: '/assets/images/JBL_TUNE220TWS_ProductImage_Pink_ChargingCaseOpen.png',
-      image2: '/assets/images/JBL_TUNE220TWS_ProductImage_Pink_Back.png',
-      old_price: '400',
-      curr_price: '300'
-    },
-    {
-      name: 'UA Project Rock',
-      image1: '/assets/images/190402_E1_FW19_EarbudsWCase_S13_0033-1_1605x1605_HERO.png',
-      image2: '/assets/images/190402_E1_FW19_EarbudsWCase_S13_0033-1_1605x1605_BACK.png',
-      old_price: '400',
-      curr_price: '300'
-    },
-  ]
+	document.querySelector('#filter-toggle').addEventListener('click', () => filter_col.classList.toggle('active'))
+	
+	document.querySelector('#filter-close').addEventListener('click', () => filter_col.classList.toggle('active'))
 
-  let product_list = document.querySelector('#products')
-
-  renderProducts = (products) => {
-    products.forEach(e => {
-      let prod = `
-            <div class="col-4 col-md-6 col-sm-12">
-                <div class="product-card">
-                    <div class="product-card-img">
-                        <img src="${e.image1}" alt="">
-                        <img src="${e.image2}" alt="">
-                    </div>
-                    <div class="product-card-info">
-                        <div class="product-btn">
-                            <a href="./product-detail.html" class="btn-flat btn-hover btn-shop-now">shop now</a>
-                            <button class="btn-flat btn-hover btn-cart-add">
-                                <i class='bx bxs-cart-add'></i>
-                            </button>
-                            <button class="btn-flat btn-hover btn-cart-add">
-                                <i class='bx bxs-heart'></i>
-                            </button>
-                        </div>
-                        <div class="product-card-name">
-                            ${e.name}
-                        </div>
-                        <div class="product-card-price">
-                            <span><del>${e.old_price}</del></span>
-                            <span class="curr-price">${e.curr_price}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `
-      product_list.insertAdjacentHTML("beforeend", prod)
-    })
-  }
-
-  renderProducts(products)
-  renderProducts(products)
-
-  let filter_col = document.querySelector('#filter-col')
-
-  document.querySelector('#filter-toggle').addEventListener('click', () => filter_col.classList.toggle('active'))
-
-  document.querySelector('#filter-close').addEventListener('click', () => filter_col.classList.toggle('active'))
+	let filterChoise = []
+	let btnView = document.getElementById('btnView')
+	let btnPrev = document.getElementById('btnPrev')
+	let btnNext = document.getElementById('btnNext')
+	let linkPages = Array.from(document.querySelectorAll('[id^="p-"]'))
+	
+	let paramString = document.location.search.split('?')[1]
+	let queryString = new URLSearchParams(paramString)
+	
+	let page = currentPage
+	let listBrandIds = queryString.get('b') || null
+	let categoryId = queryString.get('c') || null
+	let startPrice = queryString.get('sp') || null
+	let endPrice = queryString.get('ep') || null
+	let sort = queryString.get('s') || null
+	let attributes = []
+	
+	queryString.forEach((v, k) => {
+	  if (k.startsWith('a')) {
+	    attributes.push({k, v})
+	  }
+	})
+	
+	console.table(listBrandIds, categoryId, startPrice, endPrice, sort, attributes)
+	
+	const loadFilter = () => {
+		if (listBrandIds) {
+			listBrandIds.split(',').map(item => {
+				let brandInput = document.getElementById("b-" + item)
+				if (brandInput) {
+					brandInput.checked = true
+				}
+				let brandLink = document.getElementById("b-link-" + item)
+				if (brandLink){
+					brandLink.classList.add("brand-link-active")
+				}
+			})
+		}
+		if (startPrice) {
+	  		let startPriceInput = document.getElementById('sp') 
+	  		if (startPriceInput) {
+				startPriceInput.value = startPrice  
+			}
+		}
+		if (endPrice) {
+	  		let endPriceInput = document.getElementById('ep') 
+	  		if (endPriceInput) {
+				endPriceInput.value = endPrice  
+			}
+		}
+		attributes.map(item => {
+			let attributeSelect = document.getElementById("a-" + item.k.slice(1,2))
+			if (attributeSelect) {
+				attributeSelect.value = item.v
+			}
+		})
+	}
+	
+	loadFilter()
+	
+	const acceptFilter = () => {
+	  let paramString = '?'
+	  paramString += `p=${page}`
+	  paramString += listBrandIds? `&b=${listBrandIds}` : ''
+	  paramString += categoryId? `&c=${categoryId}` : ''
+	  paramString += startPrice? `&sp=${startPrice}` : ''
+	  paramString += endPrice? `&ep=${endPrice}` : ''
+	  paramString += sort? `&s=${sort}` : ''
+	
+	  if (attributes.length > 0) {
+	    attributes.forEach(item => {
+	      paramString += `&${item.k}=${item.v}`
+	    })
+	  }
+	  window.location = document.location.pathname + paramString
+	}
+	
+	if (btnPrev) {
+	  btnPrev.onclick = (e) => {
+	    e.preventDefault()
+	    page = currentPage - 1 
+	    acceptFilter()
+	  }
+	}
+	
+	if (btnNext) {
+	  btnNext.onclick = (e) => {
+	    e.preventDefault()
+	    page = currentPage + 1
+	    acceptFilter()
+	  } 
+	}
+	
+	linkPages.forEach(item => {
+	  item.onclick = (e) => {
+	    e.preventDefault()
+	    page = item.id.split("p-")[1]
+	    acceptFilter()
+	  }
+	})
+	
+	btnView.onclick = () => {
+	  listBrandIds = Array.from(document.querySelectorAll('input[id^="b-"]:checked')).map(item => {
+	    return item.id.split("-")[1]
+	  }).toString()
+	  let sPrice = document.getElementById('sp').value
+	  let ePrice = document.getElementById('ep').value
+	  if (sPrice != "" || sPrice != 0) {
+	    startPrice = sPrice
+	  }
+	  if (ePrice != "" || ePrice != 0) {
+	    endPrice = ePrice
+	  }
+	  attributes = Array.from(document.querySelectorAll('select[id^="a-"]'))
+	                        .filter(item => item.value != '')
+	                        .map(item => ({
+	                          k: item.id.split("-")[0] + item.id.split("-")[1],
+	                          v: item.value
+	                        }))
+	  acceptFilter()
+	}
 })()

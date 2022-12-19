@@ -2,6 +2,8 @@ package com.proxtechshop.serviceimpl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,10 @@ import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.entities.ProductAttributeValue;
 import com.proxtechshop.entities.User;
 import com.proxtechshop.exception.DataNotFoundException;
+import com.proxtechshop.models.ProductFilter;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CartRepository;
+import com.proxtechshop.repositories.CustomProductRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
 import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.repositories.ProductRepository;
@@ -24,12 +28,16 @@ import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.ProductService;
 import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
+import com.proxtechshop.viewmodels.ProductPagingViewModel;
 
 @Service
 public class ProductServicelmpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private CustomProductRepository customProductRepository;
 	
 	@Autowired
 	private ProductAttributeRepository par;
@@ -70,6 +78,17 @@ public class ProductServicelmpl implements ProductService {
 		ProductDetailViewModel productDetailVM = productConverter.converToModel(product);
 		return productDetailVM;
 
+	}
+
+	@Override
+	public ProductPagingViewModel getFilter(ProductFilter filter, Map<Integer, String[]> attribute) {
+		int pageSize = Constants.PRODUCT_PAGE_SIZE;
+		int totalRecord = customProductRepository.getTotalRecordFilter(pageSize, filter);
+		int currentPage = filter.getPage() > 1 ? filter.getPage() : 1;
+		List<Product> products = customProductRepository.getFilter(pageSize, filter);
+		int totalPage = totalRecord % pageSize == 0? (totalRecord / pageSize) : (totalRecord / pageSize) + 1;
+		ProductPagingViewModel productPage = new ProductPagingViewModel(products, totalPage, pageSize, currentPage, productConverter);
+		return productPage;
 	}
 	
 	/**
