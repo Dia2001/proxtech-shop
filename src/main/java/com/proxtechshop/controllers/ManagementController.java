@@ -45,12 +45,12 @@ public class ManagementController {
 	{
 		return Constants.ADMIN_CUSTOMERSMNG_VIEW;
 	}
-	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH)
-	public String MemberMng(Model model)
-	{
-		model.addAttribute("products",productService.getAllProduct());
-		return Constants.ADMIN_MEMBERSMNG_VIEW;
-	}
+//	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH)
+//	public String MemberMng(Model model)
+//	{
+//		model.addAttribute("products",productService.getAllProduct());
+//		return Constants.ADMIN_MEMBERSMNG_VIEW;
+//	}
 //	@RequestMapping(Constants.ADMIN_BRAND_PATH)
 //	public String BrandMng(Model model) {
 //		return Constants.ADMIN_BRAND_VIEW;
