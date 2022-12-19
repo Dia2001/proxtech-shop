@@ -1,6 +1,11 @@
 package com.proxtechshop.common;
+import java.math.BigDecimal;
+
+import com.proxtechshop.api.response.NotificationResponse;
 
 public class Constants {
+	
+	public static final BigDecimal PROMOTION=new BigDecimal(0);
 
 	public static final String STATIC_RESOURCE_PATH_CONFIG = "/assets/**";
 
@@ -65,7 +70,13 @@ public class Constants {
 	
 	public static final String CART_PATH = "/gio-hang";
 	
-	public static final String CART_URL_ACTION = "/addProductToCart";
+	public static final String CART_ADDPRODUCT_URL_ACTION_API = "/addProductToCart";
+	
+	public static final String PAYMENT_PRODUCTDETAIL_URL_API="/productDetailpayment";
+	
+	public static final String PAYMENT_URL_API="/payment";
+	
+	public static final String ORDER_URL_API="/order";
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

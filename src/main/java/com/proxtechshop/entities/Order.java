@@ -60,8 +60,8 @@ public class Order implements Serializable {
 	@JoinColumn(name = "customer_id", nullable = false)
 	private Customer customer;
 	
-	@OneToMany(mappedBy = "order")
-	private Set<OrderDetail> orderDetails = new HashSet<>();
+//	@OneToMany(mappedBy = "order")
+//	private Set<OrderDetail> orderDetails = new HashSet<>();
 
 	@OneToMany(mappedBy = "order")
 	private Set<OrderHistory> orderHistories = new HashSet<>();
@@ -156,13 +156,13 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	public Set<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(Set<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
+//	public Set<OrderDetail> getOrderDetails() {
+//		return orderDetails;
+//	}
+//
+//	public void setOrderDetails(Set<OrderDetail> orderDetails) {
+//		this.orderDetails = orderDetails;
+//	}
 
 	public Set<OrderHistory> getOrderHistories() {
 		return orderHistories;

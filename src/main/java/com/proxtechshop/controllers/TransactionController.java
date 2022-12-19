@@ -13,10 +13,6 @@ public class TransactionController {
 	public String OrderDetail(Model model) {
 		return Constants.ORDERDETAIL_VIEW;
 	}
-	@RequestMapping(value=Constants.PAYMENT_PATH)
-	public String Payment(Model model) {
-		return Constants.PAYMENT_VIEW;
-	}
 	@RequestMapping(value=Constants.ORDERS_PATH)
 	public String Orders(Model model) {
 		return Constants.ORDERS_VIEW;

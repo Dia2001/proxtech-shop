@@ -6,17 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.proxtechshop.converter.CartConverter;
+import com.proxtechshop.converter.UserConverter;
 import com.proxtechshop.entities.Customer;
 import com.proxtechshop.entities.User;
 import com.proxtechshop.functionalinterface.IUserLogin;
 import com.proxtechshop.repositories.CustomerRepository;
 import com.proxtechshop.repositories.UserRepository;
+import com.proxtechshop.services.InforCustomerService;
+import com.proxtechshop.services.PaymentService;
 import com.proxtechshop.services.UserService;
+import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.viewmodels.CustomUserModelView;
+import com.proxtechshop.viewmodels.PaymentCustomerDetailViewModel;
 import com.proxtechshop.viewmodels.UserView;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,InforCustomerService{
 
 	@Autowired
 	private UserRepository userRepo;
@@ -26,6 +32,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private IUserLogin userLogin;
+	
+	@Autowired
+	private UserConverter userConverter;
 
 	@Override
 	public boolean Register(UserView userv) {
@@ -106,5 +115,12 @@ public class UserServiceImpl implements UserService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public PaymentCustomerDetailViewModel inforCustomerPayment() {
+		User user = userRepo.getByUsername(GetUserUtil.GetUserName());
+		PaymentCustomerDetailViewModel infoCustomerPayment=userConverter.covertToCustomerViewModel(user.getCustomer());
+		return infoCustomerPayment;
 	}
 }

@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.proxtechshop.api.response.ProductsPaymentResponse;
+import com.proxtechshop.entities.Cart;
 import com.proxtechshop.entities.Customer;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.User;
@@ -32,6 +34,16 @@ public class ProductConverter {
 		return productDetailViewModel;
 	}
 
+	public ProductsPaymentResponse converToModel(Cart cartEntity) {
+		ProductsPaymentResponse productsPaymentResponse = new ProductsPaymentResponse();
+		productsPaymentResponse.setProduct_id(cartEntity.getProductId());
+		productsPaymentResponse.setName(cartEntity.getProduct().getName());
+		productsPaymentResponse.setDescription(cartEntity.getProduct().getDescription());
+		productsPaymentResponse.setThumbnail(cartEntity.getProduct().getThumbnail());
+		productsPaymentResponse.setPrice(cartEntity.getPrice());
+		productsPaymentResponse.setQuantity(cartEntity.getQuantity());
+		return productsPaymentResponse;
+	}
 	
 
 }
