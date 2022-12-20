@@ -1,8 +1,6 @@
 package com.proxtechshop.common;
 import java.math.BigDecimal;
 
-import com.proxtechshop.api.response.NotificationResponse;
-
 public class Constants {
 	
 	public static final BigDecimal PROMOTION=new BigDecimal(0);
@@ -61,22 +59,41 @@ public class Constants {
 	
 	public static final String ORDERS_PATH="/don-hang";
 	public static final String ORDERS_VIEW="orders/orders";
-	
-	
-	public static final String ADMIN_PATH="admin/products";
-	public static final String ADMIN_VIEW="admin/products/products";
 
 	public static final String CART_VIEW="cart/index" ;
 	
 	public static final String CART_PATH = "/gio-hang";
 	
-	public static final String CART_ADDPRODUCT_URL_ACTION_API = "/addProductToCart";
+	public static final String CART_URL_ACTION = "/addProductToCart";
+	
+	public static final int PRODUCT_PAGE_SIZE = 1;
 	
 	public static final String PAYMENT_PRODUCTDETAIL_URL_API="/productDetailpayment";
-	
 	public static final String PAYMENT_URL_API="/payment";
 	
 	public static final String ORDER_URL_API="/order";
+
+	public static final String ADMIN_PATH="/admin";
+	
+	public static final String ADMIN_PRODUCTMNG_VIEW="admin/productmanagement/index";
+		public static final String ADMIN_FOFMPRODUCT_VIEW="admin/productmanagement/formproduct";
+	public static final String ADMIN_CUSTOMERSMNG_VIEW="admin/customermanagement/index";
+	public static final String ADMIN_MEMBERSMNG_VIEW="admin/membermanagement/index";
+		public static final String ADMIN_FOFMMEMBER_VIEW="admin/membermanagement/formmember";
+	public static final String ADMIN_CATEGORIESMNG_VIEW="admin/categorymanagement/index";
+	public static final String ADMIN_ORDERMNG_VIEW="admin/ordermanagement/index";
+	public static final String ADMIN_PROFILE_VIEW="admin/adminprofile/index";
+	public static final String ADMIN_BRAND_VIEW="admin/brandmanagement/index";
+	
+	public static final String ADMIN_PRODUCTMNG_PATH="/admin/productmanagement";
+		public static final String ADMIN_FOFMPRODUCT_PATH="/admin/formproduct";
+	public static final String ADMIN_CUSTOMERSMNG_PATH="/admin/customermanagement";
+	public static final String ADMIN_MEMBERSMNG_PATH="/admin/membermanagement";
+		public static final String ADMIN_FORMMEMBER_PATH="/admin/formmember";
+	public static final String ADMIN_CATEGORIESMNG_PATH="/admin/categorymanagement";
+	public static final String ADMIN_ORDERMNG_PATH="/admin/ordermanagement";
+	public static final String ADMIN_PROFILE_PATH="/admin/adminprofile";
+	public static final String ADMIN_BRAND_PATH="/admin/brandmanagement";
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

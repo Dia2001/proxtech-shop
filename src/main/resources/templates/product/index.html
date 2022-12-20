@@ -1,313 +1,160 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ProxTech - Shop</title>
+	<title>ProxTech - Shop</title>
 
-  <!-- Include css, lib global -->
-  <th:block th:include="includes/resource-global" />
+	<!-- Include css, lib global -->
+	<th:block th:include="includes/resource-global" />
+	<link rel="stylesheet" href="/assets/css/product.css">
 </head>
 
 <body>
-  <!-- Include header -->
-  <th:block th:include="includes/header"> </th:block>
+	<!-- Include header -->
+	<th:block th:include="includes/header"> </th:block>
 
-  <!-- Content here-->
+	<!-- Content here-->
+	
+	<script th:inline="javascript">
+		let currentPage = [[${productPage.currentPage}]];
+		let totalPage = [[${productPage.totalPage}]];
+	</script>
 
-  <!-- products content -->
-  <div class="bg-main">
-    <div class="container">
-      <div class="box">
-        <div class="breadcumb">
-          <a href="./index.html">home</a>
-          <span><i class='bx bxs-chevrons-right'></i></span>
-          <a href="./products.html">all products</a>
-        </div>
-      </div>
-      <div class="box">
-        <div class="row">
-          <div class="col-3 filter-col" id="filter-col">
-            <div class="box filter-toggle-box">
-              <button class="btn-flat btn-hover" id="filter-close">close</button>
-            </div>
-            <div class="box">
-              <span class="filter-header">
-                Categories
-              </span>
-              <ul class="filter-list">
-                <li><a href="#">Wireless</a></li>
-                <li><a href="#">In-ear headphone</a></li>
-                <li><a href="#">Over-ear headphone</a></li>
-                <li><a href="#">sport headphone</a></li>
-              </ul>
-            </div>
-            <div class="box">
-              <span class="filter-header">
-                Price
-              </span>
-              <div class="price-range">
-                <input type="text">
-                <span>-</span>
-                <input type="text">
-              </div>
-            </div>
-            <div class="box">
-              <ul class="filter-list">
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="status1">
-                    <label for="status1">
-                      On sale
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="status2">
-                    <label for="status2">
-                      In stock
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="status3">
-                    <label for="status3">
-                      Featured
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="box">
-              <span class="filter-header">
-                Brands
-              </span>
-              <ul class="filter-list">
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1" checked="checked">
-                    <label for="remember1">
-                      JBL
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember2">
-                    <label for="remember2">
-                      Beat
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember3">
-                    <label for="remember3">
-                      Logitech
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember4">
-                    <label for="remember4">
-                      Samsung
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember5">
-                    <label for="remember5">
-                      Sony
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="box">
-              <span class="filter-header">
-                Colors
-              </span>
-              <ul class="filter-list">
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      Red
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember2">
-                    <label for="remember2">
-                      Blue
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember3">
-                    <label for="remember3">
-                      White
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember4">
-                    <label for="remember4">
-                      Pink
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember5">
-                    <label for="remember5">
-                      Yellow
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="box">
-              <span class="filter-header">
-                rating
-              </span>
-              <ul class="filter-list">
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      <span class="rating">
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                      </span>
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      <span class="rating">
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bx-star'></i>
-                      </span>
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      <span class="rating">
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                      </span>
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      <span class="rating">
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                      </span>
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="group-checkbox">
-                    <input type="checkbox" id="remember1">
-                    <label for="remember1">
-                      <span class="rating">
-                        <i class='bx bxs-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                        <i class='bx bx-star'></i>
-                      </span>
-                      <i class='bx bx-check'></i>
-                    </label>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-9 col-md-12">
-            <div class="box filter-toggle-box">
-              <button class="btn-flat btn-hover" id="filter-toggle">filter</button>
-            </div>
-            <div class="box">
-              <div class="row" id="products"></div>
-            </div>
-            <div class="box">
-              <ul class="pagination">
-                <li><a href="#"><i class='bx bxs-chevron-left'></i></a></li>
-                <li><a href="#" class="active">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end products content -->
+	<!-- products content -->
+	<div class="bg-main">
+		<div class="container">
+			<div class="box">
+				<div class="breadcumb">
+					<a th:href="${@homePath}">Trang chủ</a>
+					<span><i class='bx bxs-chevrons-right'></i></span>
+					<a href="./products.html">all products</a>
+				</div>
+			</div>
+			<div class="box">
+				<h3>Thương hiệu</h3>
+				<div class="box-brands">
+					<a th:href="${@productPath} + '?b=' + ${brand.id}"  th:each="brand : ${@brands.get()}" class="box-brand" th:id="'b-link-' + ${brand.id}">
+						<p th:text="${brand.name}"></p>
+						<img th:src="${@uploadImageURL} + ${brand.thumbnail}" alt="Logo thương hiệu"/>
+					</a>
+				</div>
+			</div>
+			<div class="box" method="get" th:action="${@productPath}">
+				<div class="row">
+					<div class="col-3 filter-col" id="filter-col">
+						<div class="box filter-toggle-box">
+							<button class="btn-flat btn-hover" id="filter-close">close</button>
+						</div>
+						<div class="box">
+							<span class="filter-header">Danh mục</span>
+							<ul class="filter-list">
+								<li th:each="category : ${@categories.get()}">
+									<a th:href="${@productPath} + '?c=' + ${category.id}" th:text="${category.name}"></a>
+								</li>
+							</ul>
+						</div>
+						<h3>Tiêu chí lọc</h3>
+						<div class="box">
+							<span class="filter-header">Giá</span>
+							<div class="price-range">
+								<input name="sp" id="sp" type="number" >
+								<span>-</span>
+								<input name="ep" id="ep" type="number" >
+							</div>
+						</div>
+						<div class="box">
+							<span class="filter-header">Thương hiệu</span>
+							<ul class="filter-list">
+								<li th:each="brand : ${@brands.get()}">
+									<div class="group-checkbox">
+										<input type="checkbox" name="b" th:id="'b-' + ${brand.id}" th:value="${brand.id}"/>
+										<label th:for="'b-' + ${brand.id}" >
+											<p th:text="${brand.name}"></p>
+											<i class='bx bx-check'></i>
+										</label>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="box">
+							<span class="filter-header">Thông số</span>
+							<ul class="filter-list">
+								<li th:each="attribute : ${@attributeAndValues.get()}" class="filter-attribute">
+									<p th:text="${attribute.name}" ></p>
+									<select th:id="'a-' + ${attribute.id}">
+										<option value=""></option>
+										<option th:each="value : ${attribute.values}" th:text="${value}"></option>
+									</select>
+								</li>
+							</ul>
+						</div>
+						<button id="btnView">Xem</button>
+					</div>
+					<div class="col-9 col-md-12">
+						<div class="box filter-toggle-box">
+							<button class="btn-flat btn-hover" id="filter-toggle">filter</button>
+						</div>
+						<div class="box">
+							<div class="row" id="products">
+								<div th:each="product : ${productPage.products}" class="col-3 col-md-6 col-sm-12">
+									<div class="product-card">
+										<div class="product-card-img">
+											<img th:src="${@uploadImageURL} + ${product.thumbnail}"
+												th:alt="'Hình ảnh ' + ${product.name}">
+											<img th:src="${@uploadImageURL} + ${product.thumbnail}"
+												th:alt="'Hình ảnh ' + ${product.name}">
+										</div>
+										<div class="product-card-info">
+											<div class="product-btn">
+												<a th:href="${@productPath} + '/' + ${product.slug}"
+													class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
+												<button class="btn-flat btn-hover btn-cart-add">
+													<i class='bx bxs-cart-add'></i>
+												</button>
+												<button class="btn-flat btn-hover btn-cart-add">
+											productPage		<i class='bx bxs-heart'></i>
+												</button>
+											</div>
+											<div th:text="${product.name}" class="product-card-name"></div>
+											<div class="product-card-price">
+												<span><del th:text="'$' + ${product.price}"></del></span>
+												<span th:text="'$' + ${product.price}" class="curr-price"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box">
+							<ul class="pagination">
+								<li th:if="${productPage.currentPage > 1}"><a href="#" id="btnPrev"><i class='bx bxs-chevron-left'></i></a></li>
+								<li th:each="i : ${#numbers.sequence(1 ,productPage.totalPage, 1)}">
+									<a th:id="'p-' + ${i}" th:class="${productPage.currentPage} == ${i} ? 'active' : ''" th:text="${i}"></a>
+								</li>
+								<li th:if="${productPage.currentPage < productPage.totalPage}"><a href="#" id="btnNext"><i class='bx bxs-chevron-right'></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end products content -->
 
 
-  <!-- Content end -->
+	<!-- Content end -->
 
-  <!-- Include footer-->
-  <th:block th:include="includes/footer" />
+	<!-- Include footer-->
+	<th:block th:include="includes/footer" />
 
-  <!-- Include script global-->
-  <th:block th:include="includes/js-global" />
-  <script src="/assets/js/products.js"></script>
+	<!-- Include script global-->
+	<th:block th:include="includes/js-global" />
+	<script src="/assets/js/products.js"></script>
 </body>
 
 </html>

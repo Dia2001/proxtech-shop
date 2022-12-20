@@ -28,7 +28,9 @@
 				<div class="profile-tab-nav border-right">
 					<div class="p-4">
 						<div class="img-circle text-center mb-3">
-							<img th:src="@{/assets/images/tuat.jpg}" alt="Image"
+							<img th:if="${user.image}" th:src="'/uploads/user/'+${user.image}" alt="Image"
+								class="shadow">
+							<img th:unless="${user.image}" th:src="@{/assets/images/tuat.jpg}" alt="Image"
 								class="shadow">
 						</div>
 						<h4 th:text="${user.fullName}" class="text-center"></h4>
@@ -54,9 +56,11 @@
 						<p th:if="${flag}" th:text="${message}" style="color: green;"></p>
 						<p th:unless="${flag}" th:text="${message}" style="color: red;"></p>
 						<form th:action="@{/profile}" id="profile" th:object="${user}"
-							method="POST">
+							method="POST"  enctype="multipart/form-data">
 							<h3 class="mb-4">Thông tin</h3>
 							<div class="row">
+								<input type="file" id="avatar" name="avatar"
+							accept="image/png, image/jpeg">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Tên đầy đủ</label> <input type="text"
@@ -107,8 +111,8 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>Mật khẩu mới</label> <input name="newpass"
-											id="newpass" type="password" class="form-control">
+										<label>Mật khẩu mới</label> <input name="newpass" id="newpass"
+											type="password" class="form-control">
 									</div>
 								</div>
 								<div class="col-md-6">

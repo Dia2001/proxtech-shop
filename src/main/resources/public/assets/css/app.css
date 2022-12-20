@@ -819,6 +819,7 @@ footer ul li {
 
 .group-checkbox {
     text-align: left;
+    display: flex;
 }
 
 .group-checkbox input {

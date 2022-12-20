@@ -14,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import com.proxtechshop.entities.Brand;
 import com.proxtechshop.entities.Category;
 import com.proxtechshop.entities.Product;
+import com.proxtechshop.entities.ProductAttributeValue;
+import com.proxtechshop.entities.ProductAttribute;
+import com.proxtechshop.functionalinterface.IAttribute;
 import com.proxtechshop.functionalinterface.IBrands;
 import com.proxtechshop.functionalinterface.ICategories;
 import com.proxtechshop.functionalinterface.IRandomProduct;
@@ -25,7 +28,10 @@ import com.proxtechshop.functionalinterface.IUserLoginProfile;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CategoryRepository;
 import com.proxtechshop.repositories.ProductRepository;
+import com.proxtechshop.repositories.ProductAttributeRepository;
+import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.services.UserService;
+import com.proxtechshop.viewmodels.ProductAttributeViewModel;
 
 @Configuration
 public class GlobalDataBean {
@@ -38,10 +44,16 @@ public class GlobalDataBean {
 
 	@Autowired
 	private ProductRepository pr;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
+	@Autowired
+	private ProductAttributeRepository par;
+
+	@Autowired
+	private ProductAttributeValueRepository pavr;
+
 	@Bean(name = "userLoginProfile")
 	public IUserLoginProfile userLoginProfile() {
 		return () -> userService.loadProfile();
@@ -89,5 +101,29 @@ public class GlobalDataBean {
 	@Bean(name = "top8SellingProduct")
 	public ITop8SellingProduct top8SellingProduct() {
 		return () -> pr.getTopSellingProduct(PageRequest.of(0, 8));
+	}
+
+	@Bean(name = "attributeAndValues")
+	public IAttribute attributeAndValues() {
+		return () -> {
+			List<ProductAttributeViewModel> attributeValues = new ArrayList<>();
+			List<ProductAttributeValue> values = pavr.findAll();
+			List<ProductAttribute> attributes = par.findAll();
+
+			attributes.forEach(attribute -> {
+				if(attribute.isStatus()) {
+					List<String> valueActives = new ArrayList<>();
+					values.forEach(value -> {
+						if (attribute.getId() == value.getAttributeId()) {
+							valueActives.add(value.getValue());
+						}
+					});
+					ProductAttributeViewModel pavm
+						= new ProductAttributeViewModel(attribute.getId(), attribute.getName(), valueActives.toArray(new String[valueActives.size()]));
+					attributeValues.add(pavm);
+				}
+			});
+			return attributeValues;
+		};
 	}
 }
