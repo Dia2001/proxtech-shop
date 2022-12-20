@@ -57,10 +57,10 @@
 				<a th:href="${@homePath}" class="logo">
 					<img src="/assets/icons/ProxTech.svg" alt="Logo shop">
 				</a>
-				<div class="search">
-					<input type="text" placeholder="Tìm kiếm">
-					<i class='bx bx-search-alt'></i>
-				</div>
+				<form class="search" th:action="${@productPath}" method="get">
+					<input type="text" name="q" id="search-input" placeholder="Tìm kiếm">
+					<button><i class='bx bx-search-alt'></i></button>
+				</form>
 				<ul class="user-menu">
 					<li>
 						<th:block th:include="includes/box-user" />

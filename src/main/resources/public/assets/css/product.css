@@ -9,6 +9,12 @@
 	padding-left: 20px;
 }
 
+.box-sort {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 .box-brands > .box-brand {
 	margin-top: 10px;
     display: flex;

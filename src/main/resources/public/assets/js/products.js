@@ -10,6 +10,7 @@
 	let btnPrev = document.getElementById('btnPrev')
 	let btnNext = document.getElementById('btnNext')
 	let linkPages = Array.from(document.querySelectorAll('[id^="p-"]'))
+	let sortSelect = document.getElementById("sort")
 	
 	let paramString = document.location.search.split('?')[1]
 	let queryString = new URLSearchParams(paramString)
@@ -20,6 +21,7 @@
 	let startPrice = queryString.get('sp') || null
 	let endPrice = queryString.get('ep') || null
 	let sort = queryString.get('s') || null
+	let search = queryString.get('q') || null
 	let attributes = []
 	
 	queryString.forEach((v, k) => {
@@ -27,8 +29,6 @@
 	    attributes.push({k, v})
 	  }
 	})
-	
-	console.table(listBrandIds, categoryId, startPrice, endPrice, sort, attributes)
 	
 	const loadFilter = () => {
 		if (listBrandIds) {
@@ -61,6 +61,17 @@
 				attributeSelect.value = item.v
 			}
 		})
+		if (sort) {
+			if (sortSelect) {
+				sortSelect.value = sort
+			}
+		}
+		if (search) {
+			let searchInput = document.getElementById("search-input")
+			if (searchInput) {
+				searchInput.value = search
+			}
+		}
 	}
 	
 	loadFilter()
@@ -80,6 +91,13 @@
 	    })
 	  }
 	  window.location = document.location.pathname + paramString
+	}
+	
+	if (sortSelect) {
+		sortSelect.onchange = (e) => {
+			sort = e.target.value
+		    acceptFilter()
+		} 
 	}
 	
 	if (btnPrev) {

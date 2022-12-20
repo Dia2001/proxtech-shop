@@ -87,9 +87,9 @@ public class ProductServicelmpl implements ProductService {
 	@Override
 	public ProductPagingViewModel getFilter(ProductFilter filter, Map<Integer, String[]> attribute) {
 		int pageSize = Constants.PRODUCT_PAGE_SIZE;
-		int totalRecord = customProductRepository.getTotalRecordFilter(pageSize, filter);
+		int totalRecord = customProductRepository.getTotalRecordFilter(pageSize, filter, attribute);
 		int currentPage = filter.getPage() > 1 ? filter.getPage() : 1;
-		List<Product> products = customProductRepository.getFilter(pageSize, filter);
+		List<Product> products = customProductRepository.getFilter(pageSize, filter, attribute);
 		int totalPage = totalRecord % pageSize == 0 ? (totalRecord / pageSize) : (totalRecord / pageSize) + 1;
 		ProductPagingViewModel productPage = new ProductPagingViewModel(products, totalPage, pageSize, currentPage,
 				productConverter);

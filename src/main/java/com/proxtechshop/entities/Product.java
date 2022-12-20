@@ -35,6 +35,9 @@ public class Product implements Serializable {
 	@Column(name = "id", length = 36, nullable = false)
 	private String id;
 	
+	@Column(name = "brand_id", insertable = false, updatable = false, nullable = false)
+	private int brandId;
+	
 	@Column(name = "name", length = 100, nullable = false)
 	private String name;
 	

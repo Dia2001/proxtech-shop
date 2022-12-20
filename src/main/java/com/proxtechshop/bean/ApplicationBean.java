@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.functionalinterface.IUserLogin;
 import com.proxtechshop.repositories.UserRepository;
+import com.proxtechshop.utils.OptionFilterProduct;
 
 @Configuration
 public class ApplicationBean {
@@ -29,7 +30,7 @@ public class ApplicationBean {
 	public String homePath() {
 		return Constants.HOME_PATH;
 	}
-	
+
 	@Bean(name = "loginPath")
 	public String loginPath() {
 		return Constants.LOGIN_PATH;
@@ -39,7 +40,7 @@ public class ApplicationBean {
 	public String signUpPath() {
 		return Constants.SIGNUP_PATH;
 	}
-	
+
 	@Bean(name = "logoutPath")
 	public String logoutPath() {
 		return Constants.LOGOUT_PATH;
@@ -49,7 +50,7 @@ public class ApplicationBean {
 	public String productPath() {
 		return Constants.PRODUCT_PATH;
 	}
-	
+
 	@Bean(name = "profilePath")
 	public String profilePath() {
 		return Constants.PROFILE_PATH;
@@ -65,6 +66,18 @@ public class ApplicationBean {
 		return "contact@prox.tech";
 	}
 
+	@Bean(name = "optionFilterProducts")
+	public OptionFilterProduct[] optionFilter() {
+		return new OptionFilterProduct[] {
+				new OptionFilterProduct("Sản phẩm mới", "new"),
+				new OptionFilterProduct("Giá cao tới thấp", "high"),
+				new OptionFilterProduct("Giá thấp tới cao", "short"),
+				new OptionFilterProduct("Tên A-Z", "az"),
+				new OptionFilterProduct("Tên Z-A", "za"),
+				new OptionFilterProduct("Top bán chạy", "sell")
+		};
+	}
+
 	@Bean
 	public ModelMapper modelMapper() {
 		ModelMapper modelMapper = new ModelMapper();
@@ -76,7 +89,7 @@ public class ApplicationBean {
 	public IUserLogin userLogin() {
 		return () -> {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			
+
 			if (!(auth instanceof AnonymousAuthenticationToken)) {
 				UserDetails userDetails = (UserDetails) auth.getPrincipal();
 				return userRepo.getByUsername(userDetails.getUsername());
