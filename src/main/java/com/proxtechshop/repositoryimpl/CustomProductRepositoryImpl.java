@@ -59,6 +59,16 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			predList.add(builder.like(root.get("name"), "%" + filter.getSearch() + "%"));
 		}
 		
+		if (filter.getStartPrice() >= 0) {
+			predList.add(builder.or(builder.gt(root.get("price"), filter.getStartPrice()),
+					builder.equal(root.get("price"), filter.getStartPrice())));
+		}
+		
+		if (filter.getEndPrice() > 0 && filter.getStartPrice() < filter.getEndPrice()) {
+			predList.add(builder.or(builder.lt(root.get("price"), filter.getEndPrice()),
+					builder.equal(root.get("price"), filter.getEndPrice())));
+		}
+		
 		if (filter.getBrandIds() != null && filter.getBrandIds().length > 0) {
 			List<Integer> listBrandId = new ArrayList<Integer> ();
 			for (int brandId : filter.getBrandIds()) {
