@@ -1,7 +1,9 @@
 package com.proxtechshop.serviceimpl;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.converter.UserConverter;
 import com.proxtechshop.entities.Customer;
+import com.proxtechshop.entities.Role;
 import com.proxtechshop.entities.User;
 import com.proxtechshop.functionalinterface.IUserLogin;
 import com.proxtechshop.repositories.CustomerRepository;
+import com.proxtechshop.repositories.RoleRepository;
 import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.InforCustomerService;
 import com.proxtechshop.services.UserService;
@@ -37,6 +41,8 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 
 	@Autowired
 	private UserConverter userConverter;
+	@Autowired
+	RoleRepository roleRepository;
 
 	@Override
 	public boolean Register(UserView userv) {
@@ -50,10 +56,17 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 			String encodedPassword = passwordEncoder.encode(userv.getPassword());
 			user.setCreatedDate(new Date());
 			user.setPassword(encodedPassword);
+			//set role customer
+			Role role=roleRepository.getReferenceById("customer");
+			HashSet<Role> roles= new HashSet<>();
+			roles.add(role);
+			user.setRoles(roles);
+			//
 			userCheck = userRepo.save(user);
 			if (userCheck == null) {
 				return false;
 			}
+			
 			Customer customer = new Customer();
 			customer.setFullName(userv.getFullname());
 			customer.setEmail(userv.getUsername());
@@ -75,14 +88,17 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 		System.out.println(userv.getUsername());
 		User user = userRepo.getByUsername(userv.getUsername());
 		Customer customer = customerRepo.findOneByUserId(user.getId());
-		customer.setFullName(userv.getUsername());
+		customer.setFullName(userv.getFullName());
 		customer.setAddress(userv.getAddress());
 		customer.setPhone(userv.getPhone());
 		// handle avatar
+		if(file!=null&&!file.isEmpty())
+		{
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		customer.setImage(fileName);
-		String uploadDir = "/user";
-		FileUploadUtil.saveFile(uploadDir, fileName, file);
+			customer.setImage(fileName);
+			String uploadDir = "/user/"+customer.getId()+"/";
+			FileUploadUtil.saveFile(uploadDir, fileName, file);
+		}
 		Customer checkCustomer = customerRepo.save(customer);
 		if (checkCustomer != null)
 			return true;

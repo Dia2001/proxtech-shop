@@ -1,6 +1,10 @@
 package com.proxtechshop.controllers;
 
 import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.services.UserService;
@@ -69,7 +74,7 @@ public class UserController {
 		boolean flag = userService.UpdateProfile(userv, file);
 
 		if (flag) {
-			page.addObject("user", userv);
+			page.addObject("user", userService.loadProfile());
 			page.addObject("message", "Đã thay đổi thành công!");
 			page.addObject("flag", flag);
 
@@ -79,6 +84,7 @@ public class UserController {
 			page.addObject("flag", flag);
 
 		}
+		page.setViewName(Constants.PROFILE_VIEW);
 		return page;
 	}
 

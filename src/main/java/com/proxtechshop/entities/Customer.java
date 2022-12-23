@@ -34,7 +34,7 @@ public class Customer implements Serializable {
 	@Column(name = "user_id", updatable = false, insertable = false, length = 36, nullable = false)
 	private String userId;
 	
-	@Column(name = "full_name", length = 100, nullable = false)
+	@Column(name = "full_name", length = 100,columnDefinition = "nvarchar", nullable = false)
 	private String fullName;
 	
 	@Column(name = "email", length = 50, nullable = false)

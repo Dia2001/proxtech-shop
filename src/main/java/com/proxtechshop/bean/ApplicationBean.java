@@ -64,6 +64,23 @@ public class ApplicationBean {
 	public String emailShop() {
 		return "contact@prox.tech";
 	}
+	// admin beans area
+	
+	@Bean(name="formMemberPath")
+	public String formMemberPath() {
+		return Constants.ADMIN_FORMMEMBER_PATH;
+	}
+	
+	@Bean(name="memberPath")
+	public String memberPath() {
+		return Constants.ADMIN_MEMBERSMNG_PATH;
+	}
+	
+	@Bean(name="customerPath")
+	public String customerPath() {
+		return Constants.ADMIN_CUSTOMERSMNG_PATH;
+	}
+	//
 
 	@Bean
 	public ModelMapper modelMapper() {

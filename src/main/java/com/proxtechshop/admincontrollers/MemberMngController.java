@@ -46,15 +46,18 @@ public class MemberMngController {
 	
 	@RequestMapping(value=Constants.ADMIN_FORMMEMBER_PATH,method=RequestMethod.POST)
 	String ModifyMember(User user,Model model) {
-		if(memberService.Modify(user)) {
+		if(memberService.UpdateMember(user)) {
 			model.addAttribute("flag",true);
 			model.addAttribute("msg","Sửa thành công!");
 		}
 		else {
 			model.addAttribute("flag",false);
-			model.addAttribute("msg","Sửa không thành công!");
+			model.addAttribute("msg","Tên người dùng bị trùng hoặc không hợp lệ!");
+			//without add this,it will reject error id null
+			model.addAttribute("member",user);
+			return Constants.ADMIN_FOFMMEMBER_VIEW;
 		}
-		return Constants.ADMIN_FOFMMEMBER_VIEW;
+		return findPaginated(1, "username", "asc", model);
 	}
 	
 	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH+"/delete")
@@ -68,6 +71,22 @@ public class MemberMngController {
 		}
 		return findPaginated(1, "username", "asc", model);
 	}
+	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH+"/filter")
+	public String searchMember(@RequestParam("search") String search, Model model) {
+		if(search=="")
+		{
+			model.addAttribute("flag",false);
+			model.addAttribute("msg","Không để trống phần tìm kiếm");
+			model.addAttribute("search",null);
+			return findPaginated(1, "username", "asc", model);
+		}
+		else
+		{
+			model.addAttribute("search",search);
+			return findPaginated(1, "username", "asc", model);
+		}
+		
+	}
 	
 	//pagination
 	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH+"/page/{pageNo}")
@@ -76,8 +95,26 @@ public class MemberMngController {
 			@RequestParam("sortDir") String sortDir,
 			Model model) {
 		int pageSize = 4;
-		
-		Page<User> page = memberService.paginated(pageNo, pageSize, sortField, sortDir);
+		//handler search engine
+		Page<User> page;
+		if(model.getAttribute("search")==null)
+			page = memberService.paginated(pageNo, pageSize, sortField, sortDir);
+		else
+		{
+			String search=model.getAttribute("search").toString();
+			page=memberService.FilterAndPaginated(search, pageNo, pageSize, sortField, sortDir);
+			if(page.getContent().size()==0)
+			{
+				model.addAttribute("flag",false);
+				model.addAttribute("msg","Không tìm thấy "+search);
+			}
+			else
+			{
+				model.addAttribute("flag",true);
+				model.addAttribute("msg","Tìm thấy "+page.getContent().size()+" kết quả của "+search);
+			}
+		}
+		//end
 		List<User> listMembers = page.getContent();
 		
 		model.addAttribute("currentPage", pageNo);

@@ -47,7 +47,7 @@
 							<option value="CA">Laptop</option>
 							<option value="FR">Điện thoại</option>
 							<option value="DE">Phụ kiên</option> -->
-							<option th:each="item:${category}" th:value="${item.id}"
+							<option th:each="item:${@categories.get()}" th:value="${item.id}"
 								th:text="${item.name}"></option>
 						</select> <select
 							class="block w-fit h-fit py-2.5 px-4 w-full text-md bg-transparent border-0 border-b-2 border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
@@ -56,16 +56,16 @@
 							<option value="CA">Apple</option>
 							<option value="FR">Lenovo</option>
 							<option value="DE">Sony</option> -->
-							<option th:each="item:${brand}" th:value="${item.id}"
+							<option th:each="item:${@brands.get()}" th:value="${item.id}"
 								th:text="${item.name}"></option>
-						</select> <select
+						</select> <!-- <select
 							class="block w-fit h-fit py-2.5 px-4 w-full text-md bg-transparent border-0 border-b-2 border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
 							<option selected>--Chọn trạng thái--</option>
-							<option value="US">Còn hàng</option>
+							<option value="1">Còn hàng</option>
 							<option value="CA">Mới</option>
 							<option value="FR">Gần hết</option>
 							<option value="DE">Hết hàng</option>
-						</select>
+						</select> -->
 					</div>
 					<div class="flex justify-end gap-8">
 						<button
@@ -115,7 +115,10 @@
 									Số lượng</th>
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-									tình trạng của sản phẩm</th>
+									Danh mục sản phẩm</th>
+								<th
+									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+									Giá cả</th>
 								<th
 									class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
 									Thao tác</th>
@@ -141,8 +144,7 @@
 									</div>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<p class="text-gray-900 whitespace-no-wrap">_chưa load
-										được_</p>
+									<p th:text="${product.brand.name}" class="text-gray-900 whitespace-no-wrap"></p>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
 									<p th:text="${product.createdDate}"
@@ -153,29 +155,11 @@
 										class="text-gray-900 whitespace-no-wrap"></p>
 								</td>
 								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-									<!-- khong xoa, con su dung --> <!-- <div class="flex flex-wrap gap-2 max-w-[200px]">
-										<span
-											class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-											<span aria-hidden
-											class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-											<span class="relative">Mới</span>
-										</span> <span
-											class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-											<span aria-hidden
-											class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-											<span class="relative">Mới</span>
-										</span> <span
-											class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-											<span aria-hidden
-											class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-											<span class="relative">Mới</span>
-										</span> <span
-											class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-											<span aria-hidden
-											class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-											<span class="relative">Mới</span>
-										</span>
-									</div> -->
+									<span th:each="ctg : ${product.categories}" th:text="${ctg.name}+','"></span>
+								</td>
+								<td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+									<p th:text="${product.price}+' Đồng'"
+										class="text-gray-900 whitespace-no-wrap"></p>
 								</td>
 								<td class="px-5 py-5 bg-white text-sm flex items-center gap-4">
 									<a

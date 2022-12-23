@@ -1,8 +1,11 @@
 package com.proxtechshop.bean;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -15,6 +18,7 @@ import com.proxtechshop.entities.Brand;
 import com.proxtechshop.entities.Category;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttributeValue;
+import com.proxtechshop.entities.Role;
 import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.functionalinterface.IAttribute;
 import com.proxtechshop.functionalinterface.IBrands;
@@ -28,6 +32,7 @@ import com.proxtechshop.functionalinterface.IUserLoginProfile;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CategoryRepository;
 import com.proxtechshop.repositories.ProductRepository;
+import com.proxtechshop.repositories.RoleRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
 import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.services.UserService;
@@ -53,6 +58,9 @@ public class GlobalDataBean {
 
 	@Autowired
 	private ProductAttributeValueRepository pavr;
+	
+	@Autowired
+	private RoleRepository roleRepo;
 
 	@Bean(name = "userLoginProfile")
 	public IUserLoginProfile userLoginProfile() {
@@ -67,7 +75,26 @@ public class GlobalDataBean {
 			return brands;
 		};
 	}
-
+	//admin area
+	@Bean(name="roles")//without customer role
+	List<Role> roles(){
+		List<Role> getRoles=roleRepo.findAll();
+		for(int i=0;i<getRoles.size();i++) {
+			if(getRoles.get(i).roleKey.equalsIgnoreCase("customer")) {
+				getRoles.remove(i);
+				break;
+			}
+		}
+		return getRoles;
+	}
+	
+	@Bean(name="customerRole")
+	Role customerRole() {
+		return roleRepo.getReferenceById("customer");
+	}
+	
+	
+	//end
 	@Bean(name = "top3Brand")
 	public ITop3Brand top3brand() {
 		return () -> br.findTop3ByOrderByIdDesc();
@@ -102,7 +129,10 @@ public class GlobalDataBean {
 	public ITop8SellingProduct top8SellingProduct() {
 		return () -> pr.getTopSellingProduct(PageRequest.of(0, 8));
 	}
-
+	@Bean(name="allAttribute")
+	public List<ProductAttribute> allAttribute(){
+		return par.findAll();
+	}
 	@Bean(name = "attributeAndValues")
 	public IAttribute attributeAndValues() {
 		return () -> {
