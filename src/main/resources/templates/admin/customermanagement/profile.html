@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/dms/admin-layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/profile.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<title>Thông tin người dùng</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<section class="py-5 my-5">
+			<div class="container-profile">
+				<h1 class="mb-5">Thông tin cá nhân</h1>
+				<div class="bg-white shadow rounded-lg d-block d-sm-flex">
+					<div class="profile-tab-nav border-right">
+						<div class="p-4">
+							<div class="img-circle text-center mb-3">
+								<img th:if="${user.image}"
+									th:src="${@uploadImageURL}+'user/'+${user.id}+'/'+${user.image}"
+									alt="Image" class="shadow"> <img
+									th:unless="${user.image}" th:src="@{/assets/images/tuat.jpg}"
+									alt="Image" class="shadow">
+							</div>
+							<h4 th:text="${user.fullName}" class="text-center"></h4>
+						</div>
+						<div class="nav flex-column nav-pills" id="v-pills-tab"
+							role="tablist" aria-orientation="vertical">
+
+							<a class="nav-link active" id="account-tab" data-toggle="pill"
+								href="#account" role="tab" aria-controls="account"
+								aria-selected="true"> <i class="fa fa-home text-center mr-1"></i>
+								Thông tin cá nhân
+							</a> <a class="nav-link" id="password-tab" data-toggle="pill"
+								href="#password" role="tab" aria-controls="password"
+								aria-selected="false"> <i class="fa fa-key text-center mr-1"></i>
+								Đổi mật khẩu
+							</a>
+						</div>
+					</div>
+					<div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+
+						<div class="tab-pane fade show active" id="account"
+							role="tabpanel" aria-labelledby="account-tab">
+							<p th:if="${flag}" th:text="${message}" style="color: green;"></p>
+							<p th:unless="${flag}" th:text="${message}" style="color: red;"></p>
+							<form th:action="${@customerPath}+'/profile/'+${user.userId}" id="profile"
+								th:object="${user}" method="POST" enctype="multipart/form-data">
+								<h3 class="mb-4">Thông tin</h3>
+								<div class="row">
+									<input type="file" id="avatar" name="avatar"
+										accept="image/png, image/jpeg">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Tên đầy đủ</label> <input type="text"
+												class="form-control" th:field="*{fullName}">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Tài khoản</label> <input type="text"
+												class="form-control" th:field="*{username}" readonly>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Số điện thoại</label> <input type="text"
+												class="form-control" th:field="*{phone}">
+										</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Địa chỉ</label>
+											<textarea style="resize: none;" th:field="*{address}"
+												class="form-control" rows="4"></textarea>
+										</div>
+									</div>
+								</div>
+								<div>
+									<button class="btn btn-primary" style="color:blue;" type="submit">Cập nhật</button>
+									<a href="/" class="btn btn-light">Trở về trang chủ</a>
+								</div>
+							</form>
+						</div>
+
+						<div class="tab-pane fade" id="password" role="tabpanel"
+							aria-labelledby="password-tab">
+							<p th:if="${flag}" th:text="${message}" style="color: green;"></p>
+							<p th:unless="${flag}" th:text="${message}" style="color: red;"></p>
+							<form th:action="${@customerPath}+'/profile/changepass/'+${user.userId}" name="changePassword"
+								method="POST">
+								<h3 class="mb-4">Thiết lập mật khẩu</h3>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Mật khẩu cũ</label> <input type="password"
+												id="oldpass" name="oldpass" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Mật khẩu mới</label> <input name="newpass"
+												id="newpass" type="password" class="form-control">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Nhập lại mật khẩu</label> <input id="confirmpassword"
+												name="confirmpassword" type="password" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div>
+									<button class="btn btn-danger text-red" style="color:red;" type="submit">Thay dổi</button>
+									<button class="btn btn-light" type="reset">hủy thay
+										đổi</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<script src="/assets/js/profile-validation.js"></script>
+					<script
+						src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+					<script
+						src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+					<script
+						src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js"
+						defer></script>
+					<script>
+					 const myTimeout = setTimeout(msg, 5000);
+
+			            function msg() {
+			                document.getElementById("msg").hidden = true;
+			            }
+					</script>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

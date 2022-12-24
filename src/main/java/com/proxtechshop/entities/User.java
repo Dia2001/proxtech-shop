@@ -57,10 +57,14 @@ public class User implements Serializable {
 	)
 	private Set<Role> roles = new HashSet<>();
 	
+	
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "user")
 	private Customer customer;
 	
-	public User() {}
+	public User() {
+		
+	}
+	
 
 	public String getId() {
 		return id;

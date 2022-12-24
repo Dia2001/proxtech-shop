@@ -28,4 +28,6 @@ public interface ProductService {
 	boolean updateProduct(Product product);
 	
 	HashMap<String, String> showAtrsAndValues(String productId);
+	
+	void setAttributeValues(Product product);
 }

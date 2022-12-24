@@ -30,7 +30,7 @@ public class ManagementController {
 	@Autowired
 	TypesProductService typesProductService;
 	@RequestMapping(Constants.ADMIN_PATH)
-	public RedirectView testAdmin2(Model model) {
+	public RedirectView adminMng(Model model) {
 		return new RedirectView(Constants.ADMIN_PRODUCTMNG_PATH);
 	}
 	
@@ -39,11 +39,6 @@ public class ManagementController {
 	public String ProductMng(Model model)
 	{
 		return findPaginated(1, "name", "asc", model);
-	}
-	@RequestMapping(Constants.ADMIN_CUSTOMERSMNG_PATH)
-	public String CustomerMng(Model model)
-	{
-		return Constants.ADMIN_CUSTOMERSMNG_VIEW;
 	}
 //	@RequestMapping(Constants.ADMIN_MEMBERSMNG_PATH)
 //	public String MemberMng(Model model)

@@ -6,6 +6,9 @@ import com.proxtechshop.entities.User;
 import com.proxtechshop.entities.Customer;
 
 public class CustomUserModelView {
+	private String userId;
+
+	private String id;
 	private String fullName;
 	private String username;
 	private String phone;
@@ -38,11 +41,14 @@ public class CustomUserModelView {
 	}
 
 	public CustomUserModelView(User user, Customer customer, boolean isCustomer) {
+		this.userId=user.getId();
+		this.id=customer.getId();
 		this.fullName = customer.getFullName();
 		this.username = user.getUsername();
 		this.phone = customer.getPhone();
 		this.address = customer.getAddress();
 		this.createdDate = customer.getCreatedDate();
+		this.image=customer.getImage();
 		this.newPassword = "";
 		this.password = user.getPassword();
 		this.isCustomer = isCustomer;
@@ -93,6 +99,20 @@ public class CustomUserModelView {
 
 	public String getAddress() {
 		return address;
+	}
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public void setAddress(String address) {

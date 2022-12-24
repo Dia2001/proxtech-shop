@@ -51,7 +51,9 @@ public class ProductAttributeValue implements Serializable {
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
-	public ProductAttributeValue() {}
+	public ProductAttributeValue() {
+		
+	}
 	
 	public String getName() {
 		return productAttribute.getName();

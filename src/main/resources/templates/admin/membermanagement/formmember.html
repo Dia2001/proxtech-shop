@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="admin/dms/admin-layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/dms/admin-layout">
+
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bảng thành viên</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Bảng thành viên</title>
 </head>
+
 <body>
-	<div layout:fragment="content">
-		<p>Bảng thành viên</p>
-	</div>
+    <div layout:fragment="content">
+        <form class="mx-auto max-w-[900px] bg-[#f5f5f5] min-h-[90vh]" th:action="${@formMemberPath}" method="post" th:object="${member}">
+         <h1 th:if="${member.id}" class="text-[27px] font-bold">Thay đổi thành viên</h1>
+          <h1 th:unless="${member.id}" class="text-[27px] font-bold">Tạo mới thành viên</h1>
+          <h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
+				<h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
+            <div class="flex justify-center gap-8 p-6">
+                <div class="">
+                    <img class="w-[120px] h-[120px] rounded-full object-cover shadow-small"
+                        src="https://w7.pngwing.com/pngs/141/425/png-transparent-user-profile-computer-icons-avatar-profile-s-free-angle-rectangle-profile-cliparts-free-thumbnail.png"
+                        alt="avatar" />
+                </div>
+                <div>
+                    <label th:if="${member.id}" for="">ID </label>
+                    <input th:if="${member.id!=null}" th:field="*{id}"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly />
+                    <br />
+                    <label for="">Tên tài khoản</label>
+                    <input th:field="*{username}"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+            </div>
+            <div class="flex justify-center ">
+                <div class="">
+                    <h5 class="font-semibold text-[21px]">Phân quyền</h5> 
+                    <label class="text-[18px] flex flex-col gap-2">Roles:
+                    <div class="flex gap-2" th:each="role : ${@roles}">
+							<input type="checkbox" class="p-2 cursor-pointer"
+								th:text="${role.roleName}" th:value="${role.roleKey}"
+								th:field="*{roles}" />
+					</div>
+                     
+                </label>
+                   
+                    <div th:if="${member.createdDate}">
+                        <label for="createDate">Ngày tạo</label>
+                        <h6 th:text="${member.createdDate}" class="text-semibold"></h6>
+                    </div>
+                </div>
+                </div>
+                <div class="flex justify-between m-6">
+                    <div class="flex gap-6">
+                        <button type="reset"
+                            class="border border-yellow-500 bg-yellow-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-yellow-600 focus:outline-none focus:shadow-outline">
+                            Hủy thay đổi
+                        </button>
+                        <a th:if="${member.id}" th:href="${@memberPath}+'/delete?id='+${member.id}"
+                            class="border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline">
+                            Xóa thành viên
+                        </a>
+                    </div>
+                    <div>
+                    	<h6 class="text-black/50">Default password: 12345</h6>
+                    </div>
+                    <div class="flex gap-6">
+                        <button type="submit"
+                            class="border border-indigo-500 bg-indigo-500 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-indigo-600 focus:outline-none focus:shadow-outline">
+                            Xác nhận
+                        </button>
+                        <a th:href="${@memberPath}"
+                            class="border border-gray-200 bg-gray-200 text-gray-700 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-300 focus:outline-none focus:shadow-outline">
+                            Trở về
+                        </a>
+                    </div>
+                </div>
+        </form>
+    </div>
 </body>
+
 </html>

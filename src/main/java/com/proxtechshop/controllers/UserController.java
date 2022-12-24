@@ -69,7 +69,7 @@ public class UserController {
 		boolean flag = userService.UpdateProfile(userv, file);
 
 		if (flag) {
-			page.addObject("user", userv);
+			page.addObject("user", userService.loadProfile());
 			page.addObject("message", "Đã thay đổi thành công!");
 			page.addObject("flag", flag);
 
@@ -79,6 +79,7 @@ public class UserController {
 			page.addObject("flag", flag);
 
 		}
+		page.setViewName(Constants.PROFILE_VIEW);
 		return page;
 	}
 

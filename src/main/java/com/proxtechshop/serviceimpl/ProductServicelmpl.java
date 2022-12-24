@@ -3,11 +3,13 @@ package com.proxtechshop.serviceimpl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -169,17 +171,37 @@ public class ProductServicelmpl implements ProductService {
 		productRepository.save(product);
 		return true;
 	}
-	/*
-	 * public HashMap<String, String> showAtrsAndValues(String productId){
-	 * HashMap<String, String> data=new HashMap<String, String>(); //get list
-	 * attributes value of product List<ProductAttributeValue>
-	 * attributeValues=pavr.findAllByProductId(productId); //get list attributes of
-	 * product for (ProductAttributeValue attrvalue : attributeValues) {
-	 * ProductAttribute
-	 * attribute=par.getReferenceById(attrvalue.getProductAttribute().getId());
-	 * data.put(attribute.getName(), attrvalue.getValue()); } return data; }
-	 */
-
+	
+	//error
+	@Override
+	public void setAttributeValues(Product product) {
+		List<ProductAttribute> productAttributes = par.findAll();
+		//repo
+		HashSet<ProductAttributeValue> attrValueStore=new HashSet<>();
+		//attrValue of Product
+		List<ProductAttributeValue> attrValueOfProduct = pavr.findAllByProductId(product.getId());
+		
+		for (ProductAttribute attr : productAttributes) {
+			boolean flag=true;
+			ProductAttributeValue tmp=new ProductAttributeValue();
+			tmp.setProductAttribute(attr);
+			for (ProductAttributeValue AttrValue : attrValueOfProduct) {
+				if(tmp.getAttributeId()==AttrValue.getAttributeId())
+				{
+					tmp.setValue(AttrValue.getValue());
+					flag=false;
+					break;
+				}
+			}
+			if(flag)
+			tmp.setValue("");
+			tmp.setProduct(product);
+			attrValueStore.add(tmp);
+		}
+		product.setProductAttributeValues(attrValueStore);
+	}
+	
+	
 	@Override
 	public HashMap<String, String> showAtrsAndValues(String productId) {
 		HashMap<String, String> data = new HashMap<String, String>();

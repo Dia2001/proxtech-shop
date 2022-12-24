@@ -21,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 		try {
 			ctg.setDescription("");
+			ctg.setThumbnail("");
 			ctgRepo.save(ctg);
 		} catch (Exception e) {
 			return false;
