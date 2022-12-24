@@ -24,7 +24,7 @@ public class ApplicationBean {
 	public String uploadImageURL() {
 		return Constants.UPLOAD_PATH_URL;
 	}
-
+	
 	@Bean(name = "homePath")
 	public String homePath() {
 		return Constants.HOME_PATH;
@@ -79,6 +79,10 @@ public class ApplicationBean {
 	@Bean(name="customerPath")
 	public String customerPath() {
 		return Constants.ADMIN_CUSTOMERSMNG_PATH;
+	}
+	@Bean(name="customerProfile")
+	public String customerProfile() {
+		return Constants.ADMIN_FORMCUSTOMER_PATH;
 	}
 	//
 

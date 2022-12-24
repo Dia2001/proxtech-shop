@@ -1,5 +1,6 @@
 package com.proxtechshop.admincontrollers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,21 +9,80 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.entities.Customer;
 import com.proxtechshop.services.CustomerService;
+import com.proxtechshop.services.UserService;
+import com.proxtechshop.viewmodels.CustomUserModelView;
 
 @Controller
 public class CustomerController {
 	
 	@Autowired
 	CustomerService customerService;
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(Constants.ADMIN_CUSTOMERSMNG_PATH)
 	public String getCustomer(Model model) {
 		return findPaginated(1, "fullName", "asc", model);
+	}
+	
+	@RequestMapping(Constants.ADMIN_CUSTOMERSMNG_PATH+"/profile")
+	public String Profile(@RequestParam("id")String id,Model model) {
+		CustomUserModelView mv = userService.loadProfile(id);
+		System.out.println(mv);
+		model.addAttribute("user", mv);
+		return Constants.ADMIN_FORMCUSTOMER_VIEW;
+	}
+	
+	@RequestMapping(value = Constants.ADMIN_CUSTOMERSMNG_PATH+"/profile/{id}", method = RequestMethod.POST)
+	public ModelAndView UpdateProfile(CustomUserModelView userv,@PathVariable(name="id") String id, @RequestParam(name = "avatar") MultipartFile file)
+			throws IOException {
+		ModelAndView page = new ModelAndView();
+		boolean flag = userService.UpdateProfile(userv, file);
+
+		if (flag) {
+			page.addObject("user", userService.loadProfile(id));
+			page.addObject("message", "Đã thay đổi thành công!");
+			page.addObject("flag", flag);
+
+		} else {
+			page.addObject("user", userv);
+			page.addObject("message", "Thay đổi không thành công!");
+			page.addObject("flag", flag);
+
+		}
+		page.setViewName(Constants.ADMIN_FORMCUSTOMER_VIEW);
+		return page;
+	}
+	
+	@RequestMapping(value = Constants.ADMIN_CUSTOMERSMNG_PATH+"/profile/changepass/{id}", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView changePassWord(@PathVariable(name="id") String id,@RequestParam(name = "oldpass") String oldPass,
+			@RequestParam(name = "newpass") String newPass) {
+		ModelAndView page = new ModelAndView();
+		CustomUserModelView userv = userService.loadProfile(id);
+		page.addObject("user", userv);
+		boolean flag = userService.changePassword(id,oldPass, newPass);
+
+		if (flag) {
+			page.addObject("message", "Thay đổi mật khẩu thành công!");
+			page.addObject("flag", flag);
+			page.setViewName(Constants.ADMIN_FORMCUSTOMER_VIEW);
+		} else {
+			page.addObject("message", "Lỗi khi thay đổi mật khẩu!");
+			page.addObject("flag", flag);
+			page.setViewName(Constants.ADMIN_FORMCUSTOMER_VIEW);
+		}
+
+		return page;
 	}
 	
 	@RequestMapping(Constants.ADMIN_CUSTOMERSMNG_PATH+"/delete")

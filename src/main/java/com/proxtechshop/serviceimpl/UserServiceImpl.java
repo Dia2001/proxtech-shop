@@ -1,7 +1,6 @@
 package com.proxtechshop.serviceimpl;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -122,10 +121,43 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 			return null;
 		}
 	}
+	//using in customer management
+	@Override
+	public CustomUserModelView loadProfile(String idUser) {
+		User user = userRepo.getReferenceById(idUser);
+		if (user != null) {
+			CustomUserModelView profile;
+			Customer customer = customerRepo.findOneByUserId(idUser);
+			if (customer != null) {
+				profile = new CustomUserModelView(user, customer, true);
+			} else {
+				profile = new CustomUserModelView(user, new Customer(), false);
+			}
+			return profile;
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public boolean changePassword(String oldPass, String newPass) {
 		User user = userLogin.get();
+		if (user == null) {
+			return false;
+		}
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String currentPass = user.getPassword();
+		if (passwordEncoder.matches(oldPass, currentPass)) {
+			String encodedNewPassword = passwordEncoder.encode(newPass);
+			user.setPassword(encodedNewPassword);
+			userRepo.save(user);
+			return true;
+		}
+		return false;
+	}
+	@Override
+	public boolean changePassword(String idUser,String oldPass, String newPass) {
+		User user = userRepo.getReferenceById(idUser);
 		if (user == null) {
 			return false;
 		}
