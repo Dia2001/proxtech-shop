@@ -93,9 +93,10 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 		// handle avatar
 		if(file!=null&&!file.isEmpty())
 		{
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 			customer.setImage(fileName);
 			String uploadDir = "/user/"+customer.getId()+"/";
+			FileUploadUtil.removeFolder(uploadDir + customer.getImage());
 			FileUploadUtil.saveFile(uploadDir, fileName, file);
 		}
 		Customer checkCustomer = customerRepo.save(customer);

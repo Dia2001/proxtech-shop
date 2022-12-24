@@ -66,7 +66,12 @@ public class UserController {
 	public ModelAndView UpdateProfile(CustomUserModelView userv, @RequestParam(name = "avatar") MultipartFile file)
 			throws IOException {
 		ModelAndView page = new ModelAndView();
-		boolean flag = userService.UpdateProfile(userv, file);
+		boolean flag = false;
+		try {
+			flag = userService.UpdateProfile(userv, file);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 		if (flag) {
 			page.addObject("user", userService.loadProfile());
