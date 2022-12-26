@@ -10,4 +10,8 @@ public interface CartService {
 	boolean addProductToCart(CartRequest cartRequest);
 	
 	List<CartViewModel> getAllProductToCustomer();
+	
+	boolean irProduct(String productId, int number);
+	
+	boolean removeProduct(String productId);
 }

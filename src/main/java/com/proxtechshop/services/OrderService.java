@@ -8,5 +8,11 @@ import com.proxtechshop.viewmodels.OrderViewModel;
 public interface OrderService {
 	boolean CreateOrder(PaymentCustomerRequest paymentCustomer);
 	
-	List<OrderViewModel> getOrdersByOneCustomer();
+	List<OrderViewModel> getOrdersByOneCustomer(String keyword,String statusId);
+	
+	OrderViewModel getOneOrderByCustomer(String orderId);
+	
+	List<String> getListIdProductOrder(String orderId);
+	
+	boolean CreateRepruchase(PaymentCustomerRequest paymentCustomer, String orderId);
 }

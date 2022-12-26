@@ -2,8 +2,9 @@ package com.proxtechshop.api.response;
 
 public class NotificationResponse {
 	
-	String msg;
+	private String msg;
 
+	private boolean check;
 	public NotificationResponse() {
 		super();
 	}
@@ -14,6 +15,14 @@ public class NotificationResponse {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public boolean isCheck() {
+		return check;
+	}
+
+	public void setCheck(boolean check) {
+		this.check = check;
 	}
 
 	@Override

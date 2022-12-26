@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public boolean addProductToCart(CartRequest cartRequest) {
-
+        System.out.println(cartRequest.toString());
 		Cart check = null;
 		User user = userRepository.getByUsername(GetUserUtil.GetUserName());
 		Product product = productRepository.findById(cartRequest.getProductId()).get();
@@ -87,5 +87,54 @@ public class CartServiceImpl implements CartService {
 		}
 		return carts;
 	}
+
+	@Override
+	public boolean irProduct(String productId, int number) {
+		System.out.println(productId+"aaaaaaaaa"+number);
+		Cart check = null;
+		User user = userRepository.getByUsername(GetUserUtil.GetUserName());
+		Product product = productRepository.findById(productId).get();
+		if(number==-1) {
+			Cart inforCart = cartRepository.findByCustomer_idAndProduct_id(user.getCustomer().getId(),
+					productId);
+			// If the product added to the cart exceeds the number of products available,
+			// error
+			if (product.getQuantity() >= inforCart.getQuantity() +(-1)) {
+				Cart cart = inforCart;
+				cart.setQuantity(inforCart.getQuantity() + (-1));
+				check = cartRepository.save(cart);
+			}
+		}else {
+			Cart inforCart = cartRepository.findByCustomer_idAndProduct_id(user.getCustomer().getId(),
+					productId);
+			// If the product added to the cart exceeds the number of products available,
+			// error
+			if (product.getQuantity() >= inforCart.getQuantity() +1) {
+				Cart cart = inforCart;
+				cart.setQuantity(inforCart.getQuantity() +1);
+				check = cartRepository.save(cart);
+			}
+		}
+		return check != null ? true : false;
+	}
+
+	@Override
+	public boolean removeProduct(String productId) {
+		
+		boolean check = false;
+		
+		User user = userRepository.getByUsername(GetUserUtil.GetUserName());
+		Cart cart=cartRepository.findByCustomer_idAndProduct_id(user.getCustomer().getId(),productId);
+		System.out.println(cart.toString());
+		try {
+			cartRepository.delete(cart);
+			check=true;
+		}catch (Exception e) {
+		}
+		
+		return check;
+	}
+
+	
 
 }

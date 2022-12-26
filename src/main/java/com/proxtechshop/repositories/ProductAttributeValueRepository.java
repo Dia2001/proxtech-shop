@@ -10,4 +10,6 @@ import com.proxtechshop.entities.ProductAttributeValue;
 @Component
 public interface ProductAttributeValueRepository extends JpaRepository<ProductAttributeValue, Integer> {
 	List<ProductAttributeValue> findAllByProductId(String id);
+	
+	ProductAttributeValue findByProductIdAndAttributeId(String productId, int attributeId);
 }

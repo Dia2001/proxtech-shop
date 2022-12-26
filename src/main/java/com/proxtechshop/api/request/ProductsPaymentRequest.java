@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsPaymentRequest {
-	List<String> listProductId;
+	private List<String> listProductId;
 
-	
+	private String status;
 
 	public ProductsPaymentRequest() {
 		super();
@@ -20,9 +20,19 @@ public class ProductsPaymentRequest {
 		this.listProductId = listProductId;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "ProductsPaymentRequest [listProductId=" + listProductId + "]";
+		return "ProductsPaymentRequest [listProductId=" + listProductId + ", status=" + status + "]";
 	}
+
+	
 	
 }

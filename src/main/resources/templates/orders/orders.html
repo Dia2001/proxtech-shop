@@ -25,6 +25,7 @@
 						<h4>Trạng thái đơn hàng:</h4>
 						<div>
 							<select
+							id="select-status"
 								class="form-select appearance-none
                             block
                             w-full
@@ -41,12 +42,13 @@
                             m-0
                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
 								aria-label="Default select example">
-								<option selected>Tất cả đơn hàng</option>
-								<option value="1">Đã xác nhận</option>
-								<option value="2">Đang giao hàng</option>
-								<option value="3">Giao thành công</option>
-								<option value="4">Giao không thành công</option>
-								<option value="5">Đã hủy</option>
+								<option value="" selected>Tất cả đơn hàng</option>
+								<option value="created">Chờ xác nhận</option>
+								<option value="confirm">Đã xác nhận</option>
+								<option value="shipping">Đang giao hàng</option>
+								<option value="elivered">Giao thành công</option>
+								<option value="#">Giao không thành công</option>
+								<option value="#">Đã hủy</option>
 							</select>
 						</div>
 					</div>
@@ -55,84 +57,57 @@
 			<div class="relative my-[16px] flex w-[80%] mx-auto gap-4 box-border">
 				<i
 					class="fa fa-search absolute top-2 left-2 text-[36px] text-black/50"
-					aria-hidden="true"></i> <input type="text"
+					aria-hidden="true"></i> <input id="search" type="text"
 					placeholder="Tìm sản phẩm (Mã đơn, tên sản phẩm)..."
 					class="basis-10/12 pl-[48px] py-[16px] box-border focus:outline-1 focus:outline-black/25" />
 				<button class="basis-2/12">Tìm đơn hàng</button>
 			</div>
+			<input hidden id="path" type="text" th:value="${@uploadImageURL}"/>
+			<div id="listOrder">
 			<!-- List Order -->
-			<div class="w-[80%] mx-auto my-[24px] bg-white">
+			<div class="w-[80%] mx-auto p-[24px] bg-white"
+				th:each="order : ${orders}">
 				<div class="flex justify-between items-center p-4">
-					<h4 class="text-[18px] text-black/50">Giao hàng thành công</h4>
-					<h4 class="text-right">Mã sp: 24234234234</h4>
+					<h4 class="rounded-xl bg-blue-600  text-[18px] text-black/200"
+						th:text="${order.orderStatus.name}"></h4>
+					<h4 class="text-right" th:text="'Mã hóa đơn: '+${order.id}"></h4>
 				</div>
 				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
+				<div th:each="oneProduct : ${order.products}">
+					<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
+					<div class="flex justify-between items-center p-4">
+						<div class="flex gap-4 basis-9/12">
+							<div class="relative w-[90px] h-[90px]">
+								<img class="w-[85px] h-[85px] object-cover object-center"
+									th:src="${@uploadImageURL} + ${oneProduct.product.thumbnail}" />
+								<h6
+								th:text="'X'+${oneProduct.number}"
+									class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white"></h6>
+							</div>
+							<div>
+								<h6 th:text="${oneProduct.product.description}"></h6>
+								<h6 th:text="${oneProduct.product.name}"></h6>
+							</div>
 						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
+						<h4 class="basis-3/12 text-right" th:text="${#numbers.formatInteger(oneProduct.product.price,3,'POINT')} +' VNĐ'"></h4>
 					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
-				</div>
-				<!-- order -->
-				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
-						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
-					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
-				</div>
-				<!-- order -->
-				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
-						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
-					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
 				</div>
 				<!-- order -->
 				<div class="p-4 flex justify-end">
 					<div>
 						<h5 class="text-right text-[18px] py-2">
-							Tổng tiền: <b>127.000 Đ</b>
+							Tổng tiền: <b th:text="${#numbers.formatInteger(order.checkoutPrice,3,'POINT')} +' VNĐ'" ></b>
 						</h5>
 						<div class="flex justify-between">
 							<button
+							th:onclick="repurchase([[${order.id}]])"
 								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-								<span
+								<span 
 									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
 									Mua lại </span>
 							</button>
-							<button
+							<button 
+								th:onclick="detailProduct([[${order.id}]])"
 								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
 								<span
 									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -143,93 +118,12 @@
 				</div>
 			</div>
 			<!-- List order -->
-			
-			<!-- List Order -->
-			<div class="w-[80%] mx-auto my-[24px] bg-white">
-				<div class="flex justify-between items-center p-4">
-					<h4 class="text-[18px] text-black/50">Giao hàng thành công</h4>
-					<h4 class="text-right">Mã sp: 24234234234</h4>
-				</div>
-				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
-						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
-					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
-				</div>
-				<!-- order -->
-				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
-						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
-					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
-				</div>
-				<!-- order -->
-				<!-- order -->
-				<hr class="w-[95%] text-black/50 mx-auto my-[8px]" />
-				<div class="flex justify-between items-center p-4">
-					<div class="flex gap-4 basis-9/12">
-						<div class="relative w-[90px] h-[90px]">
-							<img class="w-[85px] h-[85px] object-cover object-center"
-								src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-card-40-iphone14pro-202209_FMT_WHH?wid=508&hei=472&fmt=p-jpg&qlt=95&.v=1663611329204" />
-							<h6
-								class="w-fit h-fit px-1 rounded-[3px] absolute right-1 bottom-1 bg-black/75 text-white">x1</h6>
-						</div>
-						<div>
-							<h6>iPhone 14 Pro Max</h6>
-							<h6>iPhone</h6>
-						</div>
-					</div>
-					<h4 class="basis-3/12 text-right">99.000 VNĐ</h4>
-				</div>
-				<!-- order -->
-				<div class="p-4 flex justify-end">
-					<div>
-						<h5 class="text-right text-[18px] py-2">
-							Tổng tiền: <b>127.000 Đ</b>
-						</h5>
-						<div class="flex justify-between">
-							<button
-								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-								<span
-									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-									Mua lại </span>
-							</button>
-							<button
-								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-								<span
-									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-									Xem chi tiết </span>
-							</button>
-						</div>
-					</div>
-				</div>
 			</div>
-			<!-- List order -->
 		</div>
 	</div>
-	<th:block th:include="includes/footer"> </th:block>
+	<th:block th:include="includes/footer">
+	</th:block>
+	<script src="/assets/js/order.js"></script>
 </body>
 
 </html>

@@ -22,7 +22,6 @@ public class CartController {
 		ModelAndView mav = new ModelAndView(Constants.CART_VIEW);
 		List<CartViewModel> carts = cartService.getAllProductToCustomer();
 		mav.addObject("carts",carts);
-		System.out.print(carts);
 		return mav;
 	}
 	

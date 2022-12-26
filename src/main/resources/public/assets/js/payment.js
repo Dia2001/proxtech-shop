@@ -11,12 +11,21 @@ function paymentHandle() {
 	console.log(listProductId);
 	productsDetail(listProductId);
 	function productsDetail(listProductId) {
+		var status;
+		if (localStorage.getItem("check") === null) {
+			// This is cart
+			 status="cart";
+		}else{
+			 status=localStorage.getItem("check");
+		}
+		console.log(status);
+		debugger
 		var infoListIdProduct = {
 			listProductId: Array.from(listProductId.split(',')).map(function(item) {
 				return item;
-			})
+			}),
+			status: status
 		}
-		console.log(infoListIdProduct);
 		$.ajax({
 			type: "POST",
 			contentType: "application/json",
@@ -26,8 +35,9 @@ function paymentHandle() {
 			timeout: 100000,
 			success: function(data) {
 				document.getElementById('listproduct').innerHTML = createListProduct(data);
+				localStorage.removeItem("check");
 				console.log(data);
-				checkPayment(listProductId);
+				checkPayment(listProductId,status);
 			},
 			error: function(e) {
 				alert("Lỗi không lấy được sản phẩm");
@@ -39,17 +49,6 @@ function paymentHandle() {
 
 	document.getElementById("ipFullname").readOnly = true;
 	document.getElementById("ipPhone").readOnly = true;
-
-	// check button payment
-	//console.log(checkPayment!=null?'aaaa'+checkPayment:bbb+checkPayment);
-	/*let checkPayment=document.getElementById('btnPayment');
-	console.log(document.getElementById('btnPayment'))
-	console.log(checkPayment);
-	checkPayment.onclick=function(){
-		console.log("HELLO");
-	}
-	console.log("aaaa");*/
-
 };
 $(document).ready(paymentHandle);
 
@@ -62,7 +61,7 @@ function adress(keyword, addressDefault) {
 	}
 }
 
-function checkPayment(listProductId) {
+function checkPayment(listProductId,status) {
 	// check button payment
 	//console.log(checkPayment!=null?'aaaa'+checkPayment:bbb+checkPayment);
 	let checkPayment = document.getElementById('btnPayment');
@@ -70,29 +69,48 @@ function checkPayment(listProductId) {
 	console.log(checkPayment);
 	checkPayment.onclick = function() {
 		var infoListIdProduct = {
-			listProductId: Array.from(listProductId.split(',')).map(function(item) {
-				return item;
-			}),
-			note: $("#ipNote").val(),
-			addressShip: $("#adressShip").text()
-		}
-		$.ajax({
-			type: "POST",
-			contentType: "application/json",
-			url: "/api/v1/customer/payment",
-			data: JSON.stringify(infoListIdProduct),
-			dataType: 'json',
-			timeout: 100000,
-			success: function(data) {
-				console.log(data.msg);
-				//checkPayment();
-			},
-			error: function(e) {
-				alert("Lỗi không thanh toán được");
-				console.log("ERROR: ", e);
+				listProductId: Array.from(listProductId.split(',')).map(function(item) {
+					return item;
+				}),
+				note: $("#ipNote").val(),
+				addressShip: $("#adressShip").text(),
+				status: status
 			}
-		});
-	 console.log("bbbb");
+		if(status==="cart"){
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "/api/v1/customer/payment",
+				data: JSON.stringify(infoListIdProduct),
+				dataType: 'json',
+				timeout: 100000,
+				success: function(data) {
+					console.log(data.msg);
+					//checkPayment();
+				},
+				error: function(e) {
+					alert("Lỗi không thanh toán được");
+					console.log("ERROR: ", e);
+				}
+			});
+		}else{
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "/api/v1/customer/payment/Repurchase",
+				data: JSON.stringify(infoListIdProduct),
+				dataType: 'json',
+				timeout: 100000,
+				success: function(data) {
+					console.log(data.msg);
+					//checkPayment();
+				},
+				error: function(e) {
+					alert("Lỗi không thanh toán được");
+					console.log("ERROR: ", e);
+				}
+			});
+		}
 	}
 }
 
@@ -100,7 +118,7 @@ function createListProduct(data) {
 	let rows = [];
 	var totalPayment = 0;
 	for (var i = 0; i < data.length; i++) {
-		totalPayment += data[i]["price"];
+		totalPayment += data[i]["price"] * data[i]["quantity"];
 		let row = `<div class="card_item">
 					<div class="product_img">
 						<img

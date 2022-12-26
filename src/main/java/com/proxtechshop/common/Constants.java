@@ -51,7 +51,7 @@ public class Constants {
 	
 	public static final String CHANGEPASS_URL_PATH = "/change-password";
 	
-	public static final String ORDERDETAIL_PATH="/chi-tiet-don-hang";
+	public static final String ORDERDETAIL_PATH="/don-hang/{id}";
 	public static final String ORDERDETAIL_VIEW="orderdetail/orderdetail";
 	
 	public static final String PAYMENT_PATH="/thanh-toan";
@@ -69,9 +69,20 @@ public class Constants {
 	public static final int PRODUCT_PAGE_SIZE = 1;
 	
 	public static final String PAYMENT_PRODUCTDETAIL_URL_API="/productDetailpayment";
+	
 	public static final String PAYMENT_URL_API="/payment";
 	
+	public static final String PAYMENT_URL_REPURCHASE_API="/payment/Repurchase";
 	public static final String ORDER_URL_API="/order";
+	
+	public static final String ORDER_URL_FILTER="/getFilterOrder";
+	
+	public static final String ORDER_URL_REPURCHASE_API="getRepurchase/getOrder";
+	
+	public static final String CART_URL_IRPODUCT="/irProduct";
+	
+	public static final String CART_URL_REMOVEPRODUCT="/removeProduct";
+	
 
 	public static final String ADMIN_PATH="/admin";
 	
