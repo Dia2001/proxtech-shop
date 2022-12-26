@@ -287,4 +287,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderCheck != null && orderDetailCheck != null && orderHistoryCheck != null ? true : false;
 	}
 
+	@Override
+	public List<Order> loadAllOrders() {
+		return orderRepository.findAll();
+	}
+
 }

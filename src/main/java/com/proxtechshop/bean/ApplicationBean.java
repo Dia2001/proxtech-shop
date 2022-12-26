@@ -1,5 +1,7 @@
 package com.proxtechshop.bean;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.proxtechshop.common.Constants;
+import com.proxtechshop.entities.OrderStatus;
 import com.proxtechshop.functionalinterface.IUserLogin;
+import com.proxtechshop.repositories.OrderStatusRepository;
 import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.utils.OptionFilterProduct;
 
@@ -20,6 +24,8 @@ public class ApplicationBean {
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private OrderStatusRepository orderStatus;
 
 	@Bean(name = "uploadImageURL")
 	public String uploadImageURL() {
@@ -111,6 +117,18 @@ public class ApplicationBean {
 	public String specificationPath() {
 		return Constants.ADMIN_FOFMATTRIBUTE_PATH;
 	}
+	
+	@Bean(name="orderStatus")
+	public List<OrderStatus> orderStatus() {
+		return orderStatus.findAll();
+	}
+	
+	@Bean(name="orderMngPath")
+	public String orderMngPath() {
+		return Constants.ADMIN_ORDERMNG_PATH;
+	}
+	
+	//end
 
 	@Bean
 	public ModelMapper modelMapper() {

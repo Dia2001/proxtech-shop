@@ -59,11 +59,10 @@ public class ManagementController {
 //	{
 //		return Constants.ADMIN_CATEGORIESMNG_VIEW;
 //	}
-	@RequestMapping(Constants.ADMIN_ORDERMNG_PATH)
-	public String OrderMng(Model model)
-	{
-		return Constants.ADMIN_ORDERMNG_VIEW;
-	}
+	/*
+	 * @RequestMapping(Constants.ADMIN_ORDERMNG_PATH) public String OrderMng(Model
+	 * model) { return Constants.ADMIN_ORDERMNG_VIEW; }
+	 */
 	@RequestMapping(Constants.ADMIN_PROFILE_PATH)
 	public String ProfileAdminMng(Model model)
 	{
@@ -101,14 +100,13 @@ public class ManagementController {
 			model.addAttribute("search", search);
 			model.addAttribute("brand",brand);
 			model.addAttribute("ctg",ctg);
-			model.addAttribute("flag",true);
+			model.addAttribute("anchor",true);
 		}else {
-			model.addAttribute("flag",null);
+			model.addAttribute("anchor",null);
 			model.addAttribute("msg","Không để trống phần tìm kiếm");
 		}
 		return findPaginated(1, "name", "asc", model);
 	}
-	
 	
 	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
@@ -119,7 +117,7 @@ public class ManagementController {
 		
 		//handler search engine
 		Page<Product> page;
-		boolean flag=model.getAttribute("flag")==null;
+		boolean flag=model.getAttribute("anchor")==null;
 		if(flag) {
 			page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);			
 		}else {
