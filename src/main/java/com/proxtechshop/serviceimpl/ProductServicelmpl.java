@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.common.Constants;
+import com.proxtechshop.common.Validate;
 import com.proxtechshop.converter.ProductConverter;
 import com.proxtechshop.dto.AttrValueDto;
 import com.proxtechshop.entities.Cart;
@@ -514,6 +515,9 @@ public class ProductServicelmpl implements ProductService {
 				}
 				if (file.getContentType().contains("image/png")) {
 					fileType = ".png";
+				}
+				if ("".equals(fileType)) {
+					throw new Exception();
 				}
 				String fileName = productId + "-" + new Date().getTime() + fileType;
 				FileUploadUtil.saveFile("", fileName, file);

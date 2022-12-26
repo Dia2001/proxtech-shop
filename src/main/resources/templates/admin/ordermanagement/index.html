@@ -1,15 +1,206 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="admin/dms/admin-layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/dms/admin-layout">
+
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quản lý sản phẩm</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý khách hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
-	<div layout:fragment="content">
-		<p>quản lý đơn hàng</p>
-	</div>
+    <div class="bg-white p-8 rounded-md w-full" layout:fragment="content">
+        <div class=" flex items-start justify-between pb-6">
+            <div>
+                <h2 class="text-gray-600 text-2xl font-semibold">Quản lý Đơn hàng</h2>
+                <span class="text-xs">Tất cả Đơn hàng</span>
+                <h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
+                <h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
+            </div>
+
+
+            <form class="flex flex-col gap-2"
+                th:action="${@orderMngPath}+'/filter'">
+                <div class="flex gap-2 bg-gray-50 items-center p-2 w-fit h-fit rounded-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <input class="bg-gray-50 outline-none ml-1 block w-[400px]" type="text" name="search" id=""
+                        placeholder="search...">
+                    <button type="submit"
+                        class="bg-black/5 py-2 px-4 text-black75 rounded-[6px] hover:bg-black/20 transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+                <select name="order_status"
+							class="block w-fit h-fit py-2.5 px-4 w-full text-md bg-transparent border-0 border-b-2 border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+							<option value="" selected>--Chọn trạng thái đơn hàng--</option>
+							<!-- <option value="US">Tai nghe</option>
+							<option value="CA">Laptop</option>
+							<option value="FR">Điện thoại</option>
+							<option value="DE">Phụ kiên</option> -->
+							<option th:each="item:${@orderStatus}" th:value="${item.key}"
+								th:text="${item.name}"></option>
+				</select>
+                <button type="submit" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800 w-fit h-fit
+                ">lọc</button>
+            </form>
+
+            <div class="flex flex-col md:flex-row items-center justify-between self-end">
+
+                <!-- <div class="lg:ml-40 ml-10 space-x-8 ">
+                    <button type="button"
+                        class="bg-red-600 px-4 py-2 rounded-md text-white disabled:bg-red-300 disabled:cursor-no-drop font-semibold tracking-wide cursor-pointer"
+                        id="delete" disabled>Xóa</button> -->
+                    <!-- <a th:href="${@formorderMngPath}"
+						class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+						Tạo mới</a> -->
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    <table class="min-w-full leading-normal">
+                        <thead>
+                            <tr>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ">
+                                    <div class="flex gap-2">
+                                        <h6>Mã đơn hàng</h6>
+                                    </div>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <h6>Tên Khách hàng</h6>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <h6>Số điện thoại</h6>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <h6>Địa chỉ</h6>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <h6>Tổng tiền</h6>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <h6>Trạng thái</h6>
+                                </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Tùy chọn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- data -->
+                      <!--       <tr th:each="item: ${order}">
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm max-w-[340px]">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 w-16 h-16">
+                                            <h6 th:text="">Lấy mã đơn hàng</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy tên khách hàng</p>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy số điện thoại</p>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy địa chỉ</p>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy tổng giá trị</p>
+                                </td>
+                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy trạng thái</p>
+                                </td>
+                                <td class="px-5 py-5 bg-white text-sm flex items-center gap-4">
+                                    <a th:href="${@orderMngPath}+'/detail?id='+${item.id}"
+                                    class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
+                                    >Xem chi tiết</a>
+                                </td>
+                            </tr> -->
+                            <!-- data -->
+                        </tbody>
+                    </table>
+                    <!-- <div
+                            class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                            <span class="text-xs xs:text-sm text-gray-900">
+                                Showing 1 to 4 of 50 Entries
+                            </span>
+                            <div class="inline-flex mt-2 xs:mt-0">
+                                <button
+                                    class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-l">
+                                    Prev
+                                </button>
+                                &nbsp; &nbsp;
+                                <button
+                                    class="text-sm text-indigo-50 transition duration-150 hover:bg-indigo-500 bg-indigo-600 font-semibold py-2 px-4 rounded-r">
+                                    Next
+                                </button>
+                            </div>
+                        </div> -->
+                    <div th:if="${totalPages>1}" class="flex justify-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="flex list-style-none items-center">
+                                <li class="page-item">Trang [[${currentPage}]] của
+                                    [[${totalPages}]]</li>
+                                <li class="page-item"><a th:if="${currentPage>1}"
+                                        th:href="@{'/admin/customermanagement/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
+                                        class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 focus:shadow-none">quay
+                                        lại</a> <span th:unless="${currentPage > 1}"
+                                        class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">
+                                        Quay lại</span></li>
+                                <ul th:each="i: ${#numbers.sequence(1, totalPages)}">
+                                    <li class="page-item"><a th:if="${currentPage!=i}"
+                                            th:href="@{'/admin/customermanagement/page/'+${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                            class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">[[${i}]]</a>
+                                        <span
+                                            class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+                                            th:unless="${currentPage != i}">[[${i}]]</span>
+                                    </li>
+                                </ul>
+                                <!-- <li class="page-item"><a
+									class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+									href="#">2</a></li>
+								<li class="page-item"><a
+									class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
+									href="#">3</a></li> -->
+                                <li class="page-item"><a th:if="${currentPage<totalPages}"
+                                        th:href="@{'/admin/customermanagement/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
+                                        class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">Next</a>
+                                    <span th:unless="${currentPage < totalPages}"
+                                        class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">
+                                        Tiếp theo</span>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const myTimeout = setTimeout(msg, 5000);
+
+            function msg() {
+                document.getElementById("msg").hidden = true;
+            }
+           
+        </script>
+    </div>
+
 </body>
+
+</html>
+
 </html>

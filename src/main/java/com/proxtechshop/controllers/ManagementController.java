@@ -3,7 +3,6 @@ package com.proxtechshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,12 +19,9 @@ import com.proxtechshop.common.Constants;
 import com.proxtechshop.common.Validate;
 import com.proxtechshop.entities.Image;
 import com.proxtechshop.entities.Product;
-import com.proxtechshop.entities.User;
 import com.proxtechshop.services.ProductService;
 import com.proxtechshop.services.TypesProductService;
 import com.proxtechshop.utils.FileUploadUtil;
-
-import lombok.experimental.var;
 
 @Controller
 public class ManagementController {
@@ -61,11 +57,10 @@ public class ManagementController {
 //	{
 //		return Constants.ADMIN_CATEGORIESMNG_VIEW;
 //	}
-	@RequestMapping(Constants.ADMIN_ORDERMNG_PATH)
-	public String OrderMng(Model model) {
-		return Constants.ADMIN_ORDERMNG_VIEW;
-	}
-
+	/*
+	 * @RequestMapping(Constants.ADMIN_ORDERMNG_PATH) public String OrderMng(Model
+	 * model) { return Constants.ADMIN_ORDERMNG_VIEW; }
+	 */
 	@RequestMapping(Constants.ADMIN_PROFILE_PATH)
 	public String ProfileAdminMng(Model model) {
 		return Constants.ADMIN_PROFILE_VIEW;

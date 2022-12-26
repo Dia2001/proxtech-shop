@@ -5,6 +5,8 @@ public class Constants {
 	
 	public static final BigDecimal PROMOTION=new BigDecimal(0);
 	
+	public static final int PRODUCT_PAGE_SIZE = 12;
+	
 	public static final String API_V1_PATH = "/api/v1";
 
 	public static final String STATIC_RESOURCE_PATH_CONFIG = "/assets/**";
@@ -67,8 +69,6 @@ public class Constants {
 	public static final String CART_PATH = "/gio-hang";
 	
 	public static final String CART_URL_ACTION = "/addProductToCart";
-	
-	public static final int PRODUCT_PAGE_SIZE = 1;
 	
 	public static final String PAYMENT_PRODUCTDETAIL_URL_API="/productDetailpayment";
 	
