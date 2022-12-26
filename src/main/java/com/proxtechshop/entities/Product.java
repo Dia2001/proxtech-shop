@@ -270,9 +270,7 @@ public class Product implements Serializable {
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", thumbnail=" + thumbnail
 				+ ", slug=" + slug + ", price=" + price + ", quantity=" + quantity + ", rate=" + rate + ", createdDate="
-				+ createdDate + ", updatedDate=" + updatedDate + ", categories=" + categories + ", images=" + images
-				+ ", brand=" + brand + ", productAttributes=" + productAttributes + ", productAttributeValues="
-				+ productAttributeValues + "]";
+				+ createdDate + ", updatedDate=" + updatedDate;
 	}
 
 }

@@ -66,6 +66,15 @@ public class ApplicationBean {
 		return "contact@prox.tech";
 	}
 	// admin beans area
+	@Bean(name="productMngPath")
+	public String productMngPath() {
+		return Constants.ADMIN_PRODUCTMNG_PATH;
+	}
+	
+	@Bean(name="formProduct")
+	public String formProduct() {
+		return Constants.ADMIN_FOFMPRODUCT_PATH;
+	}
 	
 	@Bean(name="formMemberPath")
 	public String formMemberPath() {
@@ -96,6 +105,11 @@ public class ApplicationBean {
 				new OptionFilterProduct("Tên Z-A", "za"),
 				new OptionFilterProduct("Top bán chạy", "sell")
 		};
+	}
+
+	@Bean(name="specificationPath")
+	public String specificationPath() {
+		return Constants.ADMIN_FOFMATTRIBUTE_PATH;
 	}
 
 	@Bean

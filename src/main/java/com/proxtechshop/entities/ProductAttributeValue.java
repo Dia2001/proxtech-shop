@@ -122,4 +122,12 @@ public class ProductAttributeValue implements Serializable {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductAttributeValue [id=" + id + ", productId=" + productId + ", attributeId=" + attributeId
+				+ ", value=" + value + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate
+				+ ", productAttribute=" + productAttribute + ", product=" + "]";
+	}
+	
 }

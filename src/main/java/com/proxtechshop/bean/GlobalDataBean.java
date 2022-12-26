@@ -19,6 +19,7 @@ import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.functionalinterface.IAttribute;
 import com.proxtechshop.functionalinterface.IBrands;
 import com.proxtechshop.functionalinterface.ICategories;
+import com.proxtechshop.functionalinterface.INameAttr;
 import com.proxtechshop.functionalinterface.IRandomProduct;
 import com.proxtechshop.functionalinterface.ITop3Brand;
 import com.proxtechshop.functionalinterface.ITop3Category;
@@ -59,7 +60,7 @@ public class GlobalDataBean {
 
 	@Autowired
 	private ProductAttributeValueRepository pavr;
-	
+
 	@Autowired
 	private RoleRepository roleRepo;
 
@@ -76,25 +77,37 @@ public class GlobalDataBean {
 			return brands;
 		};
 	}
-	//admin area
-	@Bean(name="roles")//without customer role
-	List<Role> roles(){
-		List<Role> getRoles=roleRepo.findAll();
-		for(int i=0;i<getRoles.size();i++) {
-			if(getRoles.get(i).roleKey.equalsIgnoreCase("customer")) {
+
+	// admin area
+	@Bean(name = "roles") // without customer role
+	List<Role> roles() {
+		List<Role> getRoles = roleRepo.findAll();
+		for (int i = 0; i < getRoles.size(); i++) {
+			if (getRoles.get(i).roleKey.equalsIgnoreCase("customer")) {
 				getRoles.remove(i);
 				break;
 			}
 		}
 		return getRoles;
+		// end
 	}
-	
-	@Bean(name="customerRole")
+
+	@Bean(name = "customerRole")
 	Role customerRole() {
 		return roleRepo.getReferenceById("customer");
 	}
-	
-	//end
+
+	@Bean(name = "getAttributeName")
+	public INameAttr getAttributeName() {
+		return (id) -> {
+			ProductAttribute pa = par.getReferenceById(id);
+			if (pa != null) {
+				return pa.getName();
+			}
+			return "";
+		};
+	}
+
 	@Bean(name = "top3Brand")
 	public ITop3Brand top3brand() {
 		return () -> br.findTop3ByOrderByIdDesc();

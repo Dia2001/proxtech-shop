@@ -7,5 +7,5 @@ import com.proxtechshop.entities.ProductAttribute;
 
 @Component
 public interface ProductAttributeRepository extends JpaRepository<ProductAttribute, Integer> {
-
+	ProductAttribute getReferenceByName(String name);
 }

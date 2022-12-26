@@ -28,4 +28,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 	
 	@Query(value = "select p from Product p")
 	Page<Product> getPaging(Pageable pageable);
+	
+	List<Product> findAllByNameOrIdContains(String name,String id);
 }
