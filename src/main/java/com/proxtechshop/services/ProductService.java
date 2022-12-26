@@ -1,11 +1,13 @@
 package com.proxtechshop.services;
 
 import java.util.Map;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 import com.proxtechshop.viewmodels.ProductPagingViewModel;
@@ -30,4 +32,6 @@ public interface ProductService {
 	HashMap<String, String> showAtrsAndValues(String productId);
 	
 	void setAttributeValues(Product product);
+
+	List<ProductStatisticsMonthResponse> getProductPStatisticsDateStartDateEnd(Date start, Date end);
 }

@@ -11,4 +11,8 @@ public interface CustomProductRepository {
 	List<Product> getFilter(int pageSize, ProductFilter filter, Map<Integer, String[]> attribute);
 	
 	int getTotalRecordFilter(int pageSize, ProductFilter filter, Map<Integer, String[]> attribute);
+	
+	List<Product> getProductTheSame(String productId);
+
+	List<Product> getProductPricingInMonth(int year, int month);
 }

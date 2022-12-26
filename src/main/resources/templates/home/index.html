@@ -30,7 +30,7 @@
               <h3 th:text="${product.brand?.name}" class="top-down"></h3>
               <h2 th:text="${product.name}" class="top-down trans-delay-0-2"></h2>
               <p th:text=${product.description} class="top-down trans-delay-0-4"></p>
-              <a th:href="${@productPath} + '/' + ${product.slug}" class="top-down trans-delay-0-6">
+              <a th:href="${@productPath} + '/' + ${product.id}" class="top-down trans-delay-0-6">
                 <button class="btn-flat btn-hover">
                   <span>Xem ngay</span>
                 </button>
@@ -94,7 +94,7 @@
             </div>
             <div class="product-card-info">
               <div class="product-btn">
-                <a th:href="${@productPath} + '/' + ${product.slug}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
+                <a th:href="${@productPath} + '/' + ${product.id}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
                 <button class="btn-flat btn-hover btn-cart-add">
                   <i class='bx bxs-cart-add'></i>
                 </button>
@@ -104,8 +104,8 @@
               </div>
               <div th:text="${product.name}" class="product-card-name"></div>
               <div class="product-card-price">
-                <span><del th:text="'$' + ${product.price}"></del></span>
-                <span th:text="'$' + ${product.price}" class="curr-price"></span>
+                <span><del th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'"></del></span>
+                <span th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'" class="curr-price"></span>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@
           <div class="sp-item-info">
             <div th:text="${product.name}" class="sp-item-name"></div>
             <p th:text="${product.description}" class="sp-item-description"></p>
-            <a th:href="${@productPath} + '/' + ${product.slug}" class="btn-flat btn-hover">Xem ngay</a>
+            <a th:href="${@productPath} + '/' + ${product.id}" class="btn-flat btn-hover">Xem ngay</a>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@
             </div>
             <div class="product-card-info">
               <div class="product-btn">
-                <a th:href="${@productPath} + '/' + ${product.slug}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
+                <a th:href="${@productPath} + '/' + ${product.id}"  class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
                 <button class="btn-flat btn-hover btn-cart-add">
                   <i class='bx bxs-cart-add'></i>
                 </button>
@@ -169,8 +169,8 @@
               </div>
               <div th:text="${product.name}" class="product-card-name"></div>
               <div class="product-card-price">
-                <span><del th:text="'$' + ${product.price}"></del></span>
-                <span th:text="'$' + ${product.price}" class="curr-price"></span>
+                <span><del th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'"></del></span>
+                <span th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'" class="curr-price"></span>
               </div>
             </div>
           </div>

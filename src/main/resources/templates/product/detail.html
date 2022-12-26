@@ -63,65 +63,48 @@
 						<h1 th:text="${productDetail.name}" />
 						<div class="product-info-detail">
 							<span class="product-info-detail-title">Mô tả:</span> <a
-								th:text="${productDetail.description}" href="#"/>
+								th:text="${productDetail.description}" href="#" />
 						</div>
 						<div class="product-info-detail">
 							<span class="product-info-detail-title">Thương hiệu:</span> <a
-								th:text="${productDetail.brand.name}" href="#"/>
+								th:text="${productDetail.brand.name}" href="#" />
 						</div>
 						<div class="product-info-detail">
 							<span class="product-info-detail-title">Đánh giá:</span> <span
-								class="rating"> 
-								<th:block
+								class="rating"> <th:block
 									th:if="${productDetail.rate== 1}">
 									<i class='fa-solid fa-star'></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 1.5}">
+								</th:block> <th:block th:if="${productDetail.rate== 1.5}">
 									<i class='fa-solid fa-star'></i>
 									<i class="fa-solid fa-star-half"></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 2}">
+								</th:block> <th:block th:if="${productDetail.rate== 2}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 2.5}">
+								</th:block> <th:block th:if="${productDetail.rate== 2.5}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class="fa-solid fa-star-half"></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 3}">
+								</th:block> <th:block th:if="${productDetail.rate== 3}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 3.5}">
+								</th:block> <th:block th:if="${productDetail.rate== 3.5}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class="fa-solid fa-star-half"></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 4}">
+								</th:block> <th:block th:if="${productDetail.rate== 4}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate== 4.5}">
+								</th:block> <th:block th:if="${productDetail.rate== 4.5}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class="fa-solid fa-star-half"></i>
-								</th:block>
-								<th:block
-									th:if="${productDetail.rate==5}">
+								</th:block> <th:block th:if="${productDetail.rate==5}">
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
 									<i class='fa-solid fa-star'></i>
@@ -133,10 +116,12 @@
 						<p class="product-info-detail-title">Thông tin sản phẩm:</p>
 						<div
 							th:each="attribute_value : ${productDetail.productAttributeValues}">
-							<p th:text="${attribute_value.productAttribute.name} + ': '+${attribute_value.value}" />
+							<p
+								th:text="${attribute_value.productAttribute.name} + ': '+${attribute_value.value}" />
 						</div>
-						<p id="productId" th:text="${productDetail.id}" hidden/>
-						<input id="price" type="hidden" class="form-control" th:value="${productDetail.price}"/>
+						<p id="productId" th:text="${productDetail.id}" hidden />
+						<input id="price" type="hidden" class="form-control"
+							th:value="${productDetail.price}" />
 						<div th:text="${productDetail.price} + ' VND'"
 							class="product-info-price" />
 						<div class="product-quantity-wrapper">
@@ -148,7 +133,8 @@
 							</span>
 						</div>
 						<div>
-							<button id="btnAddCart" class="btn-flat btn-hover">Thêm vào giỏ hàng</button>
+							<button id="btnAddCart" class="btn-flat btn-hover">Thêm
+								vào giỏ hàng</button>
 						</div>
 					</div>
 				</div>
@@ -160,106 +146,13 @@
 						id="view-all-description">view all</button>
 					<div class="product-detail-description-content">
 						<p th:utext="${productDetail.descriptioned}" />
-						<img
-							src="/assets/images/JBL_Quantum_400_Product Image_Hero 02.png"
-							alt="">
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Nobis accusantium officia, quae fuga in exercitationem aliquam
-							labore ex doloribus repellendus beatae facilis ipsam. Veritatis
-							vero obcaecati iste atque aspernatur ducimus. Lorem ipsum dolor
-							sit, amet consectetur adipisicing elit. Repellat quam praesentium
-							id sit amet magnam ad, dolorum, cumque iste optio itaque expedita
-							eius similique, ab adipisci dicta. Quod, quibusdam quas. Lorem
-							ipsum dolor sit amet consectetur adipisicing elit. Odit, in
-							corrupti ipsam sint error possimus commodi incidunt suscipit sit
-							voluptatum quibusdam enim eligendi animi deserunt recusandae
-							earum natus voluptas blanditiis?</p>
-						<img
-							src="/assets/images/kisspng-beats-electronics-headphones-apple-beats-studio-red-headphones.png"
-							alt="">
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Modi ullam quam fugit veniam ipsum recusandae incidunt, ex
-							ratione, magnam labore ad tenetur officia! In, totam. Molestias
-							sapiente deserunt animi porro?</p>
 					</div>
 				</div>
 			</div>
 			<div class="box">
 				<div class="box-header">review</div>
 				<div>
-					<div class="user-rate">
-						<div class="user-info">
-							<div class="user-avt">
-								<img src="/assets/images/tuat.jpg" alt="">
-							</div>
-							<div class="user-name">
-								<span class="name">tuat tran anh</span> <span class="rating">
-									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i>
-								</span>
-							</div>
-						</div>
-						<div class="user-rate-content">Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-							amet illum, cum alias magni dolores odio, eius quo excepturi
-							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
-					</div>
-					<div class="user-rate">
-						<div class="user-info">
-							<div class="user-avt">
-								<img src="/assets/images/tuat.jpg" alt="">
-							</div>
-							<div class="user-name">
-								<span class="name">tuat tran anh</span> <span class="rating">
-									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i>
-								</span>
-							</div>
-						</div>
-						<div class="user-rate-content">Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-							amet illum, cum alias magni dolores odio, eius quo excepturi
-							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
-					</div>
-					<div class="user-rate">
-						<div class="user-info">
-							<div class="user-avt">
-								<img src="/assets/images/tuat.jpg" alt="">
-							</div>
-							<div class="user-name">
-								<span class="name">tuat tran anh</span> <span class="rating">
-									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i>
-								</span>
-							</div>
-						</div>
-						<div class="user-rate-content">Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-							amet illum, cum alias magni dolores odio, eius quo excepturi
-							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
-					</div>
-					<div class="user-rate">
-						<div class="user-info">
-							<div class="user-avt">
-								<img src="/assets/images/tuat.jpg" alt="">
-							</div>
-							<div class="user-name">
-								<span class="name">tuat tran anh</span> <span class="rating">
-									<i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-									class='bx bxs-star'></i>
-								</span>
-							</div>
-						</div>
-						<div class="user-rate-content">Lorem ipsum dolor sit amet
-							consectetur adipisicing elit. Distinctio ea iste, veritatis nobis
-							amet illum, cum alias magni dolores odio, eius quo excepturi
-							veniam ipsa voluptatibus natus voluptas vero? Aspernatur!</div>
-					</div>
-					<div class="user-rate">
+					<!-- <div class="user-rate">
 						<div class="user-info">
 							<div class="user-avt">
 								<img src="/assets/images/tuat.jpg" alt="">
@@ -287,12 +180,45 @@
 							<li><a href="#">5</a></li>
 							<li><a href="#"><i class='bx bxs-chevron-right'></i></a></li>
 						</ul>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="box">
-				<div class="box-header">related products</div>
-				<div class="row" id="related-products"></div>
+				<div class="box-header">Có thể bạn quan tâm</div>
+				<div class="row" id="related-products">
+					<div
+						th:each="product : ${@topProductTheSame.get(productDetail.id)}"
+						class="col-3 col-md-6 col-sm-12">
+						<div class="product-card">
+							<div class="product-card-img">
+								<img th:src="${@uploadImageURL} + ${product.thumbnail}"
+									th:alt="'Hình ảnh ' + ${product.name}"> <img
+									th:src="${@uploadImageURL} + ${product.thumbnail}"
+									th:alt="'Hình ảnh ' + ${product.name}">
+							</div>
+							<div class="product-card-info">
+								<div class="product-btn">
+									<a th:href="${@productPath} + '/' + ${product.id}"
+										class="btn-flat btn-hover btn-shop-now">Xem ngay</a>
+									<button class="btn-flat btn-hover btn-cart-add">
+										<i class='bx bxs-cart-add'></i>
+									</button>
+									<button class="btn-flat btn-hover btn-cart-add">
+										productPage <i class='bx bxs-heart'></i>
+									</button>
+								</div>
+								<div th:text="${product.name}" class="product-card-name"></div>
+								<div class="product-card-price">
+									<span><del
+											th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'"></del></span>
+									<span
+										th:text="${#numbers.formatInteger(product.price,3,'POINT')} +' VNĐ'"
+										class="curr-price"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

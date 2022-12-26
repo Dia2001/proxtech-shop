@@ -1,6 +1,7 @@
 package com.proxtechshop.repositoryimpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,16 +20,21 @@ import org.springframework.stereotype.Repository;
 
 import com.proxtechshop.common.Validate;
 import com.proxtechshop.entities.Category;
+import com.proxtechshop.entities.OrderDetail;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttributeValue;
 import com.proxtechshop.models.ProductFilter;
 import com.proxtechshop.repositories.CustomProductRepository;
+import com.proxtechshop.repositories.ProductRepository;
 
 @Repository
 public class CustomProductRepositoryImpl implements CustomProductRepository {
 
 	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	private ProductRepository pr;
 
 	@Override
 	public List<Product> getFilter(int pageSize, ProductFilter filter, Map<Integer, String[]> attribute) {
@@ -52,7 +58,6 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Product> query = builder.createQuery(Product.class);
 		Root<Product> root = query.from(Product.class);
-
 		List<Predicate> predList = new ArrayList<>();
 
 		if (Validate.checkStringNotEmptyOrNull(filter.getSearch())) {
@@ -82,7 +87,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 			predList.add(builder.equal(join.get("id"), filter.getCategoryId()));
 		}
 		
-		if (attribute.size() > 0) {
+		if (attribute != null && attribute.size() > 0) {
 			Join<Product, ProductAttributeValue> join = root.join("productAttributeValues", JoinType.INNER);
 			List<String> values = new ArrayList<>();
 			attribute.forEach((k, v) -> {
@@ -121,5 +126,43 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
 		}
 		query.orderBy(orderList).distinct(true);
 		return em.createQuery(query);
+	}
+
+	@Override
+	public List<Product> getProductTheSame(String productId) {
+		Product product = pr.getById(productId);
+		if (product != null) {
+			ProductFilter filter = new ProductFilter();
+			filter.setQ(product.getName().substring(0, 2));
+			filter.setB(new int[] {product.getBrand().getId()} );
+			filter.setSp(product.getPrice().intValue() - 5000000 > 0? product.getPrice().intValue() - 5000000 : 0);
+			filter.setEp(product.getPrice().intValue() + 5000000);
+			filter.setP(1);
+			return this.getFilter(12, filter, null);
+		}
+		return pr.findTop6ByOrderByCreatedDateDesc();
+	}
+
+	@Override
+	public List<Product> getProductPricingInMonth(int year, int month) {
+		Date start = new Date(year, month, 1);
+		Date end;
+		if (month == 12) {
+			end = new Date(year + 1, 1, 1);
+		} else {			
+			end = new Date(year, month + 1, 1);
+		}
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<Product> query = builder.createQuery(Product.class);
+		Root<Product> root = query.from(Product.class);
+		List<Predicate> predList = new ArrayList<>();
+		
+
+		Join<Product, OrderDetail> typeJoin = root.join("orderDetails", JoinType.INNER);
+		
+		Predicate[] predArray = new Predicate[predList.size()];
+		predList.toArray(predArray);
+		query.where(predArray);
+		return em.createQuery(query).getResultList();
 	}
 }

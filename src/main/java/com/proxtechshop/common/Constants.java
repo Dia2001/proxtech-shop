@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 public class Constants {
 	
 	public static final BigDecimal PROMOTION=new BigDecimal(0);
+	
+	public static final String API_V1_PATH = "/api/v1";
 
 	public static final String STATIC_RESOURCE_PATH_CONFIG = "/assets/**";
 
@@ -75,6 +77,14 @@ public class Constants {
 
 	public static final String ADMIN_PATH="/admin";
 	
+	public static final String ADMIN_DASHBOARD_PATH = "/admin/dashboard";
+	
+	public static final String ADMIN_DASHBOARD_VIEW = "/admin/dashboard/index";
+	
+	public static final String PRODUCT_STATISTICS_MONTH_PATH = "/statistics/month";
+	
+	public static final String PRODUCT_STATISTICS_DAY_START_DAY_END_PATH = "/statistics/month";
+	
 	public static final String ADMIN_PRODUCTMNG_VIEW="admin/productmanagement/index";
 		public static final String ADMIN_FOFMPRODUCT_VIEW="admin/productmanagement/formproduct";
 	public static final String ADMIN_CUSTOMERSMNG_VIEW="admin/customermanagement/index";
@@ -96,6 +106,8 @@ public class Constants {
 	public static final String ADMIN_ORDERMNG_PATH="/admin/ordermanagement";
 	public static final String ADMIN_PROFILE_PATH="/admin/adminprofile";
 	public static final String ADMIN_BRAND_PATH="/admin/brandmanagement";
+	
+	public static final String API_PRODUCT_PATH = API_V1_PATH +  "/product";
 
 	public static final String messageNotFound(String Id) {
 		return "This data with id " + Id + " not found";

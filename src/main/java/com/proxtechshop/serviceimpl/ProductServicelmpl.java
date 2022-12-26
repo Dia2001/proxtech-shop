@@ -1,6 +1,7 @@
 package com.proxtechshop.serviceimpl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,15 +10,17 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.converter.ProductConverter;
 import com.proxtechshop.entities.Cart;
+import com.proxtechshop.entities.Order;
+import com.proxtechshop.entities.OrderDetail;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.entities.ProductAttributeValue;
@@ -26,7 +29,9 @@ import com.proxtechshop.exception.DataNotFoundException;
 import com.proxtechshop.models.ProductFilter;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CartRepository;
+import com.proxtechshop.repositories.CustomOrderRepository;
 import com.proxtechshop.repositories.CustomProductRepository;
+import com.proxtechshop.repositories.OrderDetailRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
 import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.repositories.ProductRepository;
@@ -62,6 +67,12 @@ public class ProductServicelmpl implements ProductService {
 
 	@Autowired
 	private ProductConverter productConverter;
+
+	@Autowired
+	private CustomOrderRepository or;
+
+	@Autowired
+	private OrderDetailRepository odr;
 
 	@Override
 	public ProductDetailViewModel getOneProductDeTail(String productId) {
@@ -171,37 +182,35 @@ public class ProductServicelmpl implements ProductService {
 		productRepository.save(product);
 		return true;
 	}
-	
-	//error
+
+	// error
 	@Override
 	public void setAttributeValues(Product product) {
 		List<ProductAttribute> productAttributes = par.findAll();
-		//repo
-		HashSet<ProductAttributeValue> attrValueStore=new HashSet<>();
-		//attrValue of Product
+		// repo
+		HashSet<ProductAttributeValue> attrValueStore = new HashSet<>();
+		// attrValue of Product
 		List<ProductAttributeValue> attrValueOfProduct = pavr.findAllByProductId(product.getId());
-		
+
 		for (ProductAttribute attr : productAttributes) {
-			boolean flag=true;
-			ProductAttributeValue tmp=new ProductAttributeValue();
+			boolean flag = true;
+			ProductAttributeValue tmp = new ProductAttributeValue();
 			tmp.setProductAttribute(attr);
 			for (ProductAttributeValue AttrValue : attrValueOfProduct) {
-				if(tmp.getAttributeId()==AttrValue.getAttributeId())
-				{
+				if (tmp.getAttributeId() == AttrValue.getAttributeId()) {
 					tmp.setValue(AttrValue.getValue());
-					flag=false;
+					flag = false;
 					break;
 				}
 			}
-			if(flag)
-			tmp.setValue("");
+			if (flag)
+				tmp.setValue("");
 			tmp.setProduct(product);
 			attrValueStore.add(tmp);
 		}
 		product.setProductAttributeValues(attrValueStore);
 	}
-	
-	
+
 	@Override
 	public HashMap<String, String> showAtrsAndValues(String productId) {
 		HashMap<String, String> data = new HashMap<String, String>();
@@ -227,4 +236,33 @@ public class ProductServicelmpl implements ProductService {
 		return data;
 	}
 
+	@Override
+	public List<ProductStatisticsMonthResponse> getProductPStatisticsDateStartDateEnd(Date start, Date end) {
+		List<ProductStatisticsMonthResponse> productsInMonth = new ArrayList<>();
+		List<Order> orders = or.listOrderInStartAndEndDate(start, end);
+		for (Product product : productRepository.findAll()) {
+			for (Order order : orders) {
+				List<OrderDetail> orderDetails = odr.findByOrderId(order.getId());
+				for (OrderDetail orderDetail : orderDetails) {
+					if (orderDetail.getProductId().equals(product.getId())) {
+						boolean flag = true;
+						for (ProductStatisticsMonthResponse productTmp : productsInMonth) {
+							if (productTmp.getId().equals(product.getId())) {
+								productTmp.setQuantityPrice(productTmp.getQuantityPrice() + orderDetail.getQuantity());
+								productTmp.setTotalPrice(productTmp.getPrice() * productTmp.getQuantityPrice());
+								flag = false;
+								break;
+							}
+						}
+						if (flag) {							
+							productsInMonth.add(new ProductStatisticsMonthResponse(product, orderDetail.getQuantity(),
+									order.getCreatedDate(), order.getUpdatedDate(), order.getOrderStatus().getName()));
+						}
+						break;
+					}
+				}
+			}
+		}
+		return productsInMonth;
+	}
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="admin/dms/admin-layout">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+</head>
+
+<body>
+	<div class="bg-white p-8 rounded-md w-full" layout:fragment="content">
+		<div class=" flex items-start justify-between pb-6">
+			<div>
+				<h2 class="text-gray-600 text-2xl font-semibold">Thống kê bán
+					hàng</h2>
+				<span class="text-xs">Darshboard</span>
+				<h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
+				<h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
+			</div>
+
+		</div>
+		<div>
+			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+				<div id="dashboard-grid">
+				</div>
+			</div>
+		</div>
+		<script src="/assets/js/admin-dashboard.js"></script>
+	</div>
+</body>
+
+</html>

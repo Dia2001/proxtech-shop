@@ -31,7 +31,7 @@ public class ManagementController {
 	TypesProductService typesProductService;
 	@RequestMapping(Constants.ADMIN_PATH)
 	public RedirectView adminMng(Model model) {
-		return new RedirectView(Constants.ADMIN_PRODUCTMNG_PATH);
+		return new RedirectView(Constants.ADMIN_DASHBOARD_PATH);
 	}
 	
 	

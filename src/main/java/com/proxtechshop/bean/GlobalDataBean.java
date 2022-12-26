@@ -24,9 +24,11 @@ import com.proxtechshop.functionalinterface.ITop3Brand;
 import com.proxtechshop.functionalinterface.ITop3Category;
 import com.proxtechshop.functionalinterface.ITop6Product;
 import com.proxtechshop.functionalinterface.ITop8SellingProduct;
+import com.proxtechshop.functionalinterface.ITopProductTheSame;
 import com.proxtechshop.functionalinterface.IUserLoginProfile;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CategoryRepository;
+import com.proxtechshop.repositories.CustomProductRepository;
 import com.proxtechshop.repositories.ProductRepository;
 import com.proxtechshop.repositories.RoleRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
@@ -45,6 +47,9 @@ public class GlobalDataBean {
 
 	@Autowired
 	private ProductRepository pr;
+
+	@Autowired
+	private CustomProductRepository cpr;
 
 	@Autowired
 	private UserService userService;
@@ -89,7 +94,6 @@ public class GlobalDataBean {
 		return roleRepo.getReferenceById("customer");
 	}
 	
-	
 	//end
 	@Bean(name = "top3Brand")
 	public ITop3Brand top3brand() {
@@ -113,6 +117,11 @@ public class GlobalDataBean {
 	@Bean(name = "top6Product")
 	public ITop6Product top6Product() {
 		return () -> pr.findTop6ByOrderByCreatedDateDesc();
+	}
+	
+	@Bean(name = "topProductTheSame")
+	public ITopProductTheSame topProductTheSame() {
+		return (productId) -> cpr.getProductTheSame(productId);
 	}
 
 	@Bean(name = "randomProduct")

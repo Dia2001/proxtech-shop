@@ -85,7 +85,6 @@ public class ApplicationBean {
 	public String customerProfile() {
 		return Constants.ADMIN_FORMCUSTOMER_PATH;
 	}
-	//
 
 	@Bean(name = "optionFilterProducts")
 	public OptionFilterProduct[] optionFilter() {
