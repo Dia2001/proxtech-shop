@@ -102,9 +102,9 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product")
 	private Set<ProductAttributeValue> productAttributeValues = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "product_id")
-	private Set<OrderDetail> orderDetails = new HashSet<>();
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//	@JoinColumn(name = "product_id")
+//	private Set<OrderDetail> orderDetails = new HashSet<>();
 
 	public Product() {
 		super();
@@ -258,13 +258,13 @@ public class Product implements Serializable {
 		this.productAttributeValues = productAttributeValues;
 	}
 
-	public Set<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(Set<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
+//	public Set<OrderDetail> getOrderDetails() {
+//		return orderDetails;
+//	}
+//
+//	public void setOrderDetails(Set<OrderDetail> orderDetails) {
+//		this.orderDetails = orderDetails;
+//	}
 	
 	@Override
 	public String toString() {

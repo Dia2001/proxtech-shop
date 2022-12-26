@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.dto.AttrValueDto;
@@ -49,4 +50,8 @@ public interface ProductService {
 	public boolean deleteValueOfAttr(String idProduct,int idAttr);
 	
 	public boolean modifyListOfAttrValue(AttrValueDto attrValueDto,String idproduct);
+
+	boolean deleteImage(int imageId);
+
+	boolean uploadListImage(String productId, MultipartFile[] files);
 }

@@ -95,6 +95,16 @@ public class ApplicationBean {
 		return Constants.ADMIN_FORMCUSTOMER_PATH;
 	}
 
+	@Bean(name="deleteImageProduct")
+	public String deleteImageProduct() {
+		return Constants.ADMIN_FOFMPRODUCT_DELETE_IMAGE_PATH;
+	}
+
+	@Bean(name="deleteThumbnailProduct")
+	public String deleteThumbnailProduct() {
+		return Constants.ADMIN_FOFMPRODUCT_DELETE_THUMBNAIL_PATH;
+	}
+
 	@Bean(name = "optionFilterProducts")
 	public OptionFilterProduct[] optionFilter() {
 		return new OptionFilterProduct[] {

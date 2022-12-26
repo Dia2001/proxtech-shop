@@ -29,7 +29,7 @@ public class FileUploadUtil {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }      
     }
-	public static void removeFolder(String dir) {
+	public static void removeFile(String dir) {
 		Path removePath = Paths.get(Constants.UPLOAD_PATH_CONFIG + "/" + dir);
 		try {
 			Files.deleteIfExists(removePath);

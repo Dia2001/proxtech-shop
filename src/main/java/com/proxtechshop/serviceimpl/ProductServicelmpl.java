@@ -14,15 +14,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.converter.ProductConverter;
 import com.proxtechshop.dto.AttrValueDto;
 import com.proxtechshop.entities.Cart;
+import com.proxtechshop.entities.Category;
+import com.proxtechshop.entities.Image;
 import com.proxtechshop.entities.Order;
 import com.proxtechshop.entities.OrderDetail;
-import com.proxtechshop.entities.Category;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.entities.ProductAttributeValue;
@@ -34,12 +36,14 @@ import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CartRepository;
 import com.proxtechshop.repositories.CustomOrderRepository;
 import com.proxtechshop.repositories.CustomProductRepository;
+import com.proxtechshop.repositories.ImageRepository;
 import com.proxtechshop.repositories.OrderDetailRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
 import com.proxtechshop.repositories.ProductAttributeValueRepository;
 import com.proxtechshop.repositories.ProductRepository;
 import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.ProductService;
+import com.proxtechshop.utils.FileUploadUtil;
 import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.utils.Utils;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
@@ -79,6 +83,9 @@ public class ProductServicelmpl implements ProductService {
 
 	@Autowired
 	private OrderDetailRepository odr;
+	
+	@Autowired
+	private ImageRepository ir;
 
 	@Override
 	public ProductDetailViewModel getOneProductDeTail(String productId) {
@@ -238,10 +245,26 @@ public class ProductServicelmpl implements ProductService {
 
 	@Override
 	public boolean updateProduct(Product product) {
-		product.setCreatedDate(new Date());
-		product.setUpdatedDate(new Date());
-		product.setThumbnail("demo");// what is thumbnail
-		productRepository.save(product);
+		Product productTmp = productRepository.getById(product.getId());
+		if (productTmp != null) {
+			productTmp.setUpdatedDate(new Date());
+			productTmp.setBrand(product.getBrand());
+			productTmp.setCategories(product.getCategories());
+			productTmp.setName(product.getName());
+			productTmp.setImages(product.getImages());
+			productTmp.setDescription(product.getDescription());
+			productTmp.setDescriptioned(product.getDescriptioned());
+			productTmp.setPrice(product.getPrice());
+			productTmp.setQuantity(product.getQuantity());
+			productTmp.setRate(product.getRate());
+			productTmp.setThumbnail(product.getThumbnail());
+			productTmp.setSlug(product.getSlug());
+			productRepository.save(productTmp);
+		} else {
+			product.setCreatedDate(new Date());
+			product.setUpdatedDate(new Date());
+			productRepository.save(product);
+		}
 		return true;
 	}
 
@@ -471,5 +494,51 @@ public class ProductServicelmpl implements ProductService {
 				
 		}
 		return true;
+	}
+
+	@Override
+	public boolean uploadListImage(String productId, MultipartFile[] files) {
+		try {
+			Product product = productRepository.getById(productId);
+			if (product == null) {
+				throw new Exception();
+			}
+			for (MultipartFile file : files) {
+				String fileType = "";
+				System.out.println(file.getContentType());
+				if (file.getContentType().contains("image/jpeg")) {
+					fileType = ".jpg";
+				}
+				if (file.getContentType().contains("image/webp")) {
+					fileType = ".webp";
+				}
+				if (file.getContentType().contains("image/png")) {
+					fileType = ".png";
+				}
+				String fileName = productId + "-" + new Date().getTime() + fileType;
+				FileUploadUtil.saveFile("", fileName, file);
+				Image image = new Image();
+				image.setProduct(product);
+				image.setThumbnail(fileName);
+				ir.save(image);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean deleteImage(int imageId) {
+		try {
+			Image img = ir.getById(imageId);
+			FileUploadUtil.removeFile(img.getThumbnail());
+			ir.delete(img);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
