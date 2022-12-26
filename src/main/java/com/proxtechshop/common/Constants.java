@@ -77,6 +77,7 @@ public class Constants {
 	
 	public static final String ADMIN_PRODUCTMNG_VIEW="admin/productmanagement/index";
 		public static final String ADMIN_FOFMPRODUCT_VIEW="admin/productmanagement/formproduct";
+		public static final String ADMIN_FOFMATTRIBUTE_VIEW="admin/productmanagement/specifications";
 	public static final String ADMIN_CUSTOMERSMNG_VIEW="admin/customermanagement/index";
 		public static final String ADMIN_FORMCUSTOMER_VIEW="admin/customermanagement/profile";
 	public static final String ADMIN_MEMBERSMNG_VIEW="admin/membermanagement/index";
@@ -88,6 +89,7 @@ public class Constants {
 	
 	public static final String ADMIN_PRODUCTMNG_PATH="/admin/productmanagement";
 		public static final String ADMIN_FOFMPRODUCT_PATH="/admin/formproduct";
+		public static final String ADMIN_FOFMATTRIBUTE_PATH="/admin/form-specification";
 	public static final String ADMIN_CUSTOMERSMNG_PATH="/admin/customermanagement";
 		public static final String ADMIN_FORMCUSTOMER_PATH="/admin/formcustomer";
 	public static final String ADMIN_MEMBERSMNG_PATH="/admin/membermanagement";

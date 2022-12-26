@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="admin/dms/admin-layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Thay đổi chi tiết kỹ thuật</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="flex flex-col flex-col-reverse justify-center items-center gap-14 min-h-[80vh] w-[1240px] mx-auto">
+            <div class="basis-1/2">
+            	<h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
+				<h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
+                <form th:action="${@specificationPath}+'?id='+${idproduct}" th:object="${specifications}" method="post">
+                    <fieldset>
+                        <div class="flex flex-col">
+                            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                                    <div class="overflow-hidden">
+                                        <table class="min-w-full">
+                                            <thead class="border-b">
+                                                <tr>
+                                                    <th scope="col"
+                                                        class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                        #
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                        Thông số
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                        Giá trị
+                                                    </th>
+                                                    <th scope="col"
+                                                        class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                                        Thao tác
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="border-b" th:each="item, itemStat : *{attributeValues}">
+                                                    <td
+                                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                        <h6 th:text="${itemStat.index+1}"></h6></td>
+                                                    <td
+                                                        class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                        <h6 th:text="${@getAttributeName.get(item.attributeId)}"></h6>
+                                                    </td>
+                                                    <td
+                                                        class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                        <input type="hidden" class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" th:field="*{attributeValues[__${itemStat.index}__].attributeId}" />
+                                                        <input class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" th:field="*{attributeValues[__${itemStat.index}__].value}" />
+                                                    </td>
+                                                    <td
+                                                        class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                        <a th:href="${@specificationPath}+'/delete?id='+${idproduct}+'&idattr='+${item.attributeId}"
+                                                        class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                                                        >Xoá</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="flex justify-end gap-8">
+                    	<button type="submit" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Thay đổi</button>
+                    	<button type="reset" class="text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">Hủy thay đổi</button>
+                    	<a th:href="${@formProduct}+'?id='+${idproduct}" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Trở về</a>
+                    </div>
+                </form>
+            </div>
+            <div class="basis-1/2">
+                <!-- Form to create new attribute value -->
+                <h6 th:if="${flag2}" th:text="${msg2}" style="color: green"
+						id="msg2"></h6>
+					<h6 th:unless="${flag2}" th:text="${msg2}" style="color: red"
+						id="msg2"></h6>
+                <form th:action="${@specificationPath}+'/add'" method="POST">
+                    <h1 class="text-[24px]">Thêm thông số!</h1>
+                    <div class="flex justify-center items-center gap-4 py-8">
+                    	<input name="id" th:value="${idproduct}" type="hidden"/>
+                        <input 
+                            class="w-full h-fit p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            type="text" name="attr" placeholder="Tên thông số ..." />
+                        <h1> - </h1>
+                        <input
+                            class="w-full h-fit p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                            type="text" name="value" placeholder="Dữ liệu ..." />
+                    </div>
+                    <button
+                        class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                        type="submit">Thêm</button>
+                </form>
+            </div>
+            <script type="text/javascript">
+			
+            const myTimeout = setTimeout(msg, 5000);
+			function msg() {
+				document.getElementById("msg").hidden = true;
+				document.getElementById("msg2").hidden = true;
+			}
+			
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

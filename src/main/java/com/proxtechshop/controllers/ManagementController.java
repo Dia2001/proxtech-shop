@@ -4,6 +4,7 @@ package com.proxtechshop.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.entities.Product;
+import com.proxtechshop.entities.User;
 import com.proxtechshop.services.ProductService;
 import com.proxtechshop.services.TypesProductService;
+
+import lombok.experimental.var;
 
 
 @Controller
@@ -90,10 +94,21 @@ public class ManagementController {
 		//model.addAttribute("products",productService.getAllProduct());
 		return findPaginated(1, "name", "asc", model);
 	}
-	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/search")
-	public RedirectView searchProduct(@RequestParam(value="find",required = false) String search,Model model) {
-		return new RedirectView(findPaginated(1, "name", "asc", model));
+	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/filter")
+	public String searchProduct(@RequestParam("search") String search,@RequestParam("category") int ctg,@RequestParam("brand") int brand,Model model) {
+		//if no any param is empty, then search
+		if(search!=""||brand!=0||ctg!=0) {
+			model.addAttribute("search", search);
+			model.addAttribute("brand",brand);
+			model.addAttribute("ctg",ctg);
+			model.addAttribute("flag",true);
+		}else {
+			model.addAttribute("flag",null);
+			model.addAttribute("msg","Không để trống phần tìm kiếm");
+		}
+		return findPaginated(1, "name", "asc", model);
 	}
+	
 	
 	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH+"/page/{pageNo}")
 	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
@@ -102,7 +117,29 @@ public class ManagementController {
 			Model model) {
 		int pageSize = 4;
 		
-		Page<Product> page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);
+		//handler search engine
+		Page<Product> page;
+		boolean flag=model.getAttribute("flag")==null;
+		if(flag) {
+			page = productService.findPaginated(pageNo, pageSize, sortField, sortDir);			
+		}else {
+			String search=model.getAttribute("search").toString();
+			int brand=(int)model.getAttribute("brand");
+			int ctg=(int)model.getAttribute("ctg");
+			
+			page=productService.FilterAndPaginated(search, ctg, brand, pageNo, pageSize, sortField, sortDir);
+			
+			if(page.getContent().size()==0)
+			{
+				model.addAttribute("flag",false);
+				model.addAttribute("msg","Không tìm thấy "+search);
+			}
+			else
+			{
+				model.addAttribute("flag",true);
+				model.addAttribute("msg","Tìm thấy "+page.getContent().size()+" kết quả của "+search);
+			}
+		}
 		List<Product> listProducts = page.getContent();
 		
 		model.addAttribute("currentPage", pageNo);

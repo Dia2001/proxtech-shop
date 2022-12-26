@@ -19,6 +19,7 @@ import com.proxtechshop.entities.ProductAttribute;
 import com.proxtechshop.functionalinterface.IAttribute;
 import com.proxtechshop.functionalinterface.IBrands;
 import com.proxtechshop.functionalinterface.ICategories;
+import com.proxtechshop.functionalinterface.INameAttr;
 import com.proxtechshop.functionalinterface.IRandomProduct;
 import com.proxtechshop.functionalinterface.ITop3Brand;
 import com.proxtechshop.functionalinterface.ITop3Category;
@@ -89,7 +90,16 @@ public class GlobalDataBean {
 		return roleRepo.getReferenceById("customer");
 	}
 	
-	
+	@Bean(name="getAttributeName")
+	public INameAttr getAttributeName() {
+		return (id) -> {
+			ProductAttribute pa = par.getReferenceById(id);
+			if (pa != null) {
+				return pa.getName();
+			}
+			return "";
+		};
+	}
 	//end
 	@Bean(name = "top3Brand")
 	public ITop3Brand top3brand() {
