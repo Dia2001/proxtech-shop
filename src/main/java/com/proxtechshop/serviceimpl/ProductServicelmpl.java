@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.proxtechshop.api.response.ProductStatisticsMonthResponse;
 import com.proxtechshop.common.Constants;
-import com.proxtechshop.common.Validate;
 import com.proxtechshop.converter.ProductConverter;
 import com.proxtechshop.dto.AttrValueDto;
 import com.proxtechshop.entities.Cart;
@@ -84,7 +83,7 @@ public class ProductServicelmpl implements ProductService {
 
 	@Autowired
 	private OrderDetailRepository odr;
-	
+
 	@Autowired
 	private ImageRepository ir;
 
@@ -182,54 +181,49 @@ public class ProductServicelmpl implements ProductService {
 		PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 		return this.productRepository.findAll(pageable);
 	}
-	
-	//filter by category,brand,name and id 
-	public Page<Product> FilterAndPaginated(String search,int category,int brand, int pageNo, int pageSize, String sortField,
-			String sortDirection){
+
+	// filter by category,brand,name and id
+	public Page<Product> FilterAndPaginated(String search, int category, int brand, int pageNo, int pageSize,
+			String sortField, String sortDirection) {
 		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
 				: Sort.by(sortField).descending();
 
 		PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
-		//if search empty, then load all product and find base on category and brand
-		List<Product> products=new ArrayList<>();
-		if(search=="") {
-			products=productRepository.findAll();
-		}else {
-			products=productRepository.findAllByNameOrIdContains(search,search);			
+		// if search empty, then load all product and find base on category and brand
+		List<Product> products = new ArrayList<>();
+		if (search == "") {
+			products = productRepository.findAll();
+		} else {
+			products = productRepository.findAllByNameOrIdContains(search, search);
 		}
-		List<Product> filter1=findByBrand(products, brand);
-		List<Product> filter2=findByCtg(filter1, category);
-		Page<Product> result=(Page<Product>) Utils.toPage(filter2, pageable);
+		List<Product> filter1 = findByBrand(products, brand);
+		List<Product> filter2 = findByCtg(filter1, category);
+		Page<Product> result = (Page<Product>) Utils.toPage(filter2, pageable);
 		return result;
 	}
-	
 
-	
-	private List<Product> findByBrand(List<Product> products,int brand){
-		List<Product> tmp= new ArrayList<>();
-		if(brand==0) {
-			tmp=products;
-		}else
-		{
+	private List<Product> findByBrand(List<Product> products, int brand) {
+		List<Product> tmp = new ArrayList<>();
+		if (brand == 0) {
+			tmp = products;
+		} else {
 			for (Product product : products) {
-				if(product.getBrand().getId()==brand) {
+				if (product.getBrand().getId() == brand) {
 					tmp.add(product);
 				}
 			}
 		}
 		return tmp;
 	}
-	
-	private List<Product> findByCtg(List<Product> products,int ctg){
-		List<Product> tmp=new ArrayList<>();
-		if(ctg==0)
-		{
-			tmp=products;
-		}else
-		{
+
+	private List<Product> findByCtg(List<Product> products, int ctg) {
+		List<Product> tmp = new ArrayList<>();
+		if (ctg == 0) {
+			tmp = products;
+		} else {
 			for (Product product : products) {
 				for (Category ctgitem : product.getCategories()) {
-					if(ctgitem.getId()==ctg) {
+					if (ctgitem.getId() == ctg) {
 						tmp.add(product);
 						break;
 					}
@@ -245,28 +239,48 @@ public class ProductServicelmpl implements ProductService {
 	}
 
 	@Override
-	public boolean updateProduct(Product product) {
-		Product productTmp = productRepository.getById(product.getId());
-		if (productTmp != null) {
-			productTmp.setUpdatedDate(new Date());
-			productTmp.setBrand(product.getBrand());
-			productTmp.setCategories(product.getCategories());
-			productTmp.setName(product.getName());
-			productTmp.setImages(product.getImages());
-			productTmp.setDescription(product.getDescription());
-			productTmp.setDescriptioned(product.getDescriptioned());
-			productTmp.setPrice(product.getPrice());
-			productTmp.setQuantity(product.getQuantity());
-			productTmp.setRate(product.getRate());
-			productTmp.setThumbnail(product.getThumbnail());
-			productTmp.setSlug(product.getSlug());
-			productRepository.save(productTmp);
-		} else {
-			product.setCreatedDate(new Date());
-			product.setUpdatedDate(new Date());
-			productRepository.save(product);
+	public Product createProduct(Product product, MultipartFile file) {
+		product.setCreatedDate(new Date());
+		product.setUpdatedDate(new Date());
+		if (file != null) {
+			String fileType = Utils.getFileType(file.getContentType());
+			if (!"".equals(fileType)) {
+				try {
+					String fileName = "product-" + new Date().getTime() + fileType;
+					FileUploadUtil.saveFile("", fileName, file);
+					product.setThumbnail(fileName);
+					return productRepository.save(product);
+				} catch (Exception e) {
+				}
+			}
 		}
-		return true;
+		product.setThumbnail("");
+		return productRepository.save(product);
+	}
+
+	@Override
+	public boolean updateProduct(Product product) {
+		try {
+			Product productTmp = productRepository.getById(product.getId());
+			if (productTmp != null) {
+				productTmp.setUpdatedDate(new Date());
+				productTmp.setBrand(product.getBrand());
+				productTmp.setCategories(product.getCategories());
+				productTmp.setName(product.getName());
+				productTmp.setImages(product.getImages());
+				productTmp.setDescription(product.getDescription());
+				productTmp.setDescriptioned(product.getDescriptioned());
+				productTmp.setPrice(product.getPrice());
+				productTmp.setQuantity(product.getQuantity());
+				productTmp.setRate(product.getRate());
+				productTmp.setThumbnail(product.getThumbnail());
+				productTmp.setSlug(product.getSlug());
+				productRepository.save(productTmp);
+				return true;
+			}
+		} catch (Exception e) {
+		}
+		return false;
 	}
 
 	// error
@@ -340,7 +354,7 @@ public class ProductServicelmpl implements ProductService {
 								break;
 							}
 						}
-						if (flag) {							
+						if (flag) {
 							productsInMonth.add(new ProductStatisticsMonthResponse(product, orderDetail.getQuantity(),
 									order.getCreatedDate(), order.getUpdatedDate(), order.getOrderStatus().getName()));
 						}
@@ -351,7 +365,7 @@ public class ProductServicelmpl implements ProductService {
 		}
 		return productsInMonth;
 	}
-	
+
 	// load all attributeValue with empty value if it didnt create before
 	@Override
 	public List<ProductAttributeValue> loadAllAttrValue(String idProduct) {
@@ -368,9 +382,6 @@ public class ProductServicelmpl implements ProductService {
 			// if it already not in attributeValues, creating it
 			if (flag) {
 				ProductAttributeValue tmp = new ProductAttributeValue();
-				System.out.println("------------------");
-				System.out.println(attributes.get(i).getId());
-				System.out.println("------------------");
 				tmp.setAttributeId(attributes.get(i).getId());
 				tmp.setProductAttribute(attributes.get(i));
 				tmp.setValue("");
@@ -402,13 +413,13 @@ public class ProductServicelmpl implements ProductService {
 		}
 
 		if (flag) {
-			if (attrid > 0) {//no error
+			if (attrid > 0) {// no error
 				// update
 				ProductAttributeValue attributeValue = pavr.getReferenceByAttributeIdAndProductId(attrid, idProduct);
 				attributeValue.setValue(value);
 				pavr.save(attributeValue);
 			}
-		} else {//errors may be in there
+		} else {// errors may be in there
 			List<ProductAttribute> attributes = par.findAll();
 			int attridtmp = -1;
 			for (ProductAttribute item : attributes) {
@@ -429,8 +440,7 @@ public class ProductServicelmpl implements ProductService {
 				if (pavr.save(attributeValue) != null) {
 					pavr.flush();
 					return true;
-				}
-				else
+				} else
 					return false;
 
 			} else {
@@ -449,12 +459,10 @@ public class ProductServicelmpl implements ProductService {
 					attributeValue.setValue(value);
 					attributeValue.setCreatedDate(new Date());
 					attributeValue.setUpdatedDate(new Date());
-					if (pavr.save(attributeValue) != null)
-					{
+					if (pavr.save(attributeValue) != null) {
 						pavr.flush();
 						return true;
-					}
-					else
+					} else
 						return false;
 				} else
 					return false;
@@ -478,21 +486,20 @@ public class ProductServicelmpl implements ProductService {
 	}
 
 	@Override
-	public boolean modifyListOfAttrValue(AttrValueDto attrValueDto,String idproduct) {// error
+	public boolean modifyListOfAttrValue(AttrValueDto attrValueDto, String idproduct) {// error
 		List<ProductAttributeValue> list = attrValueDto.getAttributeValues();
 		// remove all item which has none value
 		for (int i = 0; i < list.size(); i++) {
-			//fillAttrValue(list.get(i),idproduct,list.get(i).getAttributeId());
+			// fillAttrValue(list.get(i),idproduct,list.get(i).getAttributeId());
 			String tmp = list.get(i).getValue();
-
 			if (tmp != "" && tmp != null)
 				try {
-					addAttrAndValue(idproduct, attr.get(list.get(i).getAttributeId()), list.get(i).getValue());					
-					
+					addAttrAndValue(idproduct, attr.get(list.get(i).getAttributeId()), list.get(i).getValue());
+
 				} catch (Exception e) {
 					return false;
 				}
-				
+
 		}
 		return true;
 	}
@@ -505,17 +512,10 @@ public class ProductServicelmpl implements ProductService {
 				throw new Exception();
 			}
 			for (MultipartFile file : files) {
-				String fileType = "";
-				System.out.println(file.getContentType());
-				if (file.getContentType().contains("image/jpeg")) {
-					fileType = ".jpg";
+				if (file == null) {
+					continue;
 				}
-				if (file.getContentType().contains("image/webp")) {
-					fileType = ".webp";
-				}
-				if (file.getContentType().contains("image/png")) {
-					fileType = ".png";
-				}
+				String fileType = Utils.getFileType(file.getContentType());
 				if ("".equals(fileType)) {
 					throw new Exception();
 				}
@@ -532,7 +532,7 @@ public class ProductServicelmpl implements ProductService {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public boolean deleteImage(int imageId) {
 		try {

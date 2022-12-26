@@ -173,18 +173,39 @@ public class ManagementController {
 	@RequestMapping(value = Constants.ADMIN_FOFMPRODUCT_PATH, method = RequestMethod.POST)
 	public String UpdateProduct(Product product, Model model,
 			@RequestParam(name = "files", required = false) MultipartFile[] files) {
-		if (files != null) {
-			productService.uploadListImage(product.getId(), files);
-		}
-		boolean flag = productService.updateProduct(product);
-		if (flag) {
-			model.addAttribute("flag", true);
-			model.addAttribute("msg", "Thêm hoặc sửa sản phẩm thành công!");
-			return findPaginated(1, "name", "asc", model);
+		if (Validate.checkStringNotEmptyOrNull(product.getId())) {
+			if (files != null) {
+				productService.uploadListImage(product.getId(), files);
+			}
+			boolean flag = productService.updateProduct(product);
+			if (flag) {
+				model.addAttribute("flag", true);
+				model.addAttribute("msg", "Sửa sản phẩm thành công!");
+				return findPaginated(1, "name", "asc", model);
+			} else {
+				model.addAttribute("flag", false);
+				model.addAttribute("msg", "Sửa không thành công!");
+				return getFormProduct(model);
+			}
 		} else {
-			model.addAttribute("flag", false);
-			model.addAttribute("msg", "Thêm hoặc sửa không thành công!");
-			return getFormProduct(model);
+			if (files != null && files.length > 0) {				
+				product = productService.createProduct(product, files[0]);
+				files[0] = null;
+			} else {				
+				product = productService.createProduct(product, null);
+			}
+			if (product != null) {
+				if (files != null && files.length > 1) {
+					productService.uploadListImage(product.getId(), files);
+				}
+				model.addAttribute("flag", true);
+				model.addAttribute("msg", "Thêm sản phẩm thành công!");
+				return findPaginated(1, "name", "asc", model);
+			} else {
+				model.addAttribute("flag", false);
+				model.addAttribute("msg", "Thêm không thành công!");
+				return getFormProduct(model);
+			}
 		}
 	}
 

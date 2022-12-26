@@ -15,10 +15,11 @@ import org.springframework.stereotype.Repository;
 
 import com.proxtechshop.entities.Order;
 import com.proxtechshop.repositories.CustomOrderRepository;
+import com.proxtechshop.utils.Utils;
 
 @Repository
 public class CustomOrderRepositoryImpl implements CustomOrderRepository {
-	
+
 	@Autowired
 	private EntityManager em;
 
@@ -28,10 +29,8 @@ public class CustomOrderRepositoryImpl implements CustomOrderRepository {
 		CriteriaQuery<Order> query = builder.createQuery(Order.class);
 		Root<Order> root = query.from(Order.class);
 		List<Predicate> predList = new ArrayList<>();
-		
-//		predList.add(builder.or(builder.gt(root.get("createdDate"), start),
-//				builder.equal(root.get("createdDate"), start)));
-		predList.add(builder.between(builder.currentDate(), start, end));
+
+		predList.add(builder.between(root.get("createdDate"), start, end));
 
 		Predicate[] predArray = new Predicate[predList.size()];
 		predList.toArray(predArray);

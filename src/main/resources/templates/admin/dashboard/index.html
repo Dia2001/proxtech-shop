@@ -6,6 +6,16 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="/assets/jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+   <script type="text/javascript" src="/assets/jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxcore.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxdata.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxbuttons.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxdatatable.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/jqwidgets/jqxtreegrid.js"></script>
+   <script type="text/javascript" src="/assets/jqwidgets/scripts/demos.js"></script>
 <title>Dashboard</title>
 </head>
 
@@ -22,9 +32,32 @@
 
 		</div>
 		<div>
-			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-				<div id="dashboard-grid">
+			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto flex justify-between">
+				<div class="input-date-month flex gap-10">
+					<div class="flex">
+						<label
+							class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+							for="year"> Năm </label>
+						<select id="year">
+							<option th:text="${i}" th:each="i : ${#numbers.sequence( 2020, 2036, 1)}"></option>
+						</select>
+					</div>
+					<div class="flex">
+						<label
+							class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+							for="year"> Tháng </label>
+						<select id="month">
+							<option th:text="${i}" th:each="i : ${#numbers.sequence( 1, 12, 1)}"></option>
+						</select>
+					</div>
 				</div>
+				<div class="input-date-day flex gap-10">
+					<input type="date" id="startDate" />
+					<input type="date" id="endDate" />
+				</div>
+			</div>
+			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+				<div id="dashboard-grid"></div>
 			</div>
 		</div>
 		<script src="/assets/js/admin-dashboard.js"></script>

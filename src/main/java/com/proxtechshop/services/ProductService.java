@@ -54,4 +54,6 @@ public interface ProductService {
 	boolean deleteImage(int imageId);
 
 	boolean uploadListImage(String productId, MultipartFile[] files);
+
+	Product createProduct(Product product, MultipartFile file);
 }

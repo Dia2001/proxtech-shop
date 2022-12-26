@@ -1,6 +1,8 @@
 package com.proxtechshop.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -45,4 +47,34 @@ public class Utils {
 	    return generatedString;
 	}
 
+	public static String convertDateToyyyyMMddHHmmss(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return formatter.format(date);
+	}
+	
+	public static String convertDateToddMMyyyy(Date date) {
+		if (date == null) {
+			return "";
+		}
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return formatter.format(date);
+	}
+	
+	public static Date createDateFromYMD(int year, int month, int day) {
+		return new Date(year - 1900, month - 1, day);
+	}
+	
+	public static String getFileType(String contentType) {
+		String fileType = "";
+		if (contentType.contains("image/jpeg")) {
+			fileType = ".jpg";
+		}
+		if (contentType.contains("image/webp")) {
+			fileType = ".webp";
+		}
+		if (contentType.contains("image/png")) {
+			fileType = ".png";
+		}
+		return fileType;
+	}
 }

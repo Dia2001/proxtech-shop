@@ -14,6 +14,7 @@ import com.proxtechshop.api.request.ProductStatisticsDayStartDayEndRequest;
 import com.proxtechshop.api.request.ProductStatisticsMonthRequest;
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.services.ProductService;
+import com.proxtechshop.utils.Utils;
 
 @RestController
 @RequestMapping(Constants.API_PRODUCT_PATH)
@@ -24,12 +25,12 @@ public class ProductRestController {
 
 	@PostMapping(Constants.PRODUCT_STATISTICS_MONTH_PATH)
 	public ResponseEntity<?> getProductStatisticsMonth(@RequestBody ProductStatisticsMonthRequest request) {
-		Date start = new Date(request.getYear(), request.getMonth(), 1);
+		Date start = Utils.createDateFromYMD(request.getYear(), request.getMonth(), 1);
 		Date end;
 		if (request.getYear() == 12) {
-			end = new Date(request.getYear() + 1, 1, 1);
+			end = Utils.createDateFromYMD(request.getYear() + 1, 1, 1);
 		} else {
-			end = new Date(request.getYear(), request.getMonth() + 1, 1);
+			end = Utils.createDateFromYMD(request.getYear(), request.getMonth() + 1, 1);
 		}
 
 		return new ResponseEntity<>(productService.getProductPStatisticsDateStartDateEnd(start, end), HttpStatus.OK);

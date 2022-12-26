@@ -1,11 +1,11 @@
 package com.proxtechshop.api.response;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.proxtechshop.entities.Product;
+import com.proxtechshop.utils.Utils;
 
 public class ProductStatisticsMonthResponse {
 
@@ -21,7 +21,7 @@ public class ProductStatisticsMonthResponse {
 	
 	private int quantityPrice;
 	
-	private int brandId;
+	private BrandReponse brand;
 	
 	private List<CategoryResponse> categories;
 	
@@ -40,19 +40,18 @@ public class ProductStatisticsMonthResponse {
 		this.price = product.getPrice().longValue();
 		this.quantityPrice = quantity;
 		this.totalPrice = this.price * this.quantityPrice;
-		this.brandId = product.getBrand().getId();
+		this.brand = new BrandReponse(product.getBrand());
 		this.categories = new ArrayList<>();
 		product.getCategories().forEach(c -> {
 			categories.add(new CategoryResponse(c));
 		});
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		this.orderDate = formatter.format(create);
-		this.orderUpdate = formatter.format(update);
+		this.orderDate = Utils.convertDateToddMMyyyy(create);
+		this.orderUpdate = Utils.convertDateToddMMyyyy(update);
 		this.status = status;
 	}
 
 	public ProductStatisticsMonthResponse(String id, String name, String image, long price, long totalPrice,
-			int quantityPrice, int brandId, List<CategoryResponse> categories, String orderDate, String orderUpdate,
+			int quantityPrice, BrandReponse brand, List<CategoryResponse> categories, String orderDate, String orderUpdate,
 			String status) {
 		super();
 		this.id = id;
@@ -61,7 +60,7 @@ public class ProductStatisticsMonthResponse {
 		this.price = price;
 		this.totalPrice = totalPrice;
 		this.quantityPrice = quantityPrice;
-		this.brandId = brandId;
+		this.brand = brand;
 		this.categories = categories;
 		this.orderDate = orderDate;
 		this.orderUpdate = orderUpdate;
@@ -116,12 +115,12 @@ public class ProductStatisticsMonthResponse {
 		this.quantityPrice = quantityPrice;
 	}
 
-	public int getBrandId() {
-		return brandId;
+	public BrandReponse getBrand() {
+		return brand;
 	}
 
-	public void setBrandId(int brandId) {
-		this.brandId = brandId;
+	public void setBrand(BrandReponse brand) {
+		this.brand = brand;
 	}
 
 	public String getOrderDate() {
