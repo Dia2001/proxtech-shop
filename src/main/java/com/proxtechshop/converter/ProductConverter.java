@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 import com.proxtechshop.api.response.ProductsPaymentResponse;
 import com.proxtechshop.entities.Cart;
 import com.proxtechshop.entities.Customer;
+import com.proxtechshop.entities.OrderDetail;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.User;
+import com.proxtechshop.repositories.ProductRepository;
 import com.proxtechshop.viewmodels.CustomUserModelView;
 import com.proxtechshop.viewmodels.ProductDetailViewModel;
 import com.proxtechshop.viewmodels.UserView;
@@ -18,6 +20,9 @@ public class ProductConverter {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	ProductRepository productRepository;
 	/*
 	 * public Type ojConvert; public Object ojTo;
 	 * 
@@ -45,5 +50,17 @@ public class ProductConverter {
 		return productsPaymentResponse;
 	}
 	
-
+	public ProductsPaymentResponse converOrderToModel(OrderDetail orderDetailEntity) {
+		
+		ProductsPaymentResponse productsPaymentResponse = new ProductsPaymentResponse();
+		productsPaymentResponse.setProduct_id(orderDetailEntity.getProductId());
+		Product product=productRepository.findById(orderDetailEntity.getProductId()).get();
+		productsPaymentResponse.setName(product.getName());
+		productsPaymentResponse.setDescription(product.getDescription());
+		productsPaymentResponse.setThumbnail(product.getThumbnail());
+		productsPaymentResponse.setPrice(product.getPrice());
+		productsPaymentResponse.setQuantity(orderDetailEntity.getQuantity());
+		return productsPaymentResponse;
+		
+	}
 }

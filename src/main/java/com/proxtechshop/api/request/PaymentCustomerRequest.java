@@ -9,6 +9,8 @@ public class PaymentCustomerRequest {
 	private String note;
 	
 	private String addressShip;
+	
+	private String status;
 
 	public PaymentCustomerRequest() {
 		super();
@@ -38,11 +40,20 @@ public class PaymentCustomerRequest {
 		this.addressShip = addressShip;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderDetailCustomer [listProductId=" + listProductId + ", note=" + note + ", addressShip=" + addressShip
-				+ "]";
+		return "PaymentCustomerRequest [listProductId=" + listProductId + ", note=" + note + ", addressShip="
+				+ addressShip + ", status=" + status + "]";
 	}
+
 	
 	
 }

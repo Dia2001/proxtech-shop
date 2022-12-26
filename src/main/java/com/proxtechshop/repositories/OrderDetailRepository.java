@@ -10,5 +10,8 @@ import com.proxtechshop.utils.OrderDetailId;
 
 @Component
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, OrderDetailId> {
+	
 	List<OrderDetail> findByOrderId(String orderId);
+	
+	OrderDetail findByOrderIdAndProductId(String orderId,String productId);
 }

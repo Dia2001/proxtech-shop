@@ -1,6 +1,7 @@
 package com.proxtechshop.viewmodels;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +14,7 @@ import com.proxtechshop.entities.Product;
 
 public class OrderViewModel {
 
-private String id;
+    private String id;
 	
 	private String nameShip;
 	
@@ -33,13 +34,12 @@ private String id;
 	
 	private OrderStatus orderStatus;
 	
-	private Set<OrderDetail> orderDetails = new HashSet<>();
-	
 	private Customer customer;
 	
-	private List<Product> products;
+	private List<ProductOrder> products;
 
-	public  OrderViewModel() {
+	
+	public OrderViewModel() {
 		super();
 	}
 
@@ -100,6 +100,8 @@ private String id;
 	}
 
 	public Date getCreatedDate() {
+		//SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		//return formatter.format(createdDate);
 		return createdDate;
 	}
 
@@ -131,20 +133,11 @@ private String id;
 		this.customer = customer;
 	}
 
-	public Set<OrderDetail> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(Set<OrderDetail> orderDetails) {
-		this.orderDetails = orderDetails;
-	}
-
-	
-	public List<Product> getProducts() {
+	public List<ProductOrder> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(List<ProductOrder> products) {
 		this.products = products;
 	}
 
@@ -153,7 +146,7 @@ private String id;
 		return "OrderViewModel [id=" + id + ", nameShip=" + nameShip + ", addressShip=" + addressShip + ", phoneShip="
 				+ phoneShip + ", note=" + note + ", checkoutPrice=" + checkoutPrice + ", promotion=" + promotion
 				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", orderStatus=" + orderStatus
-				+ ", orderDetails=" + orderDetails + ", customer=" + customer + ", products=" + products + "]";
+				 + ", customer=" + customer + ", products=" + products + "]";
 	}
 
 	
