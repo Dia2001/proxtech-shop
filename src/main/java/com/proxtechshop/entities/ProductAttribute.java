@@ -89,4 +89,10 @@ public class ProductAttribute implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	@Override
+	public String toString() {
+		return "ProductAttribute [id=" + id + ", name=" + name + ", description=" + description + ", status=" + status
+				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+	}
 }

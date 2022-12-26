@@ -17,5 +17,10 @@ public class AttrValueDto {
 	void AddAttrValue(ProductAttributeValue attrValue) {
 		this.attributeValues.add(attrValue);
 	}
+
+	@Override
+	public String toString() {
+		return "AttrValueDto [attributeValues=" + attributeValues + "]";
+	}
 	
 }

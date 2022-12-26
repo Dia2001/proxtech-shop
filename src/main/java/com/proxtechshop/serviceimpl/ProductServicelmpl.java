@@ -292,7 +292,7 @@ public class ProductServicelmpl implements ProductService {
 	public List<ProductAttributeValue> loadAllAttrValue(String idProduct) {
 		List<ProductAttributeValue> attributeValues = pavr.findAllByProductId(idProduct);
 		List<ProductAttribute> attributes = par.findAll();
-		for (int i = 0; i < attributes.size(); i++) {//error
+		for (int i = 0; i < attributes.size(); i++) {
 			boolean flag = true;
 			for (ProductAttributeValue productAttribute : attributeValues) {
 				if (attributes.get(i).getId() == productAttribute.getAttributeId()) {
@@ -303,6 +303,9 @@ public class ProductServicelmpl implements ProductService {
 			// if it already not in attributeValues, creating it
 			if (flag) {
 				ProductAttributeValue tmp = new ProductAttributeValue();
+				System.out.println("------------------");
+				System.out.println(attributes.get(i).getId());
+				System.out.println("------------------");
 				tmp.setAttributeId(attributes.get(i).getId());
 				tmp.setProductAttribute(attributes.get(i));
 				tmp.setValue("");

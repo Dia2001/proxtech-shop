@@ -1,5 +1,7 @@
 package com.proxtechshop.admincontrollers;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.proxtechshop.common.Constants;
 import com.proxtechshop.dto.AttrValueDto;
@@ -20,13 +23,14 @@ public class SpecificationMngController {
 	
 	@RequestMapping(Constants.ADMIN_FOFMATTRIBUTE_PATH)
 	public String getSpecificationForm(@RequestParam("id") String id,Model model) {
-		if(model.getAttribute("specifications")==null)
-		{
+//		if(model.getAttribute("specifications")==null)
+//		{
 			AttrValueDto attrValueDto=new AttrValueDto();
 			attrValueDto.setAttributeValues(productService.loadAllAttrValue(id));
+			System.out.println(attrValueDto);
 			model.addAttribute("specifications",attrValueDto);
 			model.addAttribute("idproduct",id);			
-		}
+//		}
 		return Constants.ADMIN_FOFMATTRIBUTE_VIEW;
 	}
 	
@@ -60,7 +64,7 @@ public class SpecificationMngController {
 	}
 	
 	@RequestMapping(value=Constants.ADMIN_FOFMATTRIBUTE_PATH+"/add",method=RequestMethod.POST)
-	public String createAttrAndValue(@RequestParam("id") String id,@RequestParam("attr")String attr,@RequestParam("value")String value,Model model) {
+	public RedirectView createAttrAndValue(@RequestParam("id") String id,@RequestParam("attr")String attr,@RequestParam("value")String value,Model model) {
 		boolean flag=productService.addAttrAndValue(id, attr, value);
 		if(flag)
 		{
@@ -72,11 +76,8 @@ public class SpecificationMngController {
 			model.addAttribute("flag2",flag);
 			model.addAttribute("msg2","Thêm thành công!");
 		}
-		AttrValueDto attrValueDto=new AttrValueDto();
-		attrValueDto.setAttributeValues(productService.loadAllAttrValue(id));
-		model.addAttribute("specifications",attrValueDto);
-		model.addAttribute("idproduct",id);	
-		return Constants.ADMIN_FOFMATTRIBUTE_VIEW;
+		
+		return new RedirectView(Constants.ADMIN_FOFMATTRIBUTE_PATH + "?id=" + id);
 	}
 	
 }
