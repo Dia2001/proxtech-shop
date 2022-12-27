@@ -46,7 +46,7 @@
 								<option value="created">Chờ xác nhận</option>
 								<option value="confirm">Đã xác nhận</option>
 								<option value="shipping">Đang giao hàng</option>
-								<option value="elivered">Giao thành công</option>
+								<option value="delivered">Giao thành công</option>
 								<option value="#">Giao không thành công</option>
 								<option value="#">Đã hủy</option>
 							</select>
@@ -68,7 +68,7 @@
 			<div class="w-[80%] mx-auto p-[24px] bg-white"
 				th:each="order : ${orders}">
 				<div class="flex justify-between items-center p-4">
-					<h4 class="rounded-xl bg-blue-600  text-[18px] text-black/200"
+					<h4 class="rounded-xl p-1  bg-blue-600  text-[12px]" style="color: white"
 						th:text="${order.orderStatus.name}"></h4>
 					<h4 class="text-right" th:text="'Mã hóa đơn: '+${order.id}"></h4>
 				</div>

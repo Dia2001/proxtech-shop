@@ -36,15 +36,15 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
-                <select name="order_status"
+                <select id="statusvalue" name="order_status"
 							class="block w-fit h-fit py-2.5 px-4 w-full text-md bg-transparent border-0 border-b-2 border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
 							<option value="" selected>--Chọn trạng thái đơn hàng--</option>
 							<!-- <option value="US">Tai nghe</option>
 							<option value="CA">Laptop</option>
 							<option value="FR">Điện thoại</option>
 							<option value="DE">Phụ kiên</option> -->
-							<option th:each="item:${@orderStatus}" th:value="${item.key}"
-								th:text="${item.name}"></option>
+							<option th:each="item:${orderStatuss}" th:value="${item.key}"
+								th:text="${item.name}"></option> 
 				</select>
                 <button type="submit" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-800 w-fit h-fit
                 ">lọc</button>
@@ -60,7 +60,6 @@
 						class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
 						Tạo mới</a> -->
                 </div>
-            </div>
         </div>
         <div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -101,35 +100,35 @@
                         </thead>
                         <tbody>
                             <!-- data -->
-                      <!--       <tr th:each="item: ${order}">
+                            <tr th:each="item: ${orders}">
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm max-w-[340px]">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 w-16 h-16">
-                                            <h6 th:text="">Lấy mã đơn hàng</h6>
+                                            <h6 th:text="${item.id}"></h6>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy tên khách hàng</p>
+                                    <p th:text="${item.nameShip}" class="text-gray-900 whitespace-no-wrap">Lấy tên khách hàng</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy số điện thoại</p>
+                                    <p th:text="${item.phoneShip}" class="text-gray-900 whitespace-no-wrap">Lấy số điện thoại</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy địa chỉ</p>
+                                    <p th:text="${item.addressShip}" class="text-gray-900 whitespace-no-wrap">Lấy địa chỉ</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy tổng giá trị</p>
+                                    <p th:text="${item.checkoutPrice}" class="text-gray-900 whitespace-no-wrap">Lấy tổng giá trị</p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    <p th:text="${}" class="text-gray-900 whitespace-no-wrap">Lấy trạng thái</p>
+                                    <p th:text="${item.orderStatus.name}" class="text-gray-900 whitespace-no-wrap">Lấy trạng thái</p>
                                 </td>
                                 <td class="px-5 py-5 bg-white text-sm flex items-center gap-4">
-                                    <a th:href="${@orderMngPath}+'/detail?id='+${item.id}"
+                                     <a th:href="${@orderMngPath}+'/detail/'+${item.id}"
                                     class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
-                                    >Xem chi tiết</a>
+                                    >Chi tiết</a>
                                 </td>
-                            </tr> -->
+                            </tr> 
                             <!-- data -->
                         </tbody>
                     </table>
@@ -197,6 +196,7 @@
             }
            
         </script>
+       
     </div>
 
 </body>

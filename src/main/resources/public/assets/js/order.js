@@ -77,13 +77,23 @@ function filterOrder(keyword, statusId) {
 			console.log(data);
 			var dataFilter = createListOrder(data);
 			document.getElementById('listOrder').innerHTML = dataFilter;
-			console.log("aaaaa");
-			console.log(dataFilter);
-		},
-		error: function(e) {
-			alert("Lỗi");
-			console.log("ERROR: ", e);
-		}
+
+			//
+			let repucharCheckItems = document.querySelectorAll('.repuchar-check-item');
+			repucharCheckItems.forEach(function(repucharItem) {
+				repucharItem.onclick = function() {
+					console.log(repucharItem.id.split('btn-')[1]);
+					repurchase(repucharItem.id.split('btn-')[1]);
+				 }
+			})
+
+	console.log("aaaaa");
+	console.log(dataFilter);
+},
+error: function(e) {
+	alert("Lỗi");
+	console.log("ERROR: ", e);
+}
 	})
 }
 
@@ -95,7 +105,7 @@ function createListOrder(data) {
 
 		let row = `<div class="w-[80%] mx-auto my-[24px] bg-white">
 				<div class="flex justify-between items-center p-4">
-					<h4 class="text-[18px] text-black/50"
+					<h4 class="rounded-xl p-1  bg-blue-600  text-[12px]" style="color: white"
 						>${data[i]["orderStatusName"]}</h4>
 					<h4 class="text-right" >Mã hóa đơn: ${data[i]["id"]}  </h4>
 				</div>`;
@@ -132,18 +142,19 @@ function createListOrder(data) {
 						</h5>
 						<div class="flex justify-between">
 							<button
-								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+							    id="btn-${data[i]["id"].toString().toUpperCase()}"
+								class="repuchar-check-item relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
 								<span
 									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
 									Mua lại </span>
 							</button>
-							<button 
-								onclick="detailProduct(${data[i]["id"]} )"
+							<a 
+								href="/don-hang/${data[i]["id"].toString().toUpperCase()} "
 								class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
 								<span
 									class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
 									Xem chi tiết </span>
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -153,4 +164,8 @@ function createListOrder(data) {
 
 	return rows;
 
+}
+
+if (performance.navigation.type == 2) {
+	location.reload(true);
 }
