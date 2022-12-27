@@ -1,0 +1,16 @@
+<th:block sec:authorize="isAuthenticated()">
+	<div class="flex gap-2 mr-4">
+		<a th:href="${@profilePath}"
+			th:with="userLogin = ${@userLoginProfile.get()}">
+			<p th:text="${userLogin.isCustomer() ? userLogin.fullName : userLogin.username}"></p>
+		</a> 
+		<a th:href="${@profilePath} + '?repass=true'" class="box-user-item">
+			<p>Đổi mật khẩu</p>
+		</a>
+		<form name="logoutForm" th:action="${@logoutPath}" method="post">
+			<button class="box-user-item" type="submit">
+				<p>Đăng xuất</p>
+			</button>
+		</form>
+	</div>
+</th:block>

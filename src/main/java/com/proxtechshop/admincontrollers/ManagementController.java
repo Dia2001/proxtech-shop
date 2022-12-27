@@ -1,4 +1,4 @@
-package com.proxtechshop.controllers;
+package com.proxtechshop.admincontrollers;
 
 import java.util.List;
 import java.util.Optional;

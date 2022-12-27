@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import com.proxtechshop.common.Constants;
+import com.proxtechshop.entities.User;
+import com.proxtechshop.functionalinterface.IUserLogin;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -27,8 +29,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public DaoAuthenticationProvider authProvider;
 	
+	@Autowired
+	private IUserLogin userLogin;
+	
 	private void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws Exception {
+		User user = userLogin.get();
+		if (user != null) {
+			if (user.getCustomer() == null) {
+				response.sendRedirect(Constants.ADMIN_PATH);
+				return;
+			}
+		}
 		// do something when after login success
 		response.sendRedirect(Constants.HOME_PATH);
 	}
@@ -46,18 +58,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(Constants.HOME_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_PATH).permitAll()
 				.antMatchers(HttpMethod.GET, Constants.PRODUCT_DETAIL_URL_PATH).permitAll()
-				.antMatchers(HttpMethod.POST, Constants.CART_PATH).permitAll()
-				.antMatchers(HttpMethod.POST, Constants.CART_URL_ACTION).permitAll()
-				.antMatchers(HttpMethod.POST, Constants.PAYMENT_PRODUCTDETAIL_URL_API).permitAll()
 				.antMatchers(Constants.UPLOAD_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.STATIC_RESOURCE_PATH_CONFIG).permitAll()
 				.antMatchers(Constants.SIGNUP_PATH).permitAll()
 				.antMatchers(HttpMethod.POST,Constants.REGISTER_URL_PATH).permitAll()
-				.antMatchers(Constants.ADMIN_PATH).permitAll()
-				.antMatchers(Constants.ORDERDETAIL_PATH).permitAll()
-				.antMatchers(Constants.PAYMENT_PATH).permitAll()
-				.antMatchers(Constants.ORDERS_PATH).permitAll()
-				.antMatchers(Constants.PROFILE_PATH).authenticated();
+				.antMatchers("/gio-hang/**").hasRole("CUSTOMER")
+				.antMatchers("/thanh-toan/**").hasRole("CUSTOMER")
+				.antMatchers("/don-hang/**").hasRole("CUSTOMER")
+				.antMatchers("/api/v1/customer/**").hasRole("CUSTOMER")
+				.antMatchers(Constants.ADMIN_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_DASHBOARD_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_FOFMPRODUCT_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_FOFMPRODUCT_DELETE_THUMBNAIL_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_FOFMPRODUCT_DELETE_IMAGE_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_FOFMATTRIBUTE_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_CATEGORIESMNG_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_ORDERMNG_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_PROFILE_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_BRAND_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers("/api/v1/product/**").hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_CUSTOMERSMNG_PATH).hasAnyRole("ADMIN")
+				.antMatchers(Constants.ADMIN_FORMCUSTOMER_PATH).hasAnyRole("ADMIN")
+				.antMatchers(Constants.ADMIN_MEMBERSMNG_PATH).hasAnyRole("ADMIN")
+				.antMatchers(Constants.ADMIN_FORMMEMBER_PATH).hasAnyRole("ADMIN")
+				.antMatchers(Constants.PROFILE_PATH).authenticated()
+				.antMatchers(Constants.CHANGEPASS_URL_PATH).authenticated();
 				
 		http.authorizeRequests()
 				.anyRequest().permitAll();

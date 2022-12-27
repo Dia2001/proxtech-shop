@@ -3,30 +3,28 @@
 		<p th:text="${userLogin.isCustomer() ? userLogin.fullName : userLogin.username}"></p>
 		<i class='bx bx-user-circle'></i>
 	</a>
-	<div class="box-user">
+	<div class="box-user" th:with="userLogin = ${@userLoginProfile.get()}">
+		<a th:if="${userLogin.isCustomer()}" href="/don-hang" class="box-user-item">
+			<p>Đơn hàng</p><i class='bx bx-cart'></i>
+		</a>
 		<a th:href="${@profilePath}" class="box-user-item">
-			<p>Thông tin cá nhân</p>
-			<i class='bx bx-info-circle'></i>
+			<p>Thông tin cá nhân</p><i class='bx bx-info-circle'></i>
 		</a>
 		<a th:href="${@profilePath} + '?repass=true'" class="box-user-item">
-			<p>Đổi mật khẩu</p>
-			<i class='bx bx-expand-horizontal'></i>
+			<p>Đổi mật khẩu</p><i class='bx bx-expand-horizontal'></i>
 		</a>
 		<form name="logoutForm" th:action="${@logoutPath}" method="post">
 			<button class="box-user-item" type="submit">
-				<p>Đăng xuất</p>
-				<i class='bx bx-log-out'></i>
+				<p>Đăng xuất</p><i class='bx bx-log-out'></i>
 			</button>
 		</form>
 	</div>
 </th:block>
 <th:block sec:authorize="!isAuthenticated()">
 	<a th:href="${@loginPath}" class="log-in">
-		<p>Đăng nhập</p>
-		<i class='bx bx-log-in'></i>
+		<p>Đăng nhập</p><i class='bx bx-log-in'></i>
 	</a>
 	<a th:href="${@signUpPath}" class="log-out">
-		<p>Đăng ký</p>
-		<i class='bx bx-plus'></i>
+		<p>Đăng ký</p><i class='bx bx-plus'></i>
 	</a>
 </th:block>
