@@ -105,6 +105,7 @@ public class Constants {
 		public static final String ADMIN_FOFMMEMBER_VIEW="admin/membermanagement/formmember";
 	public static final String ADMIN_CATEGORIESMNG_VIEW="admin/categorymanagement/index";
 	public static final String ADMIN_ORDERMNG_VIEW="admin/ordermanagement/index";
+	public static final String ADMIN_ORDERMNG_VIEW_PATH="admin/ordermanagement/orderdetail";
 	public static final String ADMIN_PROFILE_VIEW="admin/adminprofile/index";
 	public static final String ADMIN_BRAND_VIEW="admin/brandmanagement/index";
 	

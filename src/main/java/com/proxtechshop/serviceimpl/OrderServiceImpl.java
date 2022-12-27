@@ -17,6 +17,7 @@ import com.proxtechshop.entities.Cart;
 import com.proxtechshop.entities.Order;
 import com.proxtechshop.entities.OrderDetail;
 import com.proxtechshop.entities.OrderHistory;
+import com.proxtechshop.entities.OrderStatus;
 import com.proxtechshop.entities.Product;
 import com.proxtechshop.entities.ProductAttributeValue;
 import com.proxtechshop.entities.User;
@@ -31,6 +32,7 @@ import com.proxtechshop.repositories.UserRepository;
 import com.proxtechshop.services.OrderService;
 import com.proxtechshop.utils.GetUserUtil;
 import com.proxtechshop.utils.Utils;
+import com.proxtechshop.viewmodels.OrderStatusViewModel;
 import com.proxtechshop.viewmodels.OrderViewModel;
 import com.proxtechshop.viewmodels.ProductOrder;
 import com.proxtechshop.converter.OrderConverter;
@@ -64,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ProductAttributeValueRepository productAttributeValueRepository;
+
 
 	@Override
 	public boolean CreateOrder(PaymentCustomerRequest paymentCustomer) {
@@ -155,14 +158,14 @@ public class OrderServiceImpl implements OrderService {
 					for (OrderDetail orderDetail : listOrderDetail) {
 
 						Product product = productRepository.findById(orderDetail.getProductId()).get();
-						if (product.getName().equalsIgnoreCase(keyword)) {
+						if (product.getName().contains(keyword)) {
 							check = true;
 							break;
 						}
 					}
-
+                    System.out.println(check);
 					if (order.getOrderStatus().getKey().equalsIgnoreCase(statusId)
-							&& order.getId().equalsIgnoreCase(keyword) || check) {
+				|| order.getId().equalsIgnoreCase(keyword) && check==true) {
 						orderVModels.add(orderConverter.converToModel(order));
 					}
 				}
@@ -288,8 +291,45 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> loadAllOrders() {
-		return orderRepository.findAll();
+	public List<OrderViewModel> loadAllOrders() {
+
+		List<OrderViewModel> orderVModels = new ArrayList<>();
+		for(Order order: orderRepository.findAll()) {
+			orderVModels.add(orderConverter.converToModel(order));
+		}
+		return orderVModels;
+	}
+
+	@Override
+	public List<OrderStatusViewModel> loadAddOrderStatus() {
+		
+		List<OrderStatusViewModel> orderStatusViewModels = new ArrayList<>();
+		for(OrderStatus orderS: orderStatusRepository.findAll()) {
+			orderStatusViewModels.add(orderConverter.converModel(orderS));
+		}
+		
+		return orderStatusViewModels;
+	}
+
+	@Override
+	public boolean updateStatus(String orderId, String statusId) {
+		Order check=null;
+		OrderHistory orderHistoryCheck = null;
+		
+		Order order=orderRepository.findById(orderId).get();
+		OrderStatus orderStatus=orderStatusRepository.findById(statusId).get();
+		order.setOrderStatus(orderStatus);
+		check=orderRepository.save(order);
+		
+		
+		OrderHistory orderHistory = new OrderHistory();
+		orderHistory.setCreatedDate(new Date());
+		orderHistory.setOrder(order);
+		orderHistory.setOrderStatus(order.getOrderStatus());
+		orderHistoryCheck = orderHistoryRepository.save(orderHistory);
+		
+		// TODO Auto-generated method stub
+		return check != null && orderHistory != null?true:false;
 	}
 
 }
