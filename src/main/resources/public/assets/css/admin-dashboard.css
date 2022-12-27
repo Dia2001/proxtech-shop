@@ -1,0 +1,9 @@
+.box-hidden {
+	display: none!important;
+	visibility: hidden!important;
+}
+
+#dashboard-grid {
+	overflow-y: scroll;
+	max-height: 600px;
+}

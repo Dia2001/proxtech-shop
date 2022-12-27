@@ -79,6 +79,7 @@
 	const acceptFilter = () => {
 	  let paramString = '?'
 	  paramString += `p=${page}`
+	  paramString += search? `&q=${search}` : ''
 	  paramString += listBrandIds? `&b=${listBrandIds}` : ''
 	  paramString += categoryId? `&c=${categoryId}` : ''
 	  paramString += startPrice? `&sp=${startPrice}` : ''
