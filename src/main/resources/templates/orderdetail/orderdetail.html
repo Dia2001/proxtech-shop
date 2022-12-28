@@ -335,7 +335,10 @@
 														<a href="#" class="text-reset"
 															th:text="${oneProduct.product.description}"></a>
 													</h6>
-													<span class="small" th:text="'CPU: '+${oneProduct.value}"></span>
+
+													<th:block th:if="${oneProduct.value!=null}">
+														<span class="small" th:text="'CPU: '+${oneProduct.value}"></span>
+													</th:block>
 												</div>
 											</div>
 										</td>
@@ -427,9 +430,7 @@
 			<div class="title">
 				HÓA ĐƠN THANH TOÁN <br /> -------oOo-------
 			</div>
-			<span th:text="'Mã hóa đơn: '+${oneOrder.id}"></span> 
-			<br/>
-			<span
+			<span th:text="'Mã hóa đơn: '+${oneOrder.id}"></span> <br /> <span
 				th:text="'Ngày: '+${#dates.format(oneOrder.createdDate, 'dd-MMM-yyyy HH:mm')}"></span>
 			<br /> <br />
 			<table class="TableData">
@@ -463,12 +464,11 @@
 			<div
 				th:utext="'Bình Định, ngày '+${#dates.day(oneOrder.createdDate)}+ ' tháng '+${#dates.month(oneOrder.createdDate)}+' năm '+${#dates.year(oneOrder.createdDate)}+'
 			<br /> Khách hàng'"
-				class="footer-left">
-			</div>
-			<div th:utext="'Bình Định, ngày '+${#dates.day(oneOrder.createdDate)}+ ' tháng '+${#dates.month(oneOrder.createdDate)}+' năm '+${#dates.year(oneOrder.createdDate)}+'
-			<br /> Nhân viên'" class="footer-right">
-				
-			</div>
+				class="footer-left"></div>
+			<div
+				th:utext="'Bình Định, ngày '+${#dates.day(oneOrder.createdDate)}+ ' tháng '+${#dates.month(oneOrder.createdDate)}+' năm '+${#dates.year(oneOrder.createdDate)}+'
+			<br /> Nhân viên'"
+				class="footer-right"></div>
 		</div>
 	</div>
 

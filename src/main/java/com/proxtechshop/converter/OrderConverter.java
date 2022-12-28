@@ -48,7 +48,9 @@ public class OrderConverter {
         	productOrder.setProduct(productRepository.findById(orderDetail.getProductId()).get()); 
         	productOrder.setNumber(orderDetail.getQuantity());
         	ProductAttributeValue productAttributeValue=productAttributeValueRepository.findByProductIdAndAttributeId(orderDetail.getProductId(), 3);
-        	productOrder.setValue(productAttributeValue.getValue());
+        	if(productAttributeValue!=null) {
+        		productOrder.setValue(productAttributeValue.getValue());
+        	}
         	listProduct.add(productOrder);
         }
         orderViewModel.setProducts(listProduct);

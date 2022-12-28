@@ -15,7 +15,7 @@
             <div class="basis-1/2">
             	<h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
 				<h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
-                <form th:action="${@specificationPath}+'?id='+${idproduct}" th:object="${specifications}" method="post">
+                <form    th:action="${@specificationPath}+'?id='+${idproduct}" th:object="${specifications}" method="post">
                     <fieldset>
                         <div class="flex flex-col">
                             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -43,10 +43,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+             
                                                 <tr class="border-b" th:each="item, itemStat : *{attributeValues}">
                                                     <td
                                                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                                        <h6 th:text="${itemStat.index+1}"></h6></td>
+                                                        <h6 th:text="${itemStat.index}+1"></h6></td>
                                                     <td
                                                         class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                          <h6 th:text="${@getAttributeName.get(item.attributeId)}"></h6> 
@@ -64,6 +65,7 @@
                                                         >Xoá</a>
                                                     </td>
                                                 </tr>
+                                         
                                             </tbody>
                                         </table>
                                     </div>
