@@ -25,11 +25,11 @@ public class ProductStatisticsMonthResponse {
 	
 	private List<CategoryResponse> categories;
 	
-	private String orderDate;
-	
-	private String orderUpdate;
-	
-	private String status;
+//	private String orderDate;
+//	
+//	private String orderUpdate;
+//	
+//	private String status;
 	
 	public ProductStatisticsMonthResponse() {}
 	
@@ -45,9 +45,9 @@ public class ProductStatisticsMonthResponse {
 		product.getCategories().forEach(c -> {
 			categories.add(new CategoryResponse(c));
 		});
-		this.orderDate = Utils.convertDateToddMMyyyy(create);
-		this.orderUpdate = Utils.convertDateToddMMyyyy(update);
-		this.status = status;
+//		this.orderDate = Utils.convertDateToddMMyyyy(create);
+//		this.orderUpdate = Utils.convertDateToddMMyyyy(update);
+//		this.status = status;
 	}
 
 	public ProductStatisticsMonthResponse(String id, String name, String image, long price, long totalPrice,
@@ -62,9 +62,9 @@ public class ProductStatisticsMonthResponse {
 		this.quantityPrice = quantityPrice;
 		this.brand = brand;
 		this.categories = categories;
-		this.orderDate = orderDate;
-		this.orderUpdate = orderUpdate;
-		this.status = status;
+//		this.orderDate = orderDate;
+//		this.orderUpdate = orderUpdate;
+//		this.status = status;
 	}	
 
 	public String getId() {
@@ -123,29 +123,29 @@ public class ProductStatisticsMonthResponse {
 		this.brand = brand;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public String getOrderUpdate() {
-		return orderUpdate;
-	}
-
-	public void setOrderUpdate(String orderUpdate) {
-		this.orderUpdate = orderUpdate;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+//	public String getOrderDate() {
+//		return orderDate;
+//	}
+//
+//	public void setOrderDate(String orderDate) {
+//		this.orderDate = orderDate;
+//	}
+//
+//	public String getOrderUpdate() {
+//		return orderUpdate;
+//	}
+//
+//	public void setOrderUpdate(String orderUpdate) {
+//		this.orderUpdate = orderUpdate;
+//	}
+//
+//	public String getStatus() {
+//		return status;
+//	}
+//
+//	public void setStatus(String status) {
+//		this.status = status;
+//	}
 
 	public List<CategoryResponse> getCategories() {
 		return categories;

@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService, InforCustomerService {
 			user.setCreatedDate(new Date());
 			user.setPassword(encodedPassword);
 			//set role customer
-			Role role=roleRepository.getReferenceById("customer");
+			Role role=roleRepository.getReferenceById("ROLE_CUSTOMER");
 			HashSet<Role> roles= new HashSet<>();
 			roles.add(role);
 			user.setRoles(roles);

@@ -145,7 +145,22 @@
 										th:field="*{categories}" />
 								</div>
 								<!-- <select name="category" class="block py-2.5 px-4 w-full text-md text-black/90 bg-transparent border-0 border-b-2 border-gray-200  dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                            <option value="" selected>--Chọn Danh mục--</option>
+                            <option value="" selected>--Chọn Danh mục-<div class="flex">
+						<label
+							class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+							for="year"> Năm </label>
+						<select id="year">
+							<option th:text="${i}" th:each="i : ${#numbers.sequence( 2020, 2036, 1)}"></option>
+						</select>
+					</div>
+					<div class="flex">
+						<label
+							class="block text-gray-500 font-bold mb-1 md:mb-0 pr-4 md:text-right"
+							for="year"> Tháng </label>
+						<select id="month">
+							<option th:text="${i}" th:each="i : ${#numbers.sequence( 1, 12, 1)}"></option>
+						</select>
+					</div>-</option>
                             <option value="US">Sony</option>
                             <option value="CA">ASUS</option>
                             <option value="FR">HP</option>

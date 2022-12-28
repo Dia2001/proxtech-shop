@@ -14,7 +14,7 @@
         <div class=" flex items-start justify-between pb-6">
             <div>
                 <h2 class="text-gray-600 text-2xl font-semibold">Quản lý Đơn hàng</h2>
-                <span class="text-xs">Tất cả Đơn hàng</span>
+                <span class="text-xs">Tất cả Đơn hàng <span th:text="${totalItems}"></span></span>
                 <h6 th:if="${flag}" th:text="${msg}" style="color: green" id="msg"></h6>
                 <h6 th:unless="${flag}" th:text="${msg}" style="color: red" id="msg"></h6>
             </div>
@@ -155,14 +155,14 @@
                                 <li class="page-item">Trang [[${currentPage}]] của
                                     [[${totalPages}]]</li>
                                 <li class="page-item"><a th:if="${currentPage>1}"
-                                        th:href="@{'/admin/customermanagement/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
+                                        th:href="@{'/admin/ordermanagement/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
                                         class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 focus:shadow-none">quay
                                         lại</a> <span th:unless="${currentPage > 1}"
                                         class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">
                                         Quay lại</span></li>
                                 <ul th:each="i: ${#numbers.sequence(1, totalPages)}">
                                     <li class="page-item"><a th:if="${currentPage!=i}"
-                                            th:href="@{'/admin/customermanagement/page/'+${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                            th:href="@{'/admin/ordermanagement/page/'+${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
                                             class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">[[${i}]]</a>
                                         <span
                                             class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
@@ -176,7 +176,7 @@
 									class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
 									href="#">3</a></li> -->
                                 <li class="page-item"><a th:if="${currentPage<totalPages}"
-                                        th:href="@{'/admin/customermanagement/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
+                                        th:href="@{'/admin/ordermanagement/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
                                         class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">Next</a>
                                     <span th:unless="${currentPage < totalPages}"
                                         class="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none">
