@@ -30,6 +30,7 @@ import com.proxtechshop.functionalinterface.IUserLoginProfile;
 import com.proxtechshop.repositories.BrandRepository;
 import com.proxtechshop.repositories.CategoryRepository;
 import com.proxtechshop.repositories.CustomProductRepository;
+import com.proxtechshop.repositories.OrderRepository;
 import com.proxtechshop.repositories.ProductRepository;
 import com.proxtechshop.repositories.RoleRepository;
 import com.proxtechshop.repositories.ProductAttributeRepository;
@@ -51,6 +52,9 @@ public class GlobalDataBean {
 
 	@Autowired
 	private CustomProductRepository cpr;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@Autowired
 	private UserService userService;
@@ -83,18 +87,23 @@ public class GlobalDataBean {
 	List<Role> roles() {
 		List<Role> getRoles = roleRepo.findAll();
 		for (int i = 0; i < getRoles.size(); i++) {
-			if (getRoles.get(i).roleKey.equalsIgnoreCase("customer")) {
+			if (getRoles.get(i).roleKey.equalsIgnoreCase("ROLE_CUSTOMER")) {
 				getRoles.remove(i);
 				break;
 			}
 		}
 		return getRoles;
-		// end
 	}
+	
+	@Bean(name="totalOfOrders")
+	public int totalOfOrders() {
+		return orderRepository.findAll().size();
+	}
+	// end
 
 	@Bean(name = "customerRole")
 	Role customerRole() {
-		return roleRepo.getReferenceById("customer");
+		return roleRepo.getReferenceById("ROLE_CUSTOMER");
 	}
 
 	@Bean(name = "getAttributeName")

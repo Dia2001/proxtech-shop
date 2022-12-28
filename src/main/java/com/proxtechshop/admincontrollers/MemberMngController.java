@@ -48,7 +48,7 @@ public class MemberMngController {
 	String ModifyMember(User user,Model model) {
 		if(memberService.UpdateMember(user)) {
 			model.addAttribute("flag",true);
-			model.addAttribute("msg","Sửa thành công!");
+			model.addAttribute("msg","Tạo hoặc thay đổi thành công!");
 		}
 		else {
 			model.addAttribute("flag",false);
@@ -102,6 +102,7 @@ public class MemberMngController {
 		else
 		{
 			String search=model.getAttribute("search").toString();
+			model.addAttribute("search",search);
 			page=memberService.FilterAndPaginated(search, pageNo, pageSize, sortField, sortDir);
 			if(page.getContent().size()==0)
 			{
@@ -111,7 +112,7 @@ public class MemberMngController {
 			else
 			{
 				model.addAttribute("flag",true);
-				model.addAttribute("msg","Tìm thấy "+page.getContent().size()+" kết quả của "+search);
+				model.addAttribute("msg","Tìm thấy "+page.getTotalElements()+" kết quả của "+search);
 			}
 		}
 		//end
