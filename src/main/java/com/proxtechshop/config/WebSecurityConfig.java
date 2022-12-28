@@ -68,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/v1/customer/**").hasRole("CUSTOMER")
 				.antMatchers(Constants.ADMIN_PATH).hasAnyRole("ADMIN", "MANAGER")
 				.antMatchers(Constants.ADMIN_DASHBOARD_PATH).hasAnyRole("ADMIN", "MANAGER")
+				.antMatchers(Constants.ADMIN_PRODUCTMNG_PATH).hasAnyRole("ADMIN", "MANAGER")
 				.antMatchers(Constants.ADMIN_FOFMPRODUCT_PATH).hasAnyRole("ADMIN", "MANAGER")
 				.antMatchers(Constants.ADMIN_FOFMPRODUCT_DELETE_THUMBNAIL_PATH).hasAnyRole("ADMIN", "MANAGER")
 				.antMatchers(Constants.ADMIN_FOFMPRODUCT_DELETE_IMAGE_PATH).hasAnyRole("ADMIN", "MANAGER")

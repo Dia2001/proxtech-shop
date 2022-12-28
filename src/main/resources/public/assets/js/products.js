@@ -133,9 +133,13 @@
 	  let ePrice = document.getElementById('ep').value
 	  if (sPrice != "" || sPrice != 0) {
 	    startPrice = sPrice
+	  } else {
+		startPrice = null
 	  }
 	  if (ePrice != "" || ePrice != 0) {
 	    endPrice = ePrice
+	  } else {
+		endPrice = null
 	  }
 	  attributes = Array.from(document.querySelectorAll('select[id^="a-"]'))
 	                        .filter(item => item.value != '')
