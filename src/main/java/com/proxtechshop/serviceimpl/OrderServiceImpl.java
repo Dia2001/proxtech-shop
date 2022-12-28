@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.proxtechshop.api.request.PaymentCustomerRequest;
@@ -332,4 +335,56 @@ public class OrderServiceImpl implements OrderService {
 		return check != null && orderHistory != null?true:false;
 	}
 
+	//pagination
+	@Override
+	public Page<OrderViewModel> paginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+				: Sort.by(sortField).descending();
+
+		PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);	
+		List<OrderViewModel> orders=loadAllOrders();
+		
+		@SuppressWarnings("unchecked")
+		Page<OrderViewModel> convertToPage=(Page<OrderViewModel>) Utils.toPage(orders, pageable);
+		return convertToPage;
+	}
+
+	@Override
+	public Page<OrderViewModel> FilterAndPaginated(String search, String status, int pageNo, int pageSize,
+			String sortField, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()
+				: Sort.by(sortField).descending();
+
+		PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);	
+		List<OrderViewModel> orderViewModels=new ArrayList<>();
+		if(search=="") {
+			orderViewModels=loadAllOrders();
+		}else
+		{
+			orderViewModels.add(orderConverter.converToModel(orderRepository.getReferenceById(search)));
+		}
+		List<OrderViewModel> filter=findByStatus(orderViewModels, status);
+		
+		@SuppressWarnings("unchecked")
+		Page<OrderViewModel> result = (Page<OrderViewModel>) Utils.toPage(filter, pageable);
+		return result;
+	}
+	
+	private List<OrderViewModel> findByStatus(List<OrderViewModel> list,String status){
+		List<OrderViewModel> list2=new ArrayList<>();
+		if(status=="")
+		{
+			return list;
+		}
+		else
+		{
+			for (OrderViewModel item : list) {
+				if(item.getOrderStatus().getKey().equalsIgnoreCase(status))
+					list2.add(item);
+			}
+			return list2;
+		}
+	}
+
+	
 }

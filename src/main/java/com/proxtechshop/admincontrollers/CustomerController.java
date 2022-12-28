@@ -135,7 +135,7 @@ public class CustomerController {
 				else
 				{
 					model.addAttribute("flag",true);
-					model.addAttribute("msg","Tìm thấy "+page.getContent().size()+" kết quả của "+search);
+					model.addAttribute("msg","Tìm thấy "+page.getTotalElements()+" kết quả của "+search);
 				}
 			}
 			//end

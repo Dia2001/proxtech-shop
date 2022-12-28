@@ -315,7 +315,6 @@ public class ProductServicelmpl implements ProductService {
 	public HashMap<String, String> showAtrsAndValues(String productId) {
 		HashMap<String, String> data = new HashMap<String, String>();
 		List<ProductAttribute> productAttributes = par.findAll();
-
 		if (productId != null) {
 			List<ProductAttributeValue> attributeValues = pavr.findAllByProductId(productId);
 			for (ProductAttribute attr : productAttributes) {
@@ -326,11 +325,8 @@ public class ProductServicelmpl implements ProductService {
 						break;
 					}
 				}
+				if(value!="")
 				data.put(attr.getName(), value);
-			}
-		} else {
-			for (ProductAttribute attr : productAttributes) {
-				data.put(attr.getName(), "");
 			}
 		}
 		return data;

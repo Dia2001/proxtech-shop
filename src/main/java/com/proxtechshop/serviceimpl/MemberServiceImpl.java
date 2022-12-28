@@ -46,7 +46,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public boolean UpdateMember(User user) {
 		try {
-			if(user.getId().isEmpty()&&repo.getByUsername(user.getUsername())!=null)
+			if(user.getId()==null&&repo.getByUsername(user.getUsername())!=null)
 				return false;
 			if(user.getCreatedDate()==null)
 				user.setCreatedDate(new Date());
@@ -89,7 +89,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	private void filterRoleCustomer(List<User> users)
 	{
-		Role role=roleRepo.getReferenceById("customer");
+		Role role=roleRepo.getReferenceById("ROLE_CUSTOMER");
 		for(int i=0;i<users.size();i++)
 		{
 			if(users.get(i).getRoles().contains(role))

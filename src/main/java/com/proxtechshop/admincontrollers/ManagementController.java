@@ -107,8 +107,9 @@ public class ManagementController {
 	@RequestMapping(Constants.ADMIN_PRODUCTMNG_PATH + "/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("sortField") String sortField,
 			@RequestParam("sortDir") String sortDir, Model model) {
+		
 		int pageSize = 4;
-
+		
 		// handler search engine
 		Page<Product> page;
 		boolean flag = model.getAttribute("anchor") == null;
@@ -126,7 +127,7 @@ public class ManagementController {
 				model.addAttribute("msg", "Không tìm thấy " + search);
 			} else {
 				model.addAttribute("flag", true);
-				model.addAttribute("msg", "Tìm thấy " + page.getContent().size() + " kết quả của " + search);
+				model.addAttribute("msg", "Tìm thấy " + page.getTotalElements() + " kết quả của " + search);
 			}
 		}
 		List<Product> listProducts = page.getContent();
