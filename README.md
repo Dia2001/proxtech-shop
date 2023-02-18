@@ -1,5 +1,5 @@
 # proxtech-shop
-Website selling laptop( Spring-boot, spring data jpa, spring security, thymeleaf)
+Website selling laptop( spring-boot, spring data jpa, spring security, thymeleaf)
 
 ## Sơ đồ cấu trúc và luồng dữ liệu di chuyển
 ![clipboard.png](images/a8B3Uy-X5-clipboard.png)
