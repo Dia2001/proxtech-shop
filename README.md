@@ -4,7 +4,7 @@ Website selling laptop( spring-boot, spring data jpa, spring security, thymeleaf
 https://docs.google.com/presentation/d/1t0WHT8wgP5ajqylocA5_L9wWtbXzWFsN/edit?usp=sharing&ouid=117767921242902395081&rtpof=true&sd=true
 # Report
 https://drive.google.com/file/d/170CDdWB8N62LyvrYOAyERvweajyOqRHc/view?usp=sharing
-## Sơ đồ cấu trúc và luồng dữ liệu di chuyển
+# Sơ đồ cấu trúc và luồng dữ liệu di chuyển
 ![clipboard.png](images/a8B3Uy-X5-clipboard.png)
 1. Các thành phần chính
 * Sercuriy: Thành phần đứng trước chặn các request từ trình duyệt tới. Sử dụng Spring Sercurity
